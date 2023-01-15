@@ -5,32 +5,92 @@ import Image from 'next/image'
 
 // components
 import WaveSurferComp from '../components/waveSurfer'
+import NativeVideo from '../components/NativeVideo'
 
 // styles
 import styles from '../styles';
 import stylescss from '../styles/page.module.css';
 
+// redux
+import { selectMusicState, ADD_ITEM } from "../store/musicSlice";
+import { useDispatch, useSelector } from "react-redux";
 
+
+// 
 export default function Home() {
+    // call redux states
+    const musicState = useSelector(selectMusicState);
+    const dispatch = useDispatch();
 
-    const audioURL = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
+    console.log('musicState =>>>');
+    console.log(musicState);
+    
 
-    const [inputValue, setInputValue] = useState('')
+    interface owner {
+        name: string;
+        ID: string;
+        canonicalURL: string;
+        thumbnails?: string[];
+    }
+    
+    interface Data {
+        ID: string;
+        URL: string;
+        title: string;
+        thumbnails: string[];
+        owner: owner;
+        musicLengthSec?: number;
+        message?: string;
+    }
+
+    const [inputValue, setInputValue] = useState('96 anime song');
+    const [current, setCurrent] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value)
+        setInputValue(event.target.value);
+    }
+
+    function skipMusic(change: number) {
+        console.log('jsjsjsjsjsjsjsjs');
+        
+        if (change === 0) {
+            setCurrent(current => current - 1);
+            console.log(musicState[current]);
+        } else {
+            setCurrent(current => current + 1);
+            console.log(musicState[current]);
+        }
     }
 
     const searchMusic = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        console.log(`Hello ${inputValue}`)
-        setInputValue('')
+        // 
+        fetch("/api/searchEngine", {
+            method: "POST",
+            body: JSON.stringify({string: inputValue}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json())
+        .then((data:Data) => {
+            console.log('data =>>>>>');
+            console.log(data);
+            console.log(data.URL);
+            dispatch(ADD_ITEM(data));
+            console.log(musicState);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+        // 
+        setInputValue('');
+        
     }
 
 
   return (
     <div className={` ${styles.flexCenter} flex-col relative h-screen overflow-hidden bg-primary-color-83 `} >
-        <div id='player' className={` ${styles.flexCenter} flex-col gap-[30px] relative w-[400px] h-[850] bg-primary-color-4 `}>
+        <div id='player' className={` ${styles.flexCenter} flex-col gap-[20px] relative w-[400px] h-[850px] bg-primary-color-4 overflow-hidden `}>
             <div className={`grid grid-cols-[25%_50%_25%] relative w-full p-8`}>
                 <div className='grid content-center'>
                     <button aria-label="open_music_list">
@@ -49,24 +109,17 @@ export default function Home() {
                     </button>
                 </div>
             </div>
-            <div className={` ${styles.flexStart} gap-[150px] h-64 w-full px-8 overflow-hidden `}>
-                <div className='relative flex '>
-                    <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>
-                        <img className=" h-full object-cover relative" src="https://images.unsplash.com/photo-1673620068429-7546b29532cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="music_thumbnails" />
+            <div className={` relative ${styles.flexStart} gap-[150px] h-64 w-full px-8 transition-all left-[${-355 * current}px]`}>
+                {musicState.map(musicStateSimble => (
+                    <div key={musicStateSimble.ID} className='relative flex '>
+                        <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>
+                            <img className=" h-full object-cover relative" src={(musicState[current]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
+                        </div>
+                        <div className={` ${stylescss.darkOverlay} ${stylescss.blackHoleDisk} absolute w-[200px] h-[200px] rounded-full overflow-hidden top-1/2 left-28 -translate-y-1/2 z-[1] `}>
+                            <img className=" h-full object-cover relative" src={(musicState[current]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
+                        </div>
                     </div>
-                    <div className={` ${stylescss.darkOverlay} ${stylescss.blackHoleDisk} absolute w-[200px] h-[200px] rounded-full overflow-hidden top-1/2 left-28 -translate-y-1/2 z-[1] `}>
-                        <img className=" h-full object-cover relative" src="https://images.unsplash.com/photo-1673620068429-7546b29532cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="music_thumbnails" />
-                    </div>
-                </div>
-                {/* delete those and use a loop plz! */}
-                <div className='relative flex '>
-                    <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>
-                        <img className=" h-full object-cover relative" src="https://images.unsplash.com/photo-1673620068429-7546b29532cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="music_thumbnails" />
-                    </div>
-                    <div className={` ${stylescss.darkOverlay} ${stylescss.blackHoleDisk} absolute w-[200px] h-[200px] rounded-full overflow-hidden top-1/2 left-28 -translate-y-1/2 z-[1] `}>
-                        <img className=" h-full object-cover relative" src="https://images.unsplash.com/photo-1673620068429-7546b29532cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="music_thumbnails" />
-                    </div>
-                </div>
+                ))}
             </div>
             <div className={` grid grid-cols-[24px_2fr_24px] gap-10 relative w-full text-primary-color-83 p-8`}>
                 <div className='grid content-center'>
@@ -75,9 +128,9 @@ export default function Home() {
                     </button>
                 </div>
 
-                <div className={` ${styles.flexBetween} text-center flex-col relative`}>
-                    <div id='music-title' className={` ${stylescss.elleipsAfterSecondLine} text-2xl font-bold mb-2`}>Re:AIM Aimer Gundam OP we should not show all this crap here</div>
-                    <div id='music-owner' className=' text-base'>aimer</div>
+                <div className={` ${styles.flexBetween} text-center flex-col relative overflow-hidden`}>
+                    <div id='music-title' title={(musicState[current]) ? musicState[current].title : ''} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2`}>{(musicState[current]) ? musicState[current].title : 'This is a looong title right here boy singing for you the sweetest worlds'}</div>
+                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'Jeff'}</div>
                 </div>
 
                 <div  className='grid content-center'>
@@ -88,44 +141,14 @@ export default function Home() {
             </div>
 
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color w-full p-8 h-[333px] rounded-t-[35px]`}>
-                <div className='w-full h-[33.33%]'>
-                    <div className='w-full h-[90%] bg-red-300'>
-                        {/* <WaveSurferComp/> */}
-                        <audio controls src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"></audio>
-                    </div>
-                    <div className={` ${styles.flexBetween} w-full `}>
-                        <p>00:01</p>
-                        <p>03:23</p>
-                    </div>
-                </div>
-                <div className={` grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative w-full text-primary-color-83`}>
-                    <div className='grid content-center'>
-                        <button aria-label="shuffle_button">
-                            <Image className="w-[24px] h-[24px] object-contain relative" src="/shuffle.svg" alt="shuffle_button" width={24} height={24} />
-                        </button>
-                    </div>
-                    <div className={` ${styles.flexBetween} relative gap-[25px]`}>
-                        <button aria-label="skip_to_previous_song" className=' scale-[-1]'>
-                            <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_previous_song" width={46} height={46}/>
-                        </button>
-                        <button aria-label="play_song_button" className={` ${styles.flexCenter} w-[75px] h-[75px] rounded-full bg-primary-color-53 `}>
-                            <Image className="w-[46px] h-[46px] object-contain relative" src="/play.svg" alt="play_song_button" width={46} height={46}/>
-                        </button>
-                        <button aria-label="skip_to_next_song">
-                            <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_next_song" width={46} height={46}/>
-                        </button>
-                    </div>
-                    <div className='grid content-center'>
-                        <button aria-label="loop_song">
-                            <Image className="w-[24px] h-[24px] object-contain relative" src="/loop.svg" alt="loop_button" width={24} height={24}/>
-                        </button>
-                    </div>
+                <div className=' h-2/3 overflow-hidden'>
+                    <WaveSurferComp />
                 </div>
                 <div className='w-full'>
                     <form className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 `}>
                         <label className={` relative ${stylescss.label} w-full font-bold text-base `}>
                             <span className='relative top-[38px] left-4 transition-all'>Music name/URL:</span>
-                            <input required className='transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2' type="text" value={inputValue} onChange={handleChange} />
+                            <input required type="text" value={inputValue} onChange={handleChange} className='transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2'  />
                         </label>
                         
                         <button aria-label="search_music" type="button" onClick={searchMusic} className='absolute right-2 top-[30px] rounded-full bg-primary-color-77 hover:bg-primary-color-53 transition-all flex justify-center items-center overflow-hidden w-10 h-10' >

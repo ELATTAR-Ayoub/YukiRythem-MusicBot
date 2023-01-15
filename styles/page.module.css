@@ -6,6 +6,14 @@
     -webkit-box-orient: vertical;
 }
 
+.elleipsAfterFirstLine {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
 .label:has(input:focus) span, .label:has(input:valid) span {
     top: 0;
     left: 0;
