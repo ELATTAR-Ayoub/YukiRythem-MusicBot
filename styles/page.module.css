@@ -1,0 +1,37 @@
+.elleipsAfterSecondLine {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.label:has(input:focus) span, .label:has(input:valid) span {
+    top: 0;
+    left: 0;
+    color: var(--primary-color-53);
+}
+
+.darkOverlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .2; 
+    background-color: black;
+}
+
+.blackHoleDisk::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color-4);
+    border-radius: 999px;
+    z-index: 1;
+}
