@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image'
 import NativeVideo from './NativeVideo';
+import ytdl from "ytdl-core";
 
 // styles
 import styles from '../styles';
@@ -10,7 +11,7 @@ import stylescss from '../styles/page.module.css';
 import { selectMusicState, ADD_ITEM } from "../store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const formWaveSurferOptions = (ref) => ({
+const formWaveSurferOptions = (ref: HTMLDivElement) => ({
   container: ref,
   waveColor: "#BBD1EA",
   progressColor: "#507DBC",
@@ -28,20 +29,12 @@ export default function WaveSurferComp() {
     const musicState = useSelector(selectMusicState);
     const dispatch = useDispatch();
 
-    const waveformRef = useRef(null);
-    const wavesurfer = useRef(null);
+    const waveformRef = useRef<HTMLDivElement>(null);
+    const wavesurfer = useRef<any>(null);
     const [playing, setPlaying] = useState(false);
     const [current, setCurrent] = useState(0);
-    const mediaElt = useRef(null);
-    useEffect(() => {
-        if (mediaElt.current) {
-            setAudioSrc(mediaElt.current.src);
-        }
-    }, [mediaElt]);
 
     function skipMusic(change: number) {
-        console.log('jsjsjsjsjsjsjsjs');
-    
         if (change === 0) {
             setCurrent(current => current - 1);
             // console.log(musicState[current]);
@@ -51,32 +44,96 @@ export default function WaveSurferComp() {
         }
     }
 
-  const url =
-    "https://www.mfiles.co.uk/mp3-downloads/brahms-st-anthony-chorale-theme-two-pianos.mp3";
+    // 
+    const downloadAndLoadVideo = async (videoId: string) => {
+        try {
+            // Get the video info
+            let info = await ytdl.getInfo(videoId);
+            // Get the audio only format
+            let audioFormat = ytdl.filterFormats(info.formats, 'audioonly')[0];
+            // get the url of the audio format
+            let url = audioFormat.url;
+            // Create a new FileReader to read the stream as a blob
+            const fileReader = new FileReader();
+            // Read the audio url as array buffer
+            fetch(url)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => {
+                    fileReader.readAsArrayBuffer(new Blob([arrayBuffer]));
+                    fileReader.onload = () => {
+                        // Get the blob from the FileReader
+                        const blob = new Blob([fileReader.result], { type: 'audio/mpeg' });
+                        // Create a URL for the blob
+                        const blobUrl = URL.createObjectURL(blob);
+                        console.log(blobUrl);
+                        
+                        // Load the blob into the wavesurfer.js player
+                        const create = async () => {
+                            const WaveSurfer = (await import("wavesurfer.js")).default;
+                    
+                            const options = waveformRef.current ? formWaveSurferOptions(waveformRef.current) : {}
+                            if(waveformRef.current) {
+                                const options = formWaveSurferOptions(waveformRef.current);
+                                if(options.container) {
+                                    wavesurfer.current = WaveSurfer.create(options);
+                                    wavesurfer.current.load(blobUrl);
+                                }
+                            }
+                        };
+                        create();
+                    };
+                });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    
+    downloadAndLoadVideo('u0CqY27IFyo');
 
-  useEffect(() => {
-    create();
+    const url =
+        "https://www.mfiles.co.uk/mp3-downloads/brahms-st-anthony-chorale-theme-two-pianos.mp3";
+        
 
-    return () => {
-      if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-      }
+    useEffect(() => {
+        create();
+
+        return () => {
+        if (wavesurfer.current) {
+            wavesurfer.current.destroy();
+        }
+        };
+    }, []);
+
+    const create = async () => {
+        const WaveSurfer = (await import("wavesurfer.js")).default;
+
+        const options = waveformRef.current ? formWaveSurferOptions(waveformRef.current) : {}
+        if(waveformRef.current) {
+            const options = formWaveSurferOptions(waveformRef.current);
+            if(options.container) {
+                wavesurfer.current = WaveSurfer.create(options);
+                wavesurfer.current.load(url);
+            }
+        }
     };
-  }, []);
 
-  const create = async () => {
-    const WaveSurfer = (await import("wavesurfer.js")).default;
+    /* const create = async () => {
+        const WaveSurfer = (await import("wavesurfer.js")).default;
 
-    const options = formWaveSurferOptions(waveformRef.current);
-    wavesurfer.current = WaveSurfer.create(options);
+        const options = waveformRef.current ? formWaveSurferOptions(waveformRef.current) : {}
+        if(waveformRef.current) {
+            const options = formWaveSurferOptions(waveformRef.current);
+            if(options.container) {
+                wavesurfer.current = WaveSurfer.create(options);
+                wavesurfer.current.load(url);
+            }
+        }
+    }; */
 
-    wavesurfer.current.load(url);
-  };
-
-  const handlePlayPause = () => {
-    setPlaying(!playing);
-    wavesurfer.current.playPause();
-  };
+    const handlePlayPause = () => {
+        setPlaying(!playing);
+        wavesurfer.current.playPause();
+    };
 
   return (
     /* {<div className="relative z-10">

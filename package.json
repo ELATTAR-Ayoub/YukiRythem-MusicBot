@@ -29,7 +29,8 @@
     "redux-thunk": "^2.4.2",
     "typescript": "4.9.4",
     "wavesurfer-react": "^2.2.2",
-    "wavesurfer.js": "^6.4.0"
+    "wavesurfer.js": "^6.4.0",
+    "ytdl-core": "^4.11.2"
   },
   "devDependencies": {
     "@types/wavesurfer.js": "^6.0.3",

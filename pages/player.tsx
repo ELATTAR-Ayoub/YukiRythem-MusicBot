@@ -12,7 +12,7 @@ import styles from '../styles';
 import stylescss from '../styles/page.module.css';
 
 // redux
-import { selectMusicState, ADD_ITEM } from "../store/musicSlice";
+import { selectMusicState, selectCurrentMusic, ADD_ITEM } from "../store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Home() {
     // call redux states
     const musicState = useSelector(selectMusicState);
+    const current = useSelector(selectCurrentMusic);
     const dispatch = useDispatch();
 
     console.log('musicState =>>>');
@@ -43,23 +44,10 @@ export default function Home() {
         message?: string;
     }
 
-    const [inputValue, setInputValue] = useState('96 anime song');
-    const [current, setCurrent] = useState(0);
+    const [inputValue, setInputValue] = useState('96 anime avid song');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
-    }
-
-    function skipMusic(change: number) {
-        console.log('jsjsjsjsjsjsjsjs');
-        
-        if (change === 0) {
-            setCurrent(current => current - 1);
-            console.log(musicState[current]);
-        } else {
-            setCurrent(current => current + 1);
-            console.log(musicState[current]);
-        }
     }
 
     const searchMusic = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -130,7 +118,7 @@ export default function Home() {
 
                 <div className={` ${styles.flexBetween} text-center flex-col relative overflow-hidden`}>
                     <div id='music-title' title={(musicState[current]) ? musicState[current].title : ''} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2`}>{(musicState[current]) ? musicState[current].title : 'This is a looong title right here boy singing for you the sweetest worlds'}</div>
-                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'Jeff'}</div>
+                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'Jeff'} {current}</div>
                 </div>
 
                 <div  className='grid content-center'>
@@ -142,12 +130,13 @@ export default function Home() {
 
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color w-full p-8 h-[333px] rounded-t-[35px]`}>
                 <div className=' h-2/3 overflow-hidden'>
-                    <WaveSurferComp />
+                    {/* {<WaveSurferComp />} */}
+                    {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}
                 </div>
                 <div className='w-full'>
                     <form className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 `}>
                         <label className={` relative ${stylescss.label} w-full font-bold text-base `}>
-                            <span className='relative top-[38px] left-4 transition-all'>Music name/URL:</span>
+                            <span className='relative top-[38px] left-4 transition-all'>Music name/URL: {current}</span>
                             <input required type="text" value={inputValue} onChange={handleChange} className='transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2'  />
                         </label>
                         
