@@ -5,14 +5,15 @@ import Image from 'next/image'
 
 // components
 import WaveSurferComp from '../components/waveSurfer'
-import NativeVideo from '../components/NativeVideo'
+import NativeVideo from '../components/NativeVideo';
+import Loader from '@/components/loader';
 
 // styles
 import styles from '../styles';
 import stylescss from '../styles/page.module.css';
 
 // redux
-import { selectMusicState, selectCurrentMusic, ADD_ITEM } from "../store/musicSlice";
+import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, ADD_ITEM } from "../store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -21,6 +22,8 @@ export default function Home() {
     // call redux states
     const musicState = useSelector(selectMusicState);
     const current = useSelector(selectCurrentMusic);
+    const musicPlaying = useSelector(selectMusicPlaying);
+    const musicLoading = useSelector(selectMusicLoading);
     const dispatch = useDispatch();
 
     console.log('musicState =>>>');
@@ -44,13 +47,13 @@ export default function Home() {
         message?: string;
     }
 
-    const [inputValue, setInputValue] = useState('96 anime avid song');
+    const [inputValue, setInputValue] = useState('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     }
 
-    const searchMusic = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const searchMusic = (event: React.MouseEvent<HTMLButtonElement>  | React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         // 
         fetch("/api/searchEngine", {
@@ -91,7 +94,7 @@ export default function Home() {
                     </button>
                 </div>
                 <div className=' bg-primary-color-53 grid content-center text-center py-1 px-8 text-primary-color-83 rounded font-bold'>
-                    Now Playing
+                    {(musicLoading && musicPlaying) ? 'Now Playing' : 'Sleeping'}
                 </div>
                 <div className={`flex items-center justify-end gap-6`}>
                     <button className='grid content-center' aria-label="share_this_song">
@@ -103,6 +106,7 @@ export default function Home() {
                 </div>
             </div>
             <div style={MoveLeft} className={` relative ${styles.flexStart} gap-[150px] h-64 min-h-64 max-h-64 w-full px-8 transition-all`}>
+                {(!musicLoading) ? <Loader /> : <></>}   
                 {musicState.map(musicStateSimble => (
                     <div key={musicStateSimble.ID} className='relative flex '>
                         <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>

@@ -24,12 +24,16 @@ interface Data {
 export interface MusicState {
     musicState: Data[];
     currentMusic: number;
+    musicLoading: boolean;
+    musicPlaying: boolean;
 }
 
 // Initial state
 const initialState: MusicState = {
     musicState: [],
     currentMusic: 0,
+    musicLoading: false,
+    musicPlaying: true,
 };
 
 // Actual Slice
@@ -77,6 +81,20 @@ export const musicSlice = createSlice({
       };
     },
 
+    SET_LOADING(state, action) {
+      return {
+        ...state,
+        musicLoading: action.payload,
+      };
+    },
+
+    SET_PLAYING(state, action) {
+      return {
+        ...state,
+        musicPlaying: action.payload,
+      };
+    }
+
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
     /* extraReducers: {
@@ -91,10 +109,14 @@ export const musicSlice = createSlice({
   },
 });
 
-export const { setMusicState, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV } = musicSlice.actions;
+export const { setMusicState, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } = musicSlice.actions;
 
 export const selectMusicState = (state: AppState) => state.music.musicState;
 
 export const selectCurrentMusic = (state: AppState) => state.music.currentMusic;
+
+export const selectMusicLoading = (state: AppState) => state.music.musicLoading;
+
+export const selectMusicPlaying = (state: AppState) => state.music.musicPlaying;
 
 export default musicSlice.reducer;

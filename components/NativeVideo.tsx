@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef } from 'react';
 import Image from 'next/image'
 // import { View, TouchableOpacity } from 'react-native';
@@ -8,17 +10,18 @@ import styles from '../styles';
 import stylescss from '../styles/page.module.css';
 
 // redux
-import { selectMusicState, selectCurrentMusic, SKIP_PLUS, SKIP_PREV } from "../store/musicSlice";
+import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "../store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const NativeVideo = ({ videoId }: { videoId: string }) => {
     // redux
     const musicState = useSelector(selectMusicState);
     const current = useSelector(selectCurrentMusic);
+    const playing = useSelector(selectMusicPlaying);
+    const MusicLoading = useSelector(selectMusicLoading);
     const dispatch = useDispatch();
 
     // player config
-    const [playing, setPlaying] = useState(true)
     const [volume, setVolume] = useState(0.3);
     const [looping, setLooping] = useState(false);
     const [shuffling, setShuffling] = useState(false);
@@ -36,12 +39,12 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
 
     function handleOnEnded() {
         if (musicState.length === current || (current + 1) === musicState.length) {
-            setPlaying(false)
+            dispatch(SET_PLAYING(false));
             return;
         }
 
         if (looping === true) {
-            setPlaying(true)
+            dispatch(SET_PLAYING(true));
             return;
         }
         
@@ -50,9 +53,9 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
 
     function seektoBegining() {
         setDuration(0);
-        setPlaying(false);
+        dispatch(SET_PLAYING(false));
         setTimeout(() => {
-            setPlaying(true);
+            dispatch(SET_PLAYING(true));
         }, 1000);
     }
 
@@ -66,8 +69,12 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
         }
     }
 
+    const handleOnBuffer = () => {
+        dispatch(SET_LOADING(!MusicLoading));
+    }
+
     const handlePlayPause = () => {
-        setPlaying(!playing);
+        dispatch(SET_PLAYING(!playing));
     };
 
     const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
@@ -101,8 +108,9 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                     width={0}
                     height={0}
                     volume={volume}
-                    onPlay={() => setPlaying(true)}
-                    onPause={() => setPlaying(false)}
+                    onBuffer={() => handleOnBuffer()}
+                    onPlay={() => dispatch(SET_PLAYING(true))}
+                    onPause={() => dispatch(SET_PLAYING(false))}
                     onEnded={() => handleOnEnded()}
                     onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
                     onDuration={(duration) => setDuration(duration)}
