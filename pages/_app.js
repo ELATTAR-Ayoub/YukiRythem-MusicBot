@@ -6,7 +6,7 @@ import { wrapper } from "../store/store";
 
 function MyApp({ Component, pageProps }) {
     return (
-      <div className={`${styles.innerWidth} bg-primary-color-4 min-h-screen`}>
+      <div className={`${styles.innerWidth} relative bg-primary-color-4 min-h-screen`}>
           <Component {...pageProps} />
       </div>
     )

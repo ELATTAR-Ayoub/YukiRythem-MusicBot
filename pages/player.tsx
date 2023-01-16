@@ -47,7 +47,7 @@ export default function Home() {
         message?: string;
     }
 
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('tokyo ghoul sky');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -85,9 +85,9 @@ export default function Home() {
 
 
   return (
-    <div className={` ${styles.flexCenter} flex-col relative h-screen overflow-hidden bg-primary-color-83 `} >
-        <div id='player' className={` ${styles.flexCenter} flex-col gap-[20px] relative w-[400px] h-[850px] bg-primary-color-4 overflow-hidden `}>
-            <div className={`grid grid-cols-[25%_50%_25%] relative w-full p-8`}>
+    <div className={` ${styles.flexCenter} flex-col relative overflow-hidden h-screen bg-primary-color-83 `} >
+        <div id='player' className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative bg-primary-color-4 overflow-hidden  h-full w-full `}>
+            <div className={`grid lg:hidden grid-cols-[25%_50%_25%] relative p-8 md:px-0 sm:max-w-[675px] lg:max-w-[800px] w-full`}>
                 <div className='grid content-center'>
                     <button aria-label="open_music_list">
                         <Image className="w-[24px] h-[24px] object-contain relative" src="/list.svg" alt="open_music_list" width={24} height={24}/>
@@ -105,6 +105,7 @@ export default function Home() {
                     </button>
                 </div>
             </div>
+
             <div style={MoveLeft} className={` relative ${styles.flexStart} gap-[150px] h-64 min-h-64 max-h-64 w-full px-8 transition-all`}>
                 {(!musicLoading) ? <Loader /> : <></>}   
                 {musicState.map(musicStateSimble => (
@@ -118,16 +119,17 @@ export default function Home() {
                     </div>
                 ))}
             </div>
-            <div className={` grid grid-cols-[24px_2fr_24px] gap-10 relative w-full text-primary-color-83 p-8`}>
+
+            <div className={` grid grid-cols-[24px_2fr_24px] sm:grid-cols-[2fr_24px_24px] lg:grid-cols-[2fr_24px_24px_24px_24px_24px] gap-10 relative  text-primary-color-83 p-8 md:px-0 sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] w-full`}>
                 <div className='grid content-center'>
                     <button aria-label="Add_to_my_favorite_list">
                         <Image className="w-[24px] h-[24px] object-contain relative" src="/heart.svg" alt="Add_to_my_favorite_list" width={24} height={24}/>
                     </button>
                 </div>
 
-                <div className={` ${styles.flexBetween} text-center flex-col relative overflow-hidden`}>
-                    <div id='music-title' title={(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2`}>{(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"}</div>
-                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'} {current}</div>
+                <div className={` ${styles.flexBetween}  flex-col relative overflow-hidden text-center sm:text-left sm:order-first`}>
+                    <div id='music-title' title={(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2 w-full`}>{(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"}</div>
+                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm w-full`}>{(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'} {current}</div>
                 </div>
 
                 <div  className='grid content-center'>
@@ -135,14 +137,33 @@ export default function Home() {
                         <Image className="w-[24px] h-[24px] object-contain relative" src="/plus.svg" alt="Add_to_my_list" width={24} height={24}/>
                     </button>
                 </div>
+
+                <div className='hidden lg:grid content-center'>
+                    <button aria-label="open_music_list">
+                        <Image className="w-[24px] h-[24px] object-contain relative" src="/list.svg" alt="open_music_list" width={24} height={24}/>
+                    </button>
+                </div>
+
+                <div  className='hidden lg:grid content-center'>
+                    <button className='grid content-center' aria-label="share_this_song">
+                        <Image className="w-[24px] h-[24px] object-contain relative" src="/share.svg" alt="share_this_song" width={24} height={24}/>
+                    </button>
+                </div>
+
+                <div  className='hidden lg:grid content-center'>
+                    <button className='grid content-center' aria-label="download_this_song">
+                        <Image className="w-[24px] h-[24px] object-contain relative" src="/download.svg" alt="download_this_song" width={24} height={24}/>
+                    </button>
+                </div>
+                
             </div>
 
-            <div className={` ${styles.flexBetween} flex-col bg-secondary-color w-full p-8 h-[333px] rounded-t-[35px]`}>
-                <div className=' w-full'>
+            <div className={` ${styles.flexBetween} flex-col bg-secondary-color p-8  rounded-t-[35px] w-full h-[333px]`}>
+                <div className=' w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
                     {/* {<WaveSurferComp />} */}
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}
                 </div>
-                <div className='w-full'>
+                <div className='w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
                     <form onSubmit={searchMusic} className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 `}>
                         <label className={` relative ${stylescss.label} w-full font-bold text-base `}>
                             <span className='relative top-[38px] left-4 transition-all'>Music name/URL: {current}</span>

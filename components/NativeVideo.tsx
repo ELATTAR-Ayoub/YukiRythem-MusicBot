@@ -82,7 +82,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
   return (
     <div className={` ${styles.flexBetween} flex-col gap-4 w-full`}>
         <div className='w-full h-1/3'>
-            <div className='w-full h-[50%]'>
+            <div className='w-full h-[50%] xl:max-w-[1014px]'>
                 <ReactPlayer
                     ref={playerRef}
                     url={youtubeUrl}
@@ -133,13 +133,13 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                 <p>{`${Math.floor(duration / 60).toString().padStart(2, "0")}:${Math.floor(duration % 60).toString().padStart(2, "0")}`}</p>
             </div>
         </div>
-        <div className={`h-1/2 grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative w-full text-primary-color-83`}>
+        <div className={`h-1/2 grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative text-primary-color-83  sm:max-w-[550px] w-full`}>
             <div className='grid content-center'>
                 <button disabled={shuffling == false} aria-label="shuffle_button" className='disabled:opacity-50'>
                     <Image className="w-[24px] h-[24px] object-contain relative" src="/shuffle.svg" alt="shuffle_button" width={24} height={24} />
                 </button>
             </div>
-            <div className={` ${styles.flexBetween} relative gap-[25px]`}>
+            <div className={` ${styles.flexCenter} relative gap-[46px]`}>
                 <button onClick={() => skipMusic(0)} disabled={current === 0} aria-label="skip_to_previous_song" className=' scale-[-1] disabled:opacity-50 transition-all duration-300' >
                     <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_previous_song" width={46} height={46}/>
                 </button>
