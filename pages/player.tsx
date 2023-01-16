@@ -77,7 +77,6 @@ export default function Home() {
 
     // styles
     const MoveLeft = {
-        position: 'relative',
         left: `${-355 * current}px`
     };
 
@@ -103,7 +102,7 @@ export default function Home() {
                     </button>
                 </div>
             </div>
-            <div style={MoveLeft} className={` relative ${styles.flexStart} gap-[150px] h-64 min-h-64 max-h-64 w-full px-8 transition-allaaaaaaaaa`}>
+            <div style={MoveLeft} className={` relative ${styles.flexStart} gap-[150px] h-64 min-h-64 max-h-64 w-full px-8 transition-all`}>
                 {musicState.map(musicStateSimble => (
                     <div key={musicStateSimble.ID} className='relative flex '>
                         <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>
@@ -140,7 +139,7 @@ export default function Home() {
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}
                 </div>
                 <div className='w-full'>
-                    <form className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 `}>
+                    <form onSubmit={searchMusic} className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 `}>
                         <label className={` relative ${stylescss.label} w-full font-bold text-base `}>
                             <span className='relative top-[38px] left-4 transition-all'>Music name/URL: {current}</span>
                             <input required type="text" value={inputValue} onChange={handleChange} className='transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2'  />

@@ -20,6 +20,8 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
     // player config
     const [playing, setPlaying] = useState(true)
     const [volume, setVolume] = useState(0.3);
+    const [looping, setLooping] = useState(false);
+    const [shuffling, setShuffling] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
@@ -30,6 +32,28 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
     function handleJumpTo(time: number) {
         setCurrentTime(time);
         playerRef.current?.seekTo(time);
+    }
+
+    function handleOnEnded() {
+        if (musicState.length === current || (current + 1) === musicState.length) {
+            setPlaying(false)
+            return;
+        }
+
+        if (looping === true) {
+            setPlaying(true)
+            return;
+        }
+        
+        skipMusic(1);
+    }
+
+    function seektoBegining() {
+        setDuration(0);
+        setPlaying(false);
+        setTimeout(() => {
+            setPlaying(true);
+        }, 1000);
     }
 
     function skipMusic(change: number) {
@@ -55,6 +79,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                 <ReactPlayer
                     ref={playerRef}
                     url={youtubeUrl}
+                    loop={looping}
                     config={{
                         youtube: {
                             playerVars: {
@@ -78,7 +103,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                     volume={volume}
                     onPlay={() => setPlaying(true)}
                     onPause={() => setPlaying(false)}
-                    onEnded={() => setPlaying(false)}
+                    onEnded={() => handleOnEnded()}
                     onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
                     onDuration={(duration) => setDuration(duration)}
                 />
@@ -102,7 +127,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
         </div>
         <div className={`h-1/2 grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative w-full text-primary-color-83`}>
             <div className='grid content-center'>
-                <button  aria-label="shuffle_button">
+                <button disabled={shuffling == false} aria-label="shuffle_button" className='disabled:opacity-50'>
                     <Image className="w-[24px] h-[24px] object-contain relative" src="/shuffle.svg" alt="shuffle_button" width={24} height={24} />
                 </button>
             </div>
@@ -118,8 +143,8 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                     <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_next_song" width={46} height={46}/>
                 </button>
             </div>
-            <div className='grid content-center'>
-                <button  aria-label="loop_song" className='transition-all duration-300 hover:rotate-[360deg] focus:scale-90'>
+            <div onClick={() => setLooping(!looping)}  className='grid content-center'>
+                <button disabled={looping == false} aria-label="loop_song" className=' disabled:opacity-50 transition-all duration-300 hover:rotate-[360deg] focus:scale-90'>
                     <Image className="w-[24px] h-[24px] object-contain relative" src="/loop.svg" alt="loop_button" width={24} height={24}/>
                 </button>
             </div>
