@@ -19,22 +19,26 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
 
     // player config
     const [playing, setPlaying] = useState(true)
-    const [volume, setVolume] = useState(0.5);
+    const [volume, setVolume] = useState(0.3);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
+    // ref
     const playerRef = useRef(null);
 
+    // fun
     function handleJumpTo(time: number) {
         setCurrentTime(time);
-        playerRef.current.seekTo(time);
+        playerRef.current?.seekTo(time);
     }
 
     function skipMusic(change: number) {
         if (change === 0) {
             dispatch(SKIP_PREV(1));
+            setDuration(0);
         } else {
             dispatch(SKIP_PLUS(1));
+            setDuration(0);
         }
     }
 
@@ -45,9 +49,9 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
     const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
   return (
-    <div className={` ${styles.flexBetween} flex-col w-full h-full`}>
-        <div className='w-full h-1/2'>
-            <div className='w-full h-[90%]'>
+    <div className={` ${styles.flexBetween} flex-col gap-4 w-full`}>
+        <div className='w-full h-1/3'>
+            <div className='w-full h-[50%]'>
                 <ReactPlayer
                     ref={playerRef}
                     url={youtubeUrl}
@@ -69,8 +73,8 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                         }
                     }}
                     playing={playing}
-                    width={50}
-                    height={50}
+                    width={0}
+                    height={0}
                     volume={volume}
                     onPlay={() => setPlaying(true)}
                     onPause={() => setPlaying(false)}
@@ -79,7 +83,16 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                     onDuration={(duration) => setDuration(duration)}
                 />
                 <div className='seekBar'>
-
+                    <input 
+                        aria-label="Seek bar"
+                        className='w-full SeekBar'
+                        id='seekBar_range'
+                        type='range' 
+                        min={0} 
+                        max={duration} 
+                        value={currentTime} 
+                        onChange={e => handleJumpTo(parseFloat(e.target.value))} 
+                    />
                 </div>
             </div>
             <div className={` flex justify-between items-center w-full `}>
@@ -94,19 +107,19 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                 </button>
             </div>
             <div className={` ${styles.flexBetween} relative gap-[25px]`}>
-                <button onClick={() => skipMusic(0)} aria-label="skip_to_previous_song" className=' scale-[-1]'>
+                <button onClick={() => skipMusic(0)} disabled={current === 0} aria-label="skip_to_previous_song" className=' scale-[-1] disabled:opacity-50 transition-all duration-300' >
                     <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_previous_song" width={46} height={46}/>
                 </button>
-                <button onClick={handlePlayPause} aria-label="play/pause_song_button" className={` ${styles.flexCenter} w-[75px] h-[75px] rounded-full bg-primary-color-53 `}>
+                <button onClick={handlePlayPause} aria-label="play/pause_song_button" className={` ${styles.flexCenter} transition-all hover:scale-110 focus:scale-90 w-[75px] h-[75px] rounded-full bg-primary-color-53 `}>
                     {(!playing) ? <Image className="w-[46px] h-[46px] object-contain relative" src="/play.svg" alt="play_song_button" width={46} height={46}/>
                     : <Image className="w-[46px] h-[46px] object-contain relative" src="/pause.svg" alt="pause_song_button" width={46} height={46}/>}
                 </button>
-                <button onClick={() => skipMusic(1)} aria-label="skip_to_next_song">
+                <button onClick={() => skipMusic(1)} disabled={(current + 1) === musicState.length || (current + 1) > musicState.length} aria-label="skip_to_next_song" className=' transition-all duration-300 disabled:opacity-50'>
                     <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_next_song" width={46} height={46}/>
                 </button>
             </div>
             <div className='grid content-center'>
-                <button  aria-label="loop_song">
+                <button  aria-label="loop_song" className='transition-all duration-300 hover:rotate-[360deg] focus:scale-90'>
                     <Image className="w-[24px] h-[24px] object-contain relative" src="/loop.svg" alt="loop_button" width={24} height={24}/>
                 </button>
             </div>

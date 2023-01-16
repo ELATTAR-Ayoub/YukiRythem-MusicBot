@@ -13,6 +13,75 @@
   --primary-color-4: #04080F;
   --secondary-color: #F0F4F4;
   --primary-color-53: #507DBC;
-  --primary-color-83: #BBD1EA;
   --primary-color-77: #A1C6EA;
+  --primary-color-83: #BBD1EA;
+}
+
+input[type=range] {
+  height: 25px;
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 9px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: var(--primary-color-83);
+  border-radius: 1px;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px var(--primary-color-4);
+  border: 1px solid var(--primary-color-4);
+  height: 25px;
+  width: 15px;
+  border-radius: 1px;
+  background: var(--secondary-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8.5px;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 9px;
+  cursor: pointer;
+  animate: 0.3s;
+  background: var(--primary-color-83);
+  border-radius: 1px;
+}
+input[type=range]::-moz-range-thumb {
+  border: 1px solid var(--primary-color-4);
+  height: 25px;
+  width: 13px;
+  border-radius: 1px;
+  background: var(--secondary-color);
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 9px;
+  cursor: pointer;
+  animate: 0.2s;
+}
+input[type=range]::-ms-thumb {
+  height: 25px;
+  width: 15px;
+  border-radius: 1px;
+  background: var(--secondary-color);
+  cursor: pointer;
+}
+
+
+input[type='range']::-webkit-progress-value {
+  background-color: var(--primary-color-53);
+}
+iinput[type="range"]::-moz-range-progress {
+  background-color: var(--primary-color-53);
+}
+input[type="range"]::-ms-range-progress {
+  background-color: var(--primary-color-53);
 }

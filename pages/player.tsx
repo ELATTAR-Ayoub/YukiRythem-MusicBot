@@ -75,6 +75,12 @@ export default function Home() {
         
     }
 
+    // styles
+    const MoveLeft = {
+        position: 'relative',
+        left: `${-355 * current}px`
+    };
+
 
   return (
     <div className={` ${styles.flexCenter} flex-col relative h-screen overflow-hidden bg-primary-color-83 `} >
@@ -97,7 +103,7 @@ export default function Home() {
                     </button>
                 </div>
             </div>
-            <div className={` relative ${styles.flexStart} gap-[150px] h-64 w-full px-8 transition-all left-[${-355 * current}px]`}>
+            <div style={MoveLeft} className={` relative ${styles.flexStart} gap-[150px] h-64 min-h-64 max-h-64 w-full px-8 transition-allaaaaaaaaa`}>
                 {musicState.map(musicStateSimble => (
                     <div key={musicStateSimble.ID} className='relative flex '>
                         <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] rounded-lg overflow-hidden z-[2] `}>
@@ -117,8 +123,8 @@ export default function Home() {
                 </div>
 
                 <div className={` ${styles.flexBetween} text-center flex-col relative overflow-hidden`}>
-                    <div id='music-title' title={(musicState[current]) ? musicState[current].title : ''} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2`}>{(musicState[current]) ? musicState[current].title : 'This is a looong title right here boy singing for you the sweetest worlds'}</div>
-                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'Jeff'} {current}</div>
+                    <div id='music-title' title={(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] font-bold mb-2`}>{(musicState[current]) ? musicState[current].title : "Search for music by inserting the URL or name in the input below, let's jam!"}</div>
+                    <div id='music-owner' title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm`}>{(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'} {current}</div>
                 </div>
 
                 <div  className='grid content-center'>
@@ -129,7 +135,7 @@ export default function Home() {
             </div>
 
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color w-full p-8 h-[333px] rounded-t-[35px]`}>
-                <div className=' h-2/3 overflow-hidden'>
+                <div className=' w-full'>
                     {/* {<WaveSurferComp />} */}
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}
                 </div>
