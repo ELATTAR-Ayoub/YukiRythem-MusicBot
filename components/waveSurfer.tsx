@@ -45,7 +45,7 @@ export default function WaveSurferComp() {
     }
 
     // 
-    const downloadAndLoadVideo = async (videoId: string) => {
+    /* const downloadAndLoadVideo = async (videoId: string) => {
         try {
             // Get the video info
             let info = await ytdl.getInfo(videoId);
@@ -86,9 +86,9 @@ export default function WaveSurferComp() {
         } catch (err) {
             console.error(err);
         }
-    }
+    } */
     
-    downloadAndLoadVideo('u0CqY27IFyo');
+    // downloadAndLoadVideo('u0CqY27IFyo');
 
     const url =
         "https://www.mfiles.co.uk/mp3-downloads/brahms-st-anthony-chorale-theme-two-pianos.mp3";
