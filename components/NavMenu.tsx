@@ -41,7 +41,8 @@ const Header = () => {
         
 
         <div className=' '>
-          <p>Developed with &lt;3 by ELATTAR Ayub</p>
+          <p>Developed with &lt;3 </p>
+          <p>by ELATTAR Ayub</p>
         </div>
     </div>
   );

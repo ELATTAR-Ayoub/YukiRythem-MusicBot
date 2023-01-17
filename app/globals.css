@@ -17,6 +17,11 @@
   --primary-color-83: #BBD1EA;
 }
 
+.viewHeight {
+  height: 100vh;  
+  max-height: -webkit-fill-available;
+}
+
 .SVGB2W {
   @apply dark:bg-secondary-color;
 }
