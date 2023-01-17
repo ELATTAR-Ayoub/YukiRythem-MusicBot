@@ -126,10 +126,10 @@ export default function Home() {
                 <div style={MoveLeftStyle} className={` relative ${styles.flexStart} transition-all duration-300 gap-40 lg:gap-52 w-full h-full`}>
                     {musicState.map(musicStateSimble => (
                         <div key={musicStateSimble.ID} className={`${musicStateSimble.ID != musicState[current].ID ? 'opacity-70 scale-75' : ''} relative flex `}>
-                            <div className={` ${stylescss.darkOverlay} w-[200px] h-[250px] lg:w-[400px] lg:h-[370px] rounded-lg overflow-hidden z-[2] `}>
+                            <div className={` ${stylescss.darkOverlay} w-[150px] h-[150px] sm:w-[200px] sm:h-[250px] lg:w-[400px] lg:h-[370px] rounded-lg overflow-hidden z-[2] `}>
                                 <img className=" h-full object-cover relative" src={(musicState[current]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
                             </div>
-                            <div className={` ${stylescss.darkOverlay} ${stylescss.blackHoleDisk} absolute w-[200px] h-[200px] lg:w-[330px] lg:h-[330px] left-28 lg:left-60 rounded-full overflow-hidden top-1/2 -translate-y-1/2 z-[1] `}>
+                            <div className={` ${stylescss.darkOverlay} ${stylescss.blackHoleDisk} absolute w-[125px] h-[125px] sm:w-[200px] sm:h-[200px] lg:w-[330px] lg:h-[330px] left-28 lg:left-60 rounded-full overflow-hidden top-1/2 -translate-y-1/2 z-[1] `}>
                                 <img className=" h-full object-cover relative" src={(musicState[current]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
                             </div>
                         </div>

@@ -46,6 +46,13 @@
     z-index: 1;
 }
 
+@media (max-width: 640px) {
+  .blackHoleDisk::before {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 .circleLoading {
     width: 200px;
     height: 200px;
