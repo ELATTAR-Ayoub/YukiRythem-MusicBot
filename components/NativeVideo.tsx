@@ -6,7 +6,7 @@ import Image from 'next/image'
 import ReactPlayer from 'react-player';
 
 // styles
-import styles from '../styles';
+import styles from '../styles/index';
 import stylescss from '../styles/page.module.css';
 
 // redux

@@ -42,7 +42,7 @@ export const musicSlice = createSlice({
   initialState,
   reducers: {
 
-    // Action to set the authentication status
+    // Action to set the music status
     setMusicState(state, action) {
       state.musicState = action.payload;
     },
@@ -93,18 +93,18 @@ export const musicSlice = createSlice({
         ...state,
         musicPlaying: action.payload,
       };
-    }
+    },
 
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
-    /* extraReducers: {
-      [HYDRATE]: (state, action) => {
+    extraReducers: {
+      [HYDRATE]: (state: MusicState, action: { type: typeof HYDRATE, payload: { music: MusicState } }) => {
         return {
           ...state,
-          ...action.payload.auth,
+          ...action.payload.music,
         };
       },
-    }, */
+    },
 
   },
 });
