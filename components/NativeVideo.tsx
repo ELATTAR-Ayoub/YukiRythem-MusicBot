@@ -32,7 +32,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
     const [duration, setDuration] = useState(0);
 
     // ref
-    const playerRef = useRef(null);
+    const playerRef = useRef<ReactPlayer>(null);
 
     // fun
     function handleJumpTo(time: number) {

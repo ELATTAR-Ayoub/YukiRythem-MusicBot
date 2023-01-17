@@ -21,6 +21,10 @@
   @apply dark:bg-secondary-color;
 }
 
+.SVGW2B {
+  @apply dark:bg-primary-color-4;
+}
+
 .SVGBlue2W {
   @apply dark:bg-primary-color-77;
 }
@@ -47,6 +51,30 @@
 
   @apply dark:bg-primary-color-4
 }
+
+.linksm {
+  position: relative;
+  left: 2rem;
+}
+
+.linksm::before {
+  content: '';
+  position: absolute;
+  bottom: 50%;
+  left: -3rem;
+  width: 3rem;
+  transform: translateY(-50%);
+  height: 1px;
+  margin-top: 3px;
+  background-color: var(--primary-color-83);
+
+  @apply dark:bg-primary-color-4
+}
+
+.activeLinksm {
+  @apply font-semibold bg-primary-color-53 
+}
+
 
 
 /*styling the seek bar of the music in the player*/

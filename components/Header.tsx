@@ -11,9 +11,17 @@ import stylescss from '../styles/page.module.css';
 // components
 import LightModeBtn from './LightModeBtn.jsx';
 import Logo from './Logo';
+import SolidSvg from './SolidSVG';
 
 const Header = () => {
-  const router = useRouter()
+  const router = useRouter();
+
+  function openNavMenu() {
+    const element = document.getElementById("navMenu");
+    if (element) {
+      element.style.width = '66.666667%';
+    }
+  }
 
   return (
     <div className={` ${styles.flexBetween} w-full sm:px-7 px-7 h-[10vh] `}>
@@ -33,8 +41,8 @@ const Header = () => {
 
       <div className='flex items-center lg:hidden grid-cols-2 gap-8 content-center cursor-pointer'>
         <LightModeBtn />
-        <button className='grid content-center' aria-label="open_nav_menu">
-          <Image className="w-[24px] h-[24px] object-contain relative" src="/navMenu.svg" alt="navMenu" width={24} height={24}/>
+        <button onClick={() => openNavMenu()} className='grid content-center' aria-label="open_nav_menu">
+          <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B'} color={'#DAE3E5'} path={'/navMenu.svg'} />
         </button>
       </div>
     </div>
