@@ -14,7 +14,7 @@ import { wrapper } from "../store/store";
 function MyApp({ Component, pageProps }) {
     return (
       <ThemeProvider attribute='class'>
-        <div className={`flex justify-center items-end md:items-center relative w-screen bg-primary-color-4 dark:bg-secondary-color min-h-screen`}>
+        <div className={`flex justify-center items-center relative w-screen bg-primary-color-4 dark:bg-secondary-color min-h-screen`}>
           <div className={`${styles.innerWidth} flex justify-center items-center w-full flex-col relative h-full`}>
             <Header/>
             <NavMenu/>
