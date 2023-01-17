@@ -100,7 +100,7 @@ export default function Home() {
 
 
   return (
-    <div className={` ${styles.flexCenter} flex-col relative overflow-hidden w-full h-[90vh]`} >
+    <div className={` ${styles.flexCenter} flex-col relative overflow-hidden w-full h-[80vh] md:h-[90vh]`} >
         <div id='player' className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative bg-primary-color-4 dark:bg-secondary-color overflow-hidden  h-full w-full `}>
             <div className={`grid lg:hidden grid-cols-[25%_50%_25%] relative p-8 md:px-0 sm:max-w-[675px] lg:max-w-[800px] w-full`}>
                 <div className='grid content-center'>

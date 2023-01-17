@@ -24,7 +24,7 @@ const Header = () => {
   }
 
   return (
-    <div className={` ${styles.flexBetween} w-full sm:px-7 px-7 h-[10vh] `}>
+    <div className={` ${styles.flexBetween} w-full sm:px-7 px-7 h-[10vh] md:h-[10vh] `}>
       <Logo />
 
       <div className='lg:flex flex-row-reverse gap-8 items-center hidden content-center cursor-pointer'>
