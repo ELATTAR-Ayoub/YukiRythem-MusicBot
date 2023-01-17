@@ -1,13 +1,16 @@
 'use client'
 
 import React, { useState, useRef } from 'react';
-import Image from 'next/image'
+
 // import { View, TouchableOpacity } from 'react-native';
 import ReactPlayer from 'react-player';
 
 // styles
 import styles from '../styles/index';
 import stylescss from '../styles/page.module.css';
+
+// components
+import SolidSvg from './SolidSVG';
 
 // redux
 import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "../store/musicSlice";
@@ -128,32 +131,32 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                     />
                 </div>
             </div>
-            <div className={` flex justify-between items-center w-full `}>
-            <p>{`${Math.floor(currentTime / 60).toString().padStart(2, "0")}:${Math.floor(currentTime % 60).toString().padStart(2, "0")}`}</p>
+            <div className={` flex justify-between items-center w-full text-primary-color-4 dark:text-secondary-color `}>
+                <p>{`${Math.floor(currentTime / 60).toString().padStart(2, "0")}:${Math.floor(currentTime % 60).toString().padStart(2, "0")}`}</p>
                 <p>{`${Math.floor(duration / 60).toString().padStart(2, "0")}:${Math.floor(duration % 60).toString().padStart(2, "0")}`}</p>
             </div>
         </div>
-        <div className={`h-1/2 grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative text-primary-color-83  sm:max-w-[550px] w-full`}>
+        <div className={`h-1/2 grid grid-cols-[24px_1fr_24px] gap-[30px] content-center relative sm:max-w-[550px] w-full`}>
             <div className='grid content-center'>
                 <button disabled={shuffling == false} aria-label="shuffle_button" className='disabled:opacity-50'>
-                    <Image className="w-[24px] h-[24px] object-contain relative" src="/shuffle.svg" alt="shuffle_button" width={24} height={24} />
+                    <SolidSvg width={'24px'} height={'24px'} className={'SVGBlue2W'} color={'#507DBC'} path={'/shuffle.svg'} />
                 </button>
             </div>
             <div className={` ${styles.flexCenter} relative gap-[46px]`}>
-                <button onClick={() => skipMusic(0)} disabled={current === 0} aria-label="skip_to_previous_song" className=' scale-[-1] disabled:opacity-50 transition-all duration-300' >
-                    <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_previous_song" width={46} height={46}/>
+                <button onClick={() => skipMusic(0)} disabled={current === 0} aria-label="skip_to_previous_song" className=' scale-[-1] disabled:opacity-50 transition-all duration-300 cursor-pointer' >
+                    <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/next_song.svg'} />
                 </button>
                 <button onClick={handlePlayPause} aria-label="play/pause_song_button" className={` ${styles.flexCenter} transition-all hover:scale-110 focus:scale-90 w-[75px] h-[75px] rounded-full bg-primary-color-53 `}>
-                    {(!playing) ? <Image className="w-[46px] h-[46px] object-contain relative" src="/play.svg" alt="play_song_button" width={46} height={46}/>
-                    : <Image className="w-[46px] h-[46px] object-contain relative" src="/pause.svg" alt="pause_song_button" width={46} height={46}/>}
+                    {(!playing) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/play.svg'} />
+                    : <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/pause.svg'} />}
                 </button>
-                <button onClick={() => skipMusic(1)} disabled={(current + 1) === musicState.length || (current + 1) > musicState.length} aria-label="skip_to_next_song" className=' transition-all duration-300 disabled:opacity-50'>
-                    <Image className="w-[46px] h-[46px] object-contain relative" src="/next_song.svg" alt="skip_to_next_song" width={46} height={46}/>
+                <button onClick={() => skipMusic(1)} disabled={(current + 1) === musicState.length || (current + 1) > musicState.length} aria-label="skip_to_next_song" className=' transition-all duration-300 disabled:opacity-50 cursor-pointer'>
+                    <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/next_song.svg'} />
                 </button>
             </div>
             <div onClick={() => setLooping(!looping)}  className='grid content-center'>
                 <button disabled={looping == false} aria-label="loop_song" className=' disabled:opacity-50 transition-all duration-300 hover:rotate-[360deg] focus:scale-90'>
-                    <Image className="w-[24px] h-[24px] object-contain relative" src="/loop.svg" alt="loop_button" width={24} height={24}/>
+                    <SolidSvg width={'24px'} height={'24px'} className={'SVGBlue2W'} color={'#507DBC'} path={'/loop.svg'} />
                 </button>
             </div>
         </div>

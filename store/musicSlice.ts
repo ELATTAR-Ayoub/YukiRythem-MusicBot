@@ -97,14 +97,14 @@ export const musicSlice = createSlice({
 
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
-    extraReducers: {
+    /* extraReducers: {
       [HYDRATE]: (state: MusicState, action: { type: typeof HYDRATE, payload: { music: MusicState } }) => {
         return {
           ...state,
           ...action.payload.music,
         };
       },
-    },
+    }, */
 
   },
 });
