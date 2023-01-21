@@ -18,8 +18,8 @@ import Tryit from '../sections/Tryit';
 import SolidSvg from '@/components/SolidSVG';
 
 export default function Home() {
-  const lightVersionRef1 = useRef(null);
-  const lightVersionRef2 = useRef(null);
+  const lightVersionRef1 = useRef<HTMLDivElement>(null);
+  const lightVersionRef2 = useRef<HTMLDivElement>(null);
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
     const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
