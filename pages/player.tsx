@@ -146,7 +146,7 @@ export default function Home() {
 
                 <div className={` ${styles.flexBetween}  flex-col relative overflow-hidden text-center sm:text-left sm:order-first`}>
                     <div title={(musicState[current]) ? musicState[current].title : "Search for music by inserting the name or the URL in the input below, let's jam!"} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{(musicState[current]) ? musicState[current].title : "Search for music by inserting the name or the URL in the input below, let's jam!"}</div>
-                    <div title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm w-full`}>{(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'} {current}</div>
+                    <div title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm w-full`}>by {(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'}</div>
                 </div>
 
                 <div  className='grid content-center'>

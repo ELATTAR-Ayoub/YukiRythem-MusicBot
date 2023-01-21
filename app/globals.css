@@ -39,12 +39,12 @@ body {
   -webkit-filter: grayscale(100%);
 }
 
-.skills_btn p {
+/*.skills_btn p {
   text-shadow: -1px -1px 0 var(--secondary-color), 
   1px -1px 0 var(--secondary-color), 
   -1px 1px 0 var(--secondary-color), 
   1px 1px 0 var(--secondary-color);
-}
+}*/
 
 .SVGB2W {
   @apply dark:bg-secondary-color;
@@ -135,6 +135,12 @@ body {
 
 .bg_gradient1 {
   background: linear-gradient(107.05deg, hsla(266, 100%, 64%, 0.103) 5.04%, hsla(215, 45%, 53%, 0.11) 68.89%) 150% 50%;
+  background-size: 400% 400%;
+  animation: radiant-animation 5s ease-in-out infinite;
+}
+
+.bg_gradient2 {
+  background: linear-gradient(107.05deg, hsla(266, 100%, 64%) 5.04%, hsla(215, 45%, 53%) 68.89%) 150% 50%;
   background-size: 400% 400%;
   animation: radiant-animation 5s ease-in-out infinite;
 }

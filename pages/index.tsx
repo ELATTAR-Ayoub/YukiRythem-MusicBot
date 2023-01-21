@@ -12,7 +12,7 @@ import stylescss from '../styles/page.module.css';
 import Hero from '../sections/Hero';
 import Features from '../sections/Features';
 import Skills from '../sections/Skills';
-import Tryit from '../sections/Skills';
+import Tryit from '../sections/Tryit';
 
 // components
 import SolidSvg from '@/components/SolidSVG';
