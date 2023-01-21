@@ -7,12 +7,22 @@ import Link from 'next/link'
 import styles from '../styles/index';
 import stylescss from '../styles/page.module.css';
 
+// /section
+import Hero from '../sections/Hero';
+import Features from '../sections/Features';
+
+// components
+import SolidSvg from '@/components/SolidSVG';
+
+// constant
+import { App_Features } from '../constants';
+
 export default function Home() {
   return (
-    <main className={`${styles.innerWidth} min-h-[90vh] w-full overflow-hidden text-primary-color-83 dark:text-primary-color-4 p-8`}>
-      <h1 className=''>This app is still in production</h1>
-      <p>Check the app here: <Link href='player' className=' underline text-primary-color-53'>Check the app</Link> </p>
+      <div className={` ${styles.flexCenter} flex-col 2xl:max-w-[1440px] min-h-[90vh] gap-28 w-full overflow-hidden text-secondary-color dark:text-primary-color-4 p-8`}>
+        <Hero/>
+        <Features/>
       
-    </main>
+      </div>
   )
 }

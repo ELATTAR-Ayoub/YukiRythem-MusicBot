@@ -19,7 +19,7 @@ module.exports = {
         'out-flex': 'cubic-bezier(0.05, 0.6, 0.4, 0.9)',
       },
       fontFamily: {
-        'Plain': ['Plain-Light', 'sans-serif'],
+        'Montserrat': ['Montserrat', 'sans-serif'],
       },
     },
   },

@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  scroll-padding-top: 20rem;
 }
 
 :root {
@@ -17,9 +22,16 @@
   --primary-color-83: #BBD1EA;
 }
 
+body {
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
 .viewHeight {
-  height: 100vh;  
+  min-height: 100vh;  
   max-height: -webkit-fill-available;
+  overflow-x: hidden;
 }
 
 .SVGB2W {
@@ -80,7 +92,88 @@
   @apply font-semibold bg-primary-color-53 
 }
 
+/* sectiosn */
 
+
+.cta-primary, .cta-secondary {
+  transition: all ease-in-out .3s;
+  @apply grid content-center p-4 min-w-[230px] text-center;
+}
+
+.cta-primary {
+  @apply text-secondary-color bg-primary-color-53 hover:bg-primary-color-77 hover:text-primary-color-4 hover:font-bold ;
+}
+
+.cta-secondary {
+  @apply text-primary-color-4 bg-secondary-color border-secondary-color hover:bg-transparent hover:border hover:text-secondary-color ;
+}
+
+.gradient1 {
+  background: linear-gradient(107.05deg, #9747FF 5.04%, #507DBC 68.89%) 150% 50%;
+  background-size: 400% 400%;
+  animation: radiant-animation 5s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg_gradient1 {
+  background: linear-gradient(107.05deg, hsla(266, 100%, 64%, 0.103) 5.04%, hsla(215, 45%, 53%, 0.11) 68.89%) 150% 50%;
+  background-size: 400% 400%;
+  animation: radiant-animation 5s ease-in-out infinite;
+}
+
+.rotateInfinite {
+  animation: rotateInfinite-animation 10s linear infinite;
+  transform-origin: center center;
+}
+
+.rotateInfinite1 {
+  animation: rotateInfinite-animation-minus 50s linear infinite;
+  transform-origin: center center;
+}
+
+.rotateInfinite2 {
+  animation: rotateInfinite-animation-minus 25s linear infinite;
+  transform-origin: center center;
+}
+
+.rotateInfinite3 {
+  animation: rotateInfinite-animation 30s linear infinite;
+  transform-origin: center center;
+}
+
+
+
+@keyframes rotateInfinite-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateInfinite-animation-minus {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(-360deg);
+  }
+}
+
+@keyframes radiant-animation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
 
 /*styling the seek bar of the music in the player*/
 input[type=range] {
