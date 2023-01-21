@@ -24,6 +24,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/LightModeBtn.jsx", "components/LightModeBtn.jsx", "pages/_app.js", "sections/Hero.tsx", "sections/Hero.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/LightModeBtn.jsx", "components/LightModeBtn.jsx", "pages/_app.js", "sections/Hero.tsx", "sections/Features.tsx"],
   "exclude": ["node_modules"]
 }

@@ -189,7 +189,6 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 9px;
   cursor: pointer;
-  animate: 0.2s;
   background: var(--primary-color-83);
   border-radius: 1px;
 }
@@ -209,7 +208,6 @@ input[type=range]::-moz-range-track {
   width: 100%;
   height: 9px;
   cursor: pointer;
-  animate: 0.3s;
   background: var(--primary-color-83);
   border-radius: 1px;
 }
@@ -226,7 +224,6 @@ input[type=range]::-ms-track {
   width: 100%;
   height: 9px;
   cursor: pointer;
-  animate: 0.2s;
 }
 input[type=range]::-ms-thumb {
   height: 25px;

@@ -14,15 +14,16 @@ import Features from '../sections/Features';
 // components
 import SolidSvg from '@/components/SolidSVG';
 
-// constant
-import { App_Features } from '../constants';
-
 export default function Home() {
   return (
-      <div className={` ${styles.flexCenter} flex-col 2xl:max-w-[1440px] min-h-[90vh] gap-28 w-full overflow-hidden text-secondary-color dark:text-primary-color-4 p-8`}>
-        <Hero/>
-        <Features/>
+    <div className={` ${styles.flexCenter} flex-col 2xl:max-w-[1440px] min-h-[90vh] gap-28 w-full overflow-hidden text-secondary-color dark:text-primary-color-4 p-8`}>
       
+      <div className={` ${styles.flexCenter} flex-col h-full gap-28 w-screen 2xl:max-w-[1440px] bg-primary-color-4`}>
+        <Hero />
+        <Features />
       </div>
+
+
+    </div>
   )
 }
