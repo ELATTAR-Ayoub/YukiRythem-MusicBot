@@ -17,9 +17,9 @@ import { App_Skills } from '../constants';
 
 const Skills = () => {
 
-    const img_section = useRef(null);
-    const label_section = useRef(null);
-    const number_section = useRef(null);
+    const img_section = useRef<HTMLImageElement>(null);
+    const label_section = useRef<HTMLDivElement>(null);
+    const number_section = useRef<HTMLDivElement>(null);
     const [indexSkills, setIndexSkills] = useState(0);
     const numbers = Array.from({length: 3}, (_, i) => i + 1);
 
