@@ -19,7 +19,7 @@ export default function Home() {
     <div className={` ${styles.flexCenter} flex-col 2xl:max-w-[1440px] min-h-[90vh] gap-28 w-full overflow-hidden text-secondary-color dark:text-primary-color-4 p-8`}>
       
       <div className={` ${styles.flexCenter} flex-col h-full gap-28 w-screen 2xl:max-w-[1440px] bg-primary-color-4`}>
-        <Hero />
+        <Hero mode={'light'}/>
         <Features />
       </div>
 

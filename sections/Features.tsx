@@ -17,8 +17,8 @@ export default function Features() {
   return (
     <div id='learn_more' className={` ${styles.flexBetween} w-full p-8 flex-col text-secondary-color gap-16 bg-primary-color-4`}>
         <div className={` ${styles.flexStart} w-full flex-col lg:flex-row gap-0 lg:gap-6`}>
-            <h1 className='text-5xl w-full font-bold leading-[65px] my-6 mt-0'>Inspire, Relax & <span className='gradient1'>Boost your productivity</span></h1>
-            <p className='text-lg w-full my-6'>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
+            <h1 className='text-5xl w-full font-bold leading-[65px] my-6 mt-0 text-center md:text-left'>Inspire, Relax & <span className='gradient1'>Boost your productivity</span></h1>
+            <p className='text-lg w-full my-6 text-center md:text-left'>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
         </div>
         <div className={` ${styles.flexBetween} w-full flex-col lg:flex-row gap-6`}>
             {App_Features.map((feature, index) => (

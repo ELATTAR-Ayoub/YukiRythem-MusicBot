@@ -95,7 +95,7 @@ body {
 /* sectiosn */
 
 
-.cta-primary, .cta-secondary {
+.cta-primary, .cta-secondary, .cta-secondary-dark {
   transition: all ease-in-out .3s;
   @apply grid content-center p-4 min-w-[230px] text-center;
 }
@@ -106,6 +106,10 @@ body {
 
 .cta-secondary {
   @apply text-primary-color-4 bg-secondary-color border-secondary-color hover:bg-transparent hover:border hover:text-secondary-color ;
+}
+
+.cta-secondary-dark {
+  @apply text-secondary-color bg-primary-color-4 border-primary-color-4 hover:bg-transparent hover:border hover:text-primary-color-4 ;
 }
 
 .gradient1 {
