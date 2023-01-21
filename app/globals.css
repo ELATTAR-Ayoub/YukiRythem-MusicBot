@@ -34,6 +34,18 @@ body {
   overflow-x: hidden;
 }
 
+.b_and_w {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+
+.skills_btn p {
+  text-shadow: -1px -1px 0 var(--secondary-color), 
+  1px -1px 0 var(--secondary-color), 
+  -1px 1px 0 var(--secondary-color), 
+  1px 1px 0 var(--secondary-color);
+}
+
 .SVGB2W {
   @apply dark:bg-secondary-color;
 }

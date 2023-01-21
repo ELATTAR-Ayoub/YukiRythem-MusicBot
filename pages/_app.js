@@ -17,11 +17,13 @@ const MyApp = ({Component, pageProps, ...rest}) => {
     return (
       <ThemeProvider attribute='class'>
         <Provider store={store}>
-          <div className={`flex justify-center items-center relative bg-primary-color-4 dark:bg-secondary-color viewHeight`}>
-            <div className={`${styles.innerWidth} flex justify-center items-center w-full flex-col relative`}>
+          <div className={`flex justify-center items-center relative bg-primary-color-4 w-full h-full dark:bg-secondary-color viewHeight`}>
+            <div className={`${styles.innerWidth} flex justify-center items-center w-full h-full flex-col relative`} >
               <Header/>
               <NavMenu/>
-              <Component {...pageProps} />
+              <div className={`2xl:max-w-[1440px] w-full `}>
+                <Component {...pageProps} />
+              </div>
             </div>
           </div>
         </Provider>

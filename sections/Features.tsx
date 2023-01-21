@@ -13,16 +13,21 @@ import SolidSvg from '@/components/SolidSVG';
 // constant
 import { App_Features } from '../constants';
 
-export default function Features() {
+
+interface HeroProps {
+    mode: 'light' | 'dark'
+}
+
+const Features: React.FC<HeroProps> = ({ mode = "light" }) => {
   return (
-    <div id='learn_more' className={` ${styles.flexBetween} w-full p-8 flex-col text-secondary-color gap-16 bg-primary-color-4`}>
+    <div id='learn_more' className={` ${mode == 'light' ? 'text-secondary-color bg-primary-color-4' : 'text-primary-color-4 bg-secondary-color'} relative 2xl:max-w-[1440px] w-screen p-8 flex-col gap-16 lg:flex-row overflow-hidden `}>
         <div className={` ${styles.flexStart} w-full flex-col lg:flex-row gap-0 lg:gap-6`}>
-            <h1 className='text-5xl w-full font-bold leading-[65px] my-6 mt-0 text-center md:text-left'>Inspire, Relax & <span className='gradient1'>Boost your productivity</span></h1>
-            <p className='text-lg w-full my-6 text-center md:text-left'>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
+            <h1 className={` ${styles.h1Section} text-center md:text-left`}>Inspire, Relax & <span className='gradient1'>Boost your productivity</span></h1>
+            <p className={`  ${styles.h1Paragraph} text-center md:text-left `}>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
         </div>
         <div className={` ${styles.flexBetween} w-full flex-col lg:flex-row gap-6`}>
             {App_Features.map((feature, index) => (
-                <div key={`feature_${index}`} className={`relative ${styles.flexCenter} flex-col  rounded-3xl w-full h-[500px] p-6 text-secondary-color bg_gradient1 gap-6 lg:gap-6`}>
+                <div key={`feature_${index}`} className={`relative ${styles.flexCenter} flex-col  rounded-3xl w-full h-[500px] p-6 bg_gradient1 gap-6 lg:gap-6`}>
                     <div>
                             <Image
                             className='absolute -bottom-5 left-0 -translate-x-1/2  rotateInfinite3 z-0 opacity-25'
@@ -45,13 +50,13 @@ export default function Features() {
                             width={32}
                             height={32}
                             />
-                        </div>
+                    </div>
                     
                     <div className={` ${styles.flexCenter} relative `}>
                         
                         <Image
                         className='h-[150px] mb-4'
-                        src={feature.illustration}
+                        src={ mode == 'light' ? feature.illustration : feature.illustration_dark}
                         alt={feature.illustration}
                         width={250}
                         height={150}
@@ -65,3 +70,5 @@ export default function Features() {
     </div>
   )
 }
+
+export default Features;
