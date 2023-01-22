@@ -1,5 +1,6 @@
 'use client'
 
+import {useState, useEffect} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
@@ -15,6 +16,8 @@ import SolidSvg from './SolidSVG';
 
 const Header = () => {
   const router = useRouter();
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
 
   function openNavMenu() {
     const element = document.getElementById("navMenu");
@@ -23,8 +26,29 @@ const Header = () => {
     }
   }
 
+  useEffect(() => {
+    function handleScroll() {
+      const currentScrollTop = window.pageYOffset;
+      if (currentScrollTop < lastScrollTop) {
+        setIsScrollingUp(false);
+      } else {
+        setIsScrollingUp(true);
+      }
+      setLastScrollTop(currentScrollTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollTop]);
+
   return (
-    <div className={` ${styles.flexBetween} w-full sm:px-7 px-7 h-[10vh] md:h-[10vh] `}>
+    <div
+      className={` ${styles.flexBetween} fixed top-0 w-full sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
+        isScrollingUp ? " h-0" : "h-[10vh]"
+      }`}
+    >
       <Link href="/"><Logo /></Link>
 
       <div className='lg:flex flex-row-reverse gap-8 items-center hidden content-center cursor-pointer'>

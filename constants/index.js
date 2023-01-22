@@ -39,3 +39,57 @@ export const App_Skills = [
     illustration: "/custome_playlist_illustration.png",
   }
 ]
+
+export const Footer_links = [
+  {
+    title: 'Explore',
+    links: [
+      {
+        label: "Home",
+        path: "/",
+      },
+      {
+        label: "Player",
+        path: "/player",
+      },
+    ]
+  },
+  {
+    title: 'Quick links',
+    links: [
+      {
+        label: "About",
+        path: "/about",
+      },
+      {
+        label: "Benefits",
+        path: "#skills",
+      },
+      {
+        label: "Features",
+        path: "#features",
+      },
+    ]
+  },
+  {
+    title: 'Developer',
+    links: [
+      {
+        label: "Twitter",
+        path: "https://twitter.com/EA_Krowl",
+      },
+      {
+        label: "LinkedIn",
+        path: "https://www.linkedin.com/in/elattar-ayoub-22469320b/",
+      },
+      {
+        label: "Github",
+        path: "https://github.com/ELATTAR-Ayoub",
+      },
+      {
+        label: "Email",
+        path: "mailto:elattarayoub000@gmail.com",
+      },
+    ]
+  },
+]

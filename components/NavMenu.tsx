@@ -24,8 +24,8 @@ const Header = () => {
   }
 
   return (
-    <div id='navMenu' className={`absolute flex justify-start items-center flex-col lg:hidden transition-all duration-200 top-0 right-0 bg-primary-color-4 dark:bg-primary-color-83 text-primary-color-83 dark:text-primary-color-4 h-screen w-0 z-30 overflow-hidden`}>
-        <div className={` ${styles.flexBetween} w-full mb-10 p-7 pt-7 activeLink before:opacity-20`}>
+    <div id='navMenu' className={`fixed top-0 right-0 flex justify-start items-center flex-col lg:hidden transition-all duration-200 bg-primary-color-4 dark:bg-primary-color-83 text-primary-color-83 dark:text-primary-color-4 h-screen w-0 z-50 overflow-hidden`}>
+        <div className={` ${styles.flexBetween} w-full mb-10 sm:px-7 px-7 h-[10vh] activeLink before:opacity-20`}>
             <LightModeBtn />
             
             <button onClick={()=> closeNavMenu()} aria-label="close_na_menu" className=''>
@@ -42,7 +42,7 @@ const Header = () => {
 
         <div className=' '>
           <p>Developed with &lt;3 </p>
-          <p>by ELATTAR Ayub</p>
+          <p>by ELATTAR Ayoub</p>
         </div>
     </div>
   );

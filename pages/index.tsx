@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={` relative flex-col h-full gap-28 w-full 2xl:max-w-[1440px] bg-primary-color-4`}>
+      <div id='features' className={` relative flex-col h-full gap-28 w-full 2xl:max-w-[1440px] bg-primary-color-4`}>
         <div className='w-full h-full inset-0 overflow-hidden z-0'>
           <Features mode={'light'}/>
         </div>

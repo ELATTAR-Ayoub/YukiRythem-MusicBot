@@ -23,7 +23,7 @@ const Features: React.FC<HeroProps> = ({ mode = "light" }) => {
     <div id='learn_more' className={` ${mode == 'light' ? 'text-secondary-color bg-primary-color-4' : 'text-primary-color-4 bg-secondary-color'} relative 2xl:max-w-[1440px] w-screen p-8 flex-col gap-16 lg:flex-row overflow-hidden `}>
         <div className={` ${styles.flexStart} w-full flex-col lg:flex-row gap-0 lg:gap-6`}>
             <h1 className={` ${styles.h1Section} text-center md:text-left`}>Inspire, Relax & <span className='gradient1'>Boost your productivity</span></h1>
-            <p className={`  ${styles.h1Paragraph} text-center md:text-left `}>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
+            <p className={`  ${styles.Paragraph} text-center md:text-left `}>{"Discover how YUKIRYTHEM's unique features can help you stay inspired, relaxed, and keep learning as you work."}</p>
         </div>
         <div className={` ${styles.flexBetween} w-full flex-col lg:flex-row gap-6`}>
             {App_Features.map((feature, index) => (
@@ -62,8 +62,8 @@ const Features: React.FC<HeroProps> = ({ mode = "light" }) => {
                         height={150}
                         />
                     </div>
-                    <h2 className=' font-bold text-2xl text-center z-10'>{feature.title}</h2>
-                    <p className=' text-base text-center z-10'>{feature.desc}</p>
+                    <h2 className=' font-bold text-xl md:text-2xl text-center z-10'>{feature.title}</h2>
+                    <p className=' text-sm sm:text-base text-center z-10'>{feature.desc}</p>
                 </div>
             ))}
         </div>

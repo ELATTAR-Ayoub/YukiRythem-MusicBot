@@ -26,8 +26,8 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
       ${styles.flexBetween} relative 2xl:max-w-[1440px] w-screen p-8 flex-col gap-16 lg:flex-row overflow-hidden 
     `} >
     <div className='relative w-full h-full lg:w-2/3 '>
-        <h1 className='z-10 relative text-5xl sm:text-7xl w-full font-bold leading-[65px] sm:leading-[75px] my-6'> <span className='gradient1'>Discover</span> Music and Podcasts like Never Before </h1>
-        <p className='z-10 relative text-base sm:text-xl w-full my-6'>{"The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can't remember the name."}</p>
+        <h1 className='z-10 relative text-5xl sm:text-7xl w-full font-bold leading-[60px] sm:leading-[75px] my-6'> <span className='gradient1'>Discover</span> Music and Podcasts like Never Before </h1>
+        <p className='z-10 relative text-lg sm:text-xl w-full my-6'>{"The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can't remember the name."}</p>
         <div className={`relative ${styles.flexStart} gap-6 flex-col sm:flex-row z-10`}>
             <Link href="/player" className='cta-primary'>Try YUKIRYTHEM now</Link>
             <Link href="#learn_more" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Learn more</Link>

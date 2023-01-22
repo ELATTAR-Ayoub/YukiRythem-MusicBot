@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes';
 
 // components
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import NavMenu from '../components/NavMenu'
 
 // redux
@@ -21,9 +22,10 @@ const MyApp = ({Component, pageProps, ...rest}) => {
             <div className={`${styles.innerWidth} flex justify-center items-center w-full h-full flex-col relative`} >
               <Header/>
               <NavMenu/>
-              <div className={`2xl:max-w-[1440px] w-full `}>
+              <div className={`2xl:max-w-[1440px] w-full mt-[10vh] `}>
                 <Component {...pageProps} />
               </div>
+              <Footer/>
             </div>
           </div>
         </Provider>

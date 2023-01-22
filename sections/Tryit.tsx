@@ -60,10 +60,10 @@ const Tryit = () => {
     <div ref={wavesContainer} className={`${styles.flexCenter} relative w-full lg:h-[700px] p-8 pb-0 flex-col gap-16 overflow-hidden `} >
         <div className={`${styles.flexCenter} flex-col relative w-full lg:w-1/2 `} >
             <h1 className={` ${styles.h1Section} text-primary-color-77 dark:text-primary-color-53 text-center mb-0`}>Try the app now</h1>
-            <p className={`  ${styles.h1Paragraph} text-center text-lg`}>
+            <p className={`  ${styles.Paragraph} text-center text-lg`}>
                 Live on <Link href={'/player'} className={` text-primary-color-77 font-bold underline`}>YukiRythem/player</Link>
             </p>
-            <p className={`  ${styles.h1Paragraph} text-center`}>The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can&apos;t remember the name.</p>
+            <p className={`  ${styles.Paragraph} text-center`}>The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can&apos;t remember the name.</p>
             <Link href={'/player'} className='cta-primary'>Try YUKIRYTHEM now</Link>
         </div>
 
