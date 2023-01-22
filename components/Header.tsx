@@ -45,7 +45,7 @@ const Header = () => {
 
   return (
     <div
-      className={` ${styles.flexBetween} fixed top-0 w-full sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
+      className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
         isScrollingUp ? " h-0" : "h-[10vh]"
       }`}
     >
