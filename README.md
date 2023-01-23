@@ -1,38 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# YUKIRYTHEM
 
-## Getting Started
+YUKIRYTHEM is an AI-powered music and podcast bot that makes it easy to search and listen to your favorite songs and podcasts, even if you can't remember the name. The app uses advanced AI algorithms to provide accurate and efficient results for your music and podcast searches. 
 
-First, run the development server:
+![YUKIRYTHEM app screenshot](https://i.imgur.com/jpPWHHQ.png) ![YUKIRYTHEM app screenshot](https://i.imgur.com/lmuPkAC.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
+- AI-powered search engine
+- YouTube URL support
+- Responsive UI for all devices
+- Personalized playlists
+- Multi-language support
+- User-friendly interface
+- Light/Dark mode
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies
+- Next.js
+- Tailwind
+- TypeScript
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
+1. Clone the repository: `git clone https://github.com/ELATTAR-Ayoub/YukiRythem---Nextjs`
+2. Install the dependencies: `npm install`
+3. Start the development server: `npm run dev`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Contributions
+We welcome contributions to YUKIRYTHEM. If you have an idea for a new feature or have found a bug, please open an issue or submit a pull request.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## License
+YUKIRYTHEM is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contact
+If you have any questions or feedback, please reach out to us at [yukirythem@app.com](mailto:yukirythem@app.com)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Acknowledgments
+Thanks to the community for their support and contributions.
