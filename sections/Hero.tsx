@@ -2,14 +2,16 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
 
 // styles
 import styles from '../styles';
-import stylescss from '../styles/page.module.css';
 
 // /componenets
 import SolidSvg from '@/components/SolidSVG';
+
+// motion
+import { motion } from 'framer-motion';
+import { fadeIn, slideIn, slideInRotating, staggerContainer, textVariant } from '../utils/motion';
 
 interface HeroProps {
   mode: 'light' | 'dark',
@@ -19,24 +21,45 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
   
   return (
-    <div ref={ref} className={` ${mode == 'light' ?
+    <motion.div ref={ref}
+    variants={staggerContainer}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: false, amount: 0.25 }}
+    className={` ${mode == 'light' ?
      'text-secondary-color bg-primary-color-4' : 
      'text-primary-color-4 bg-secondary-color'
     } 
       ${styles.flexBetween} relative 2xl:max-w-[1440px] w-screen p-8 flex-col gap-16 lg:flex-row overflow-hidden 
     `} >
-    <div className='relative w-full h-full lg:w-2/3 '>
-        <h1 className='z-10 relative text-5xl sm:text-7xl w-full font-bold leading-[60px] sm:leading-[75px] my-6'> <span className='gradient1'>Discover</span> Music and Podcasts like Never Before </h1>
-        <p className='z-10 relative text-lg sm:text-xl w-full my-6'>{"The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can't remember the name."}</p>
-        <div className={`relative ${styles.flexStart} gap-6 flex-col sm:flex-row z-10`}>
+
+    <motion.div 
+        className='relative w-full h-full lg:w-2/3 '>
+        <motion.h1
+          variants={textVariant(0.7)}
+         className='z-10 relative text-5xl sm:text-7xl w-full font-bold leading-[60px] sm:leading-[75px] my-6'> <span className='gradient1'>Discover</span> Music and Podcasts like Never Before </motion.h1>
+        <motion.p
+        variants={textVariant(0.8)}
+        className='z-10 relative text-lg sm:text-xl w-full my-6'>{"The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can't remember the name."}</motion.p>
+        <motion.div 
+        variants={fadeIn('left', 'spring', 0.5, 2)}
+        className={`relative ${styles.flexStart} gap-6 flex-col sm:flex-row z-10`}>
             <Link href="/player" className='cta-primary'>Try YUKIRYTHEM now</Link>
             <Link href="#learn_more" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Learn more</Link>
-        </div>
-        <div className='absolute right-0 top-1/2 -translate-x-1/2 z-0 rotateInfinite'>
+        </motion.div>
+        
+        <motion.div
+        variants={slideInRotating('left', 'spring', 0, 2)}
+        className='absolute right-0 top-1/2 '>
+          
           <SolidSvg width={'92px'} height={'92px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/triangle.svg'} />
-        </div>
-    </div>
-    <div className='relative w-screen lg:w-2/3 lg:left-12 xl:left-0'>
+        
+        </motion.div>
+    </motion.div>
+
+    <motion.div 
+    variants={slideIn('left', 'spring', 0, 1.3)}
+    className='relative w-screen lg:w-2/3 lg:left-12 xl:left-0'>
         <Image
         className={`${mode == 'light' ? ' ' : 'b_and_w'} w-full`}
         src="/hero_picture.jpg"
@@ -45,11 +68,11 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
         height={500}
         />
 
-        <div className='absolute left-2/3 -top-8 -translate-x-1/2 rotateInfinite delay-500 z-20'>
+        <div className='absolute left-2/3 -top-2 -translate-x-1/2 rotateInfinite delay-500 z-20'>
           <SolidSvg width={'92px'} height={'92px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/triangle_empty.svg'} />
         </div>
-    </div>
-</div>
+    </motion.div>
+</motion.div>
   )
 }
 

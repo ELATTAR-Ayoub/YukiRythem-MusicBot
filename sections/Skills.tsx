@@ -2,17 +2,16 @@
 
 import {useState, useRef} from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 // styles
 import styles from '../styles';
-import stylescss from '../styles/page.module.css';
-
-// /componenets
-import SolidSvg from '@/components/SolidSVG';
 
 // constant
 import { App_Skills } from '../constants';
+
+// motion
+import { motion } from 'framer-motion';
+import { fadeIn, slideIn, staggerContainer, textVariant } from '../utils/motion';
 
 
 const Skills = () => {
@@ -57,12 +56,24 @@ const Skills = () => {
     }
 
   return (
-    <div id='skills' className={`${styles.flexCenter} lg:justify-between relative w-full lg:h-[700px] p-8 lg:px-0 flex-col gap-16 lg:flex-row-reverse overflow-hidden transition-all duration-300 `} >
+    <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.25 }}
+        id='skills' className={`${styles.flexCenter} lg:justify-between relative w-full lg:h-[700px] p-8 lg:px-0 flex-col gap-16 lg:flex-row-reverse overflow-hidden transition-all duration-300 `} >
+        
         <div ref={label_section} className={` ${styles.flexCenter} flex-col lg:pl-12 h-64 lg:h-[700px] lg:w-96 lg:border-l border-secondary-color dark:border-primary-color-4`}>
-            <h1 className={` ${styles.h1Section} text-primary-color-77 dark:text-primary-color-53 text-center md:text-right`}>{App_Skills[indexSkills].title}</h1>
-            <p className={`  ${styles.Paragraph} text-center md:text-right `}>{App_Skills[indexSkills].desc}</p>
+            <motion.h1 
+            variants={textVariant(0.7)}
+            className={` ${styles.h1Section} text-primary-color-77 dark:text-primary-color-53 text-center md:text-right`}>{App_Skills[indexSkills].title}</motion.h1>
+            <motion.p 
+            variants={textVariant(0.8)}
+            className={`  ${styles.Paragraph} text-center md:text-right `}>{App_Skills[indexSkills].desc}</motion.p>
         </div>
-        <div className={` ${styles.flexCenter} overflow-hidden `}>
+        <motion.div 
+        variants={slideIn('left', 'spring', 0, 1.3)}
+        className={` ${styles.flexCenter} overflow-hidden `}>
             <Image
             ref={img_section}
             className=' relative transition-all duration-1000'
@@ -71,16 +82,19 @@ const Skills = () => {
             width={500}
             height={500}
             />
-        </div>
-        <div ref={number_section} className={` ${styles.flexBetween} w-screen lg:w-36 lg:h-full border-y border-y-secondary-color dark:border-y-primary-color-4 lg:flex-col`}>
+        </motion.div>
+
+        <motion.div
+        variants={fadeIn('left', 'tween', 0.5, 1)}
+        ref={number_section} className={` ${styles.flexBetween} w-screen lg:w-36 lg:h-full border-y border-y-secondary-color dark:border-y-primary-color-4 lg:flex-col`}>
             {numbers.map((number, index) => (
                 <button onClick={() => {handleClick(index)}} className=' w-1/3 lg:w-full p-8 h-32 lg:h-1/3 text-6xl transition-all duration-300 border border-secondary-color dark:border-primary-color-4 hover:bg-primary-color-77 skills_btn' key={number}>
                     <p className={` ${indexSkills == index ? ' text-primary-color-53 dark:text-primary-color-77' : ' '} dark:text-primary-color-4 text-secondary-color`}>{`0${number}`}</p>
                 </button>
             ))}
-        </div>
+        </motion.div>
         
-    </div>
+    </motion.div>
   )
 }
 

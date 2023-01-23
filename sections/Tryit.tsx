@@ -14,6 +14,10 @@ import SolidSvg from '@/components/SolidSVG';
 // constant
 import { App_Skills } from '../constants';
 
+// motion
+import { motion } from 'framer-motion';
+import { fadeIn, slideIn, staggerContainer, textVariant } from '../utils/motion';
+
 
 const Tryit = () => {
   const vpRefs = useRef<(HTMLDivElement)[]>([]);
@@ -57,24 +61,43 @@ const Tryit = () => {
   }, []);
 
   return (
-    <div ref={wavesContainer} className={`${styles.flexCenter} relative w-full lg:h-[700px] p-8 pb-0 flex-col gap-16 overflow-hidden `} >
+    <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.25 }}
+        ref={wavesContainer} className={`${styles.flexCenter} relative w-full lg:h-[700px] p-8 pb-0 flex-col gap-16 overflow-hidden `} >
+        
         <div className={`${styles.flexCenter} flex-col relative w-full lg:w-1/2 `} >
-            <h1 className={` ${styles.h1Section} text-primary-color-77 dark:text-primary-color-53 text-center mb-0`}>Try the app now</h1>
-            <p className={`  ${styles.Paragraph} text-center text-lg`}>
+            <motion.h1 
+            variants={textVariant(0.7)} className={` ${styles.h1Section} text-primary-color-77 dark:text-primary-color-53 text-center mb-0`}>Try the app now</motion.h1 >
+            <motion.p 
+            variants={textVariant(0.8)}
+            className={`  ${styles.Paragraph} text-center text-lg`}>
                 Live on <Link href={'/player'} className={` text-primary-color-77 font-bold underline`}>YukiRythem/player</Link>
-            </p>
-            <p className={`  ${styles.Paragraph} text-center`}>The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can&apos;t remember the name.</p>
-            <Link href={'/player'} className='cta-primary'>Try YUKIRYTHEM now</Link>
+            </motion.p>
+            <motion.p
+            variants={textVariant(0.8)}
+            className={`  ${styles.Paragraph} text-center`}>The ultimate music and podcast bot that makes it easy to search and listen to your favourite songs and podcasts, even if you can&apos;t remember the name.</motion.p>
+            
+            <motion.button 
+            variants={textVariant(1)}
+            className='cta-primary'>
+              <Link href={'/player'} >Try YUKIRYTHEM now</Link>
+            </motion.button>
+            
         </div>
 
-        <div className=' h-full overflow-hidden'>
+        <motion.div
+        variants={fadeIn('down', 'spring', 0, 1.3)}
+        className=' h-full overflow-hidden'>
           {Array.from({length: 70}, (_, i) => (
             <div className=' inline-block py-0 px-2' key={i} >
               <div className=' w-3 rounded-t-sm absolute bottom-0 bg_gradient1 bg-cover bg-center bg-fixed' ref={(el) => el && (vpRefs.current[i] = el)}></div>
             </div>
           ))}
-        </div>
-    </div>
+        </motion.div>
+    </motion.div>
   )
 }
 

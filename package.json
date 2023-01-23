@@ -18,6 +18,7 @@
     "@types/tailwindcss": "^3.1.0",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.2",
+    "framer-motion": "^8.5.0",
     "next": "13.1.2",
     "next-redux-wrapper": "^8.1.0",
     "next-themes": "^0.2.1",
@@ -25,12 +26,9 @@
     "react-dom": "18.2.0",
     "react-player": "^2.11.0",
     "react-redux": "^8.0.5",
-    "react-wavesurfer.js": "^0.0.8",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
     "typescript": "4.9.4",
-    "wavesurfer-react": "^2.2.2",
-    "wavesurfer.js": "^6.4.0",
     "ytdl-core": "^4.11.2"
   },
   "devDependencies": {

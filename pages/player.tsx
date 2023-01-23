@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 // components
-import WaveSurferComp from '../components/waveSurfer'
 import NativeVideo from '../components/NativeVideo';
 import Loader from '@/components/loader';
 import SolidSvg from '@/components/SolidSVG';
@@ -177,7 +176,6 @@ export default function Home() {
 
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color dark:bg-primary-color-4 p-8  rounded-t-[35px] w-full h-[333px]`}>
                 <div className=' w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
-                    {/* {<WaveSurferComp />} */}
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}
                 </div>
                 <div className='w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
