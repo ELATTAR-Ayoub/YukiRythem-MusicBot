@@ -16,14 +16,26 @@ import SolidSvg from './SolidSVG';
 // constants
 import {Footer_links} from '../constants/index'
 
+// motion
+import { motion } from 'framer-motion';
+import { fadeIn, slideIn, staggerContainer, textVariant } from '../utils/motion';
+
 
 const Header = () => {
   const router = useRouter();
 
   return (
     <div className={` ${styles.flexCenter} flex-col w-screen bg-[#121212]`}>
-        <div className={` ${styles.flexStart} p-8 flex-col gap-16 2xl:max-w-[1440px] w-full lg:flex-row `}>
-            <div className={` w-full lg:w-1/4 my-6`}>
+        <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.25 }} 
+        className={` ${styles.flexStart} p-8 flex-col gap-16 2xl:max-w-[1440px] w-full lg:flex-row `}>
+
+            <motion.div 
+            variants={fadeIn('right', 'spring', 0, 0.8)}
+            className={` w-full lg:w-1/4 my-6`}>
                 <Link href="/">
 
                 <svg className='w-[100px] h-[30px] object-contain relative' width="77" height="15" viewBox="0 0 77 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,25 +44,31 @@ const Header = () => {
                 </svg>
                     
                 </Link>
-            </div>
+            </motion.div>
+
             <div className={`${styles.flexStart} flex-col lg:flex-row w-full gap-16`}>
                 {Footer_links.map((footer_link, index) => (
-                <div key={`${Footer_links}_${index}`} className={`${styles.flexStart} flex-col`}>
+                <motion.div
+                variants={fadeIn('right', 'spring', (0.5 * (index + 1)), 1)}
+                key={`${Footer_links}_${index}`} className={`${styles.flexStart} flex-col`}>
                     <h3 className=' text-lg font-bold text-primary-color-77 my-6'>{footer_link.title}</h3>
                     {footer_link.links.map(({ label, path }) => (
                         <Link className=' text-sm text-secondary-color my-3 transition-all duration-300 hover:underline' key={label} href={path}>
                             {label}
                         </Link>
                     ))}
-                </div>
+                </motion.div>
                 ))}
             </div>
-            <div className={` w-full lg:w-full`}>
+
+            <motion.div 
+            variants={fadeIn('right', 'spring', 0, 0.8)}
+            className={` w-full lg:w-full`}>
                 <p className='text-base text-secondary-color my-6'>Thank you for choosing YUKIRYTHEM! We hope you enjoy using our app to enhance your productivity, stay inspired, and discover new music and podcasts. We&apos;re constantly working to improve the app and add new features, so please don&apos;t hesitate to reach out to us with any feedback or suggestions.</p>
                 <p className='text-base text-secondary-color my-3 mb-12'>Developed with &lt;3 by ELATTAR Ayoub.</p>
                 <p className=' opacity-70 text-base text-secondary-color text-center'>Copyright &#169; 2023 YUKIRYTHEM</p>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
         
     </div>
   );
