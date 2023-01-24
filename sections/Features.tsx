@@ -28,7 +28,7 @@ const Features: React.FC<HeroProps> = () => {
 
 
   return (
-    <motion.div id='learn_more'
+    <motion.section id='learn_more'
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -86,7 +86,7 @@ const Features: React.FC<HeroProps> = () => {
                 </motion.div>
             ))}
         </div>
-    </motion.div>
+    </motion.section>
   )
 }
 

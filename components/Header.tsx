@@ -44,7 +44,7 @@ const Header = () => {
   }, [lastScrollTop]);
 
   return (
-    <div
+    <section
       className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
         isScrollingUp ? " h-0" : "h-[10vh]"
       }`}
@@ -69,7 +69,7 @@ const Header = () => {
           <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B'} color={'#DAE3E5'} path={'/navMenu.svg'} />
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

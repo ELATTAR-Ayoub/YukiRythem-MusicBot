@@ -56,7 +56,7 @@ const Skills = () => {
     }
 
   return (
-    <motion.div
+    <motion.section
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -94,7 +94,7 @@ const Skills = () => {
             ))}
         </motion.div>
         
-    </motion.div>
+    </motion.section>
   )
 }
 

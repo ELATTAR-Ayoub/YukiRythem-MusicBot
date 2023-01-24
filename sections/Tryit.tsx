@@ -61,7 +61,7 @@ const Tryit = () => {
   }, []);
 
   return (
-    <motion.div 
+    <motion.section 
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
@@ -97,7 +97,7 @@ const Tryit = () => {
             </div>
           ))}
         </motion.div>
-    </motion.div>
+    </motion.section>
   )
 }
 

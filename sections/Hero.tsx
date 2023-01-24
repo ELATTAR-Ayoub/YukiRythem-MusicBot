@@ -21,7 +21,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
   
   return (
-    <motion.div ref={ref}
+    <motion.section ref={ref}
     variants={staggerContainer}
     initial="hidden"
     whileInView="show"
@@ -72,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
           <SolidSvg width={'92px'} height={'92px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/triangle_empty.svg'} />
         </div>
     </motion.div>
-</motion.div>
+</motion.section>
   )
 }
 

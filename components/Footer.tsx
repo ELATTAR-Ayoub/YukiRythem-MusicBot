@@ -25,7 +25,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <div className={` ${styles.flexCenter} flex-col w-screen bg-[#121212]`}>
+    <section className={` ${styles.flexCenter} flex-col w-screen bg-[#121212]`}>
         <motion.div
         variants={staggerContainer}
         initial="hidden"
@@ -70,7 +70,7 @@ const Header = () => {
             </motion.div>
         </motion.div>
         
-    </div>
+    </section>
   );
 };
 
