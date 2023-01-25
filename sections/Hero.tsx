@@ -45,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
         variants={fadeIn('left', 'spring', 0.5, 2)}
         className={`relative ${styles.flexStart} gap-6 flex-col sm:flex-row z-10`}>
             <Link href="/player" className='cta-primary'>Try YUKIRYTHEM now</Link>
-            <Link href="#learn_more" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Learn more</Link>
+            <Link href="/login" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Login for free</Link>
         </motion.div>
         
         <motion.div

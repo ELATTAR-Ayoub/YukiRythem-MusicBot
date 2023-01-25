@@ -55,7 +55,7 @@ export const musicSlice = createSlice({
     },
 
     DELETE_ITEM(state, action) {
-      const index = state.musicState.findIndex(item => item.ID === action.payload.ID);
+      const index = state.musicState.findIndex(item => item.ID === action.payload);
       if (index === -1) return state;
     
       const newMusicState = [...state.musicState];
@@ -88,6 +88,13 @@ export const musicSlice = createSlice({
       };
     },
 
+    SET_CURRENT(state, action) {
+      return {
+        ...state,
+        currentMusic: action.payload,
+      };
+    },
+
     SET_PLAYING(state, action) {
       return {
         ...state,
@@ -108,7 +115,7 @@ export const musicSlice = createSlice({
     }, */
 });
 
-export const { setMusicState, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } = musicSlice.actions;
+export const { setMusicState, SET_CURRENT, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } = musicSlice.actions;
 
 export const selectMusicState = (state: AppState) => state.music.musicState;
 

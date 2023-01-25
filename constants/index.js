@@ -52,6 +52,10 @@ export const Footer_links = [
         label: "Player",
         path: "/player",
       },
+      {
+        label: "Log in",
+        path: "/login",
+      },
     ]
   },
   {

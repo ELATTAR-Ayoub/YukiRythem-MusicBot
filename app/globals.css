@@ -124,6 +124,10 @@ body {
   @apply text-secondary-color bg-primary-color-4 border-primary-color-4 hover:bg-transparent hover:border hover:text-primary-color-4 ;
 }
 
+.btn-rounded-primary {
+  @apply rounded-full bg-primary-color-77 dark:bg-primary-color-53 hover:bg-primary-color-53 dark:hover:bg-primary-color-77 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
+}
+
 .gradient1 {
   background: linear-gradient(107.05deg, #9747FF 5.04%, #507DBC 68.89%) 150% 50%;
   background-size: 400% 400%;
@@ -143,6 +147,10 @@ body {
   background: linear-gradient(107.05deg, hsla(266, 100%, 64%) 5.04%, hsla(215, 45%, 53%) 68.89%) 150% 50%;
   background-size: 400% 400%;
   animation: radiant-animation 5s ease-in-out infinite;
+}
+
+.list-opener:focus ul {
+  display: block;
 }
 
 .rotateInfinite {
@@ -198,6 +206,11 @@ body {
 }
 
 /*styling the seek bar of the music in the player*/
+
+.player_input {
+  @apply transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2 dark:bg-primary-color-4;
+}
+
 input[type=range] {
   height: 25px;
   -webkit-appearance: none;
