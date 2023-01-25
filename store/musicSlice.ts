@@ -38,7 +38,7 @@ const initialState: MusicState = {
 
 // Actual Slice
 export const musicSlice = createSlice({
-  name: "music",
+  name: 'music',
   initialState,
   reducers: {
 
@@ -98,14 +98,14 @@ export const musicSlice = createSlice({
 
   },
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
-    extraReducers: {
+    /* extraReducers: {
       [HYDRATE]: (state: MusicState, action: { type: typeof HYDRATE, payload: { music: MusicState } }) => {
         return {
           ...state,
           ...action.payload.music,
         };
       },
-    },
+    }, */
 });
 
 export const { setMusicState, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } = musicSlice.actions;

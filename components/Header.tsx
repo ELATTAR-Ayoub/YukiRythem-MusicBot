@@ -1,9 +1,7 @@
-'use client'
-
 import {useState, useEffect} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter, usePathname } from 'next/navigation'
 
 // styles
 import styles from '../styles/index';
@@ -43,6 +41,8 @@ const Header = () => {
     };
   }, [lastScrollTop]);
 
+  const pathname = usePathname();
+
   return (
     <section
       className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
@@ -55,10 +55,10 @@ const Header = () => {
         <LightModeBtn />
         <ul className='flex items-center gap-4 list-none text-primary-color-83 dark:text-primary-color-53'>
           <li>
-            <Link href="/" className={`${router.pathname === '/' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Home</Link>
+            <Link href="/" className={`${pathname === '/' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Home</Link>
           </li>
           <li >
-            <Link href="/player" className={`${router.pathname === '/player' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
+            <Link href="/player" className={`${pathname === '/player' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
           </li>
         </ul>
       </div>
