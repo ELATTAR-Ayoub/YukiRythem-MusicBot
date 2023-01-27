@@ -210,7 +210,7 @@ export default function Page() {
             </div>
         </div>
 
-        <div id='music_list_popup' className='fixed bottom-0 h-0 w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] rounded-t-lg z-30 transition-all duration-300'>
+        <div id='music_list_popup' className='fixed bottom-0 h-0 overflow-hidden w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] rounded-t-lg z-30 transition-all duration-300'>
             <MusicList />
         </div>
         
