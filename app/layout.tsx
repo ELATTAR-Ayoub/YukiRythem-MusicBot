@@ -21,7 +21,7 @@ export default function RootLayout({children, ...rest}: { children: React.ReactN
           <Provider store={store_0001}>
             <Header/>
             <NavMenu/>
-            <div className={`flex justify-center 2xl:max-w-[1440px] w-full mt-[10vh] text-secondary-color dark:text-primary-color-4 `}>
+            <div className={` 2xl:max-w-[1440px] w-full mt-[10vh] text-secondary-color dark:text-primary-color-4 `}>
               {children}
             </div>
             <Footer/>

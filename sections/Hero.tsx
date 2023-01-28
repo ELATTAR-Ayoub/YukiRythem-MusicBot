@@ -25,7 +25,7 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
     variants={staggerContainer}
     initial="hidden"
     whileInView="show"
-    viewport={{ once: false, amount: 0.25 }}
+    viewport={{ once: (mode == 'dark' ? true : false), amount: 0.25 }}
     className={` ${mode == 'light' ?
      'text-secondary-color bg-primary-color-4' : 
      'text-primary-color-4 bg-secondary-color'
