@@ -16,6 +16,7 @@ module.exports = {
         'primary-color-53': '#507DBC',
         'primary-color-77': '#A1C6EA',
         'primary-color-83': '#BBD1EA',
+        'danger-color': '#FF4343',
       },
       transitionTimingFunction: {
         'out-flex': 'cubic-bezier(0.05, 0.6, 0.4, 0.9)',

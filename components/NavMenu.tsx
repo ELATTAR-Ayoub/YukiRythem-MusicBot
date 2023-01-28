@@ -33,6 +33,7 @@ const Header = () => {
         <nav className={` ${styles.flexStart} flex-col w-full gap-6 text-xl p-7 `}>
             <Link href="/" className={`${pathname === '/' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Home</Link>
             <Link href="/player" className={`${pathname === '/player' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
+            <Link href="/signin" className={`${pathname === '/signin' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
         </nav>
       
         

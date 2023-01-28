@@ -104,7 +104,9 @@ const MusicList = () => {
       <div className={`relative ${styles.flexStart} gap-4 flex-col w-full h-full overflow-y-auto `}>
         {musicState.map((musicStateSimble, index) => (
             <div key={musicStateSimble.ID} className={`relative grid grid-cols-[84px_1fr_118px] sm:grid-cols-[96px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
-                <img className='' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
+                <div className='h-full'>
+                  <img className='w-full bg-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
+                </div>
                 <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
                 <div className={`relative ${styles.flexCenter} gap-4`}>
                   <div className='grid content-center btn-rounded-primary'>
