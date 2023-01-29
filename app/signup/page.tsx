@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -16,6 +15,7 @@ import stylescss from '../../styles/page.module.css';
 
 // route
 import { useRouter } from 'next/navigation';
+import { Avatar } from '@nextui-org/react';
 
 export default function Page() {
   const { user, signup } = useAuth()
@@ -23,11 +23,11 @@ export default function Page() {
 
   // inputs
   const [userAvatar, setUserAvatar] = useState('https://api.dicebear.com/5.x/lorelei/svg?seed=A');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordre, setPasswordre] = useState('');
-  const [gender, setGender] = useState('');
+  const [name, setName] = useState('elattar');
+  const [email, setEmail] = useState('elattarayoub000@gmail.com');
+  const [password, setPassword] = useState('asa123A');
+  const [passwordre, setPasswordre] = useState('asa123A');
+  const [gender, setGender] = useState('male');
   const [marketingEmails, setMarketingEmails] = useState(false);
   const [shareData, setShareData] = useState(false);
 
@@ -60,7 +60,7 @@ export default function Page() {
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-    if (event.target.value.length < 5 || event.target.value.length > 30 || !event.target.value.match(/[A-Z]/) || !event.target.value.match(/[a-z]/) || !event.target.value.match(/[0-9]/)) {
+    if (event.target.value.length < 6 || event.target.value.length > 30 || !event.target.value.match(/[A-Z]/) || !event.target.value.match(/[a-z]/) || !event.target.value.match(/[0-9]/)) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
@@ -81,9 +81,9 @@ export default function Page() {
     console.log('start');
 
     try {
-      await signup(email, password);
-      console.log('signed up');
-      router.push('/')
+      await signup(email, password, userAvatar, name, gender, marketingEmails, shareData);
+      console.log('signed in');
+      router.push(`/profile/${user.uid}`)
     } catch (err) {
       console.log(err)
       console.log('err up');
@@ -214,17 +214,17 @@ export default function Page() {
               </label>
               <label className={` ${styles.flexCenter} relative font-normal gap-4`}>
                 <input type="checkbox" className='w-4 h-4' value={'true'} onChange={e => setShareData(Boolean(e.target.value))} />
-                Share my registration data with YukiRythem's content providers for marketing purposes.
+                {"Share my registration data with YukiRythem's content providers for marketing purposes."}
               </label>
             </div>
 
 
             <div className={` relative ${styles.flexStart} flex-col w-3/4 gap-4 text-center text-xs dark:text-primary-color-4 text-secondary-color `}>
               <p>
-                By clicking on sign-up, you agree to  YukiRythem's <Link href={'/legal/end-user-agreement/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'>Terms and Conditions of Use</Link>.
+                {"By clicking on sign-up, you agree to  YukiRythem's"} <Link href={'/legal/end-user-agreement/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'>Terms and Conditions of Use</Link>.
               </p>
               <p>
-                To learn more about how  YukiRythem collects, uses, shares and protects your personal data, please see <Link href={'/legal/privacy-policy/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'> YukiRythem's Privacy Policy</Link>.
+                {"To learn more about how  YukiRythem collects, uses, shares and protects your personal data, please see"} <Link href={'/legal/privacy-policy/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'> {"YukiRythem's Privacy Policy"}</Link>.
               </p>
             </div>
 

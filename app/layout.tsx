@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 
 export default function RootLayout({children, ...rest}: { children: React.ReactNode }) {
 
-  const noAuthRequired = ['/', '/player', '/login', '/signup', '/collections', '/profile', '/legal']
+  const AuthRequired = ['/collections/create', '/profile/update', ]
 
   return (
     <html lang="en">

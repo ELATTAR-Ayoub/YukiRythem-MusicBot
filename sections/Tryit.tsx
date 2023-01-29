@@ -24,8 +24,8 @@ const Tryit = () => {
   const wavesContainer = useRef<HTMLDivElement>(null);
 
   function getHeight() {
-    console.log( 'document.body.scrollHeight');
-    console.log( document.body.scrollHeight);
+    /* console.log( 'document.body.scrollHeight');
+    console.log( document.body.scrollHeight); */
     
     let containerHeight = wavesContainer.current!.offsetHeight;
     let limit = containerHeight / 8;
@@ -36,8 +36,8 @@ const Tryit = () => {
   
   function equalizer(bar:HTMLDivElement) {
     var height = getHeight();
-    console.log('height');
-    console.log(height);
+    // console.log('height');
+    // console.log(height);
     
     var timing = height * 5;
     bar.animate(
@@ -58,7 +58,7 @@ const Tryit = () => {
     vpRefs.current.forEach((vpRefs) => {
       equalizer(vpRefs);
     });
-  }, []);
+  }, );
 
   return (
     <motion.section 

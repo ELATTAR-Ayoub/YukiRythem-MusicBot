@@ -61,7 +61,7 @@ const Skills = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: false, amount: 0.25 }}
-        id='skills' className={`${styles.flexCenter} lg:justify-between relative w-full lg:h-[700px] p-8 lg:px-0 flex-col gap-16 lg:flex-row-reverse overflow-hidden transition-all duration-300 `} >
+        id='skills' className={`${styles.flexCenter} p-8 lg:justify-between  relative w-full lg:h-[700px] flex-col gap-16 lg:flex-row-reverse overflow-hidden transition-all duration-300 `} >
         
         <div ref={label_section} className={` ${styles.flexCenter} flex-col lg:pl-12 h-64 lg:h-[700px] lg:w-96 lg:border-l border-secondary-color dark:border-primary-color-4`}>
             <motion.h1 

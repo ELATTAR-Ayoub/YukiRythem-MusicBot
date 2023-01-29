@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -56,7 +55,8 @@ export default function Page() {
     try {
       await signin(email, password);
       console.log('signed in');
-      router.push('/')
+      console.log(user);
+      router.push(`/profile/${user.ID}`)
     } catch (err) {
       console.log(err)
       console.log('err in');
@@ -98,7 +98,7 @@ export default function Page() {
                     <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
                     {emailError && (
                         <p className=' text-danger-color font-normal mt-2' >
-                            Email address already is incorrect.
+                            Email address is in incorrect form.
                         </p>
                     )}
                 </label>
@@ -132,7 +132,7 @@ export default function Page() {
 
         <div className={` relative ${styles.flexCenter} flex-col w-full gap-4 text-center dark:text-primary-color-4 text-secondary-color `}>
             <p>
-            Don't have an account? <Link href={'/signup'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77 transition-all duration-300'>sign up</Link>.
+                {"Don't have an account?"} <Link href={'/signup'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77 transition-all duration-300'>sign up</Link>.
             </p>
         </div>
     </div>
