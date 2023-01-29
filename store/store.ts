@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { useDispatch } from 'react-redux';
 import musicSlice from './musicSlice';
+import userSlice from './userSlice';
 
 const store = configureStore({
   reducer: {
     music: musicSlice,
+    user: userSlice,
   },
 });
 

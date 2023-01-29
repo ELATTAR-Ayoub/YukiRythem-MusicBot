@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -6,12 +7,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from "next-themes";
 
+// auth
+import { useAuth } from '@/context/AuthContext'
+
 // styles
 import styles from '../../styles';
 import stylescss from '../../styles/page.module.css';
 
-export default function Page() {
+// route
+import { useRouter } from 'next/navigation';
 
+export default function Page() {
+    const { user, signin } = useAuth()
+    const router = useRouter();
 
   // inputs
   const [name, setName] = useState('');
@@ -41,12 +49,24 @@ export default function Page() {
   }
 
 
-  const signin = () => {
+  const signinEmail = async (event: React.MouseEvent<HTMLButtonElement>  | React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log('start');
 
+    try {
+      await signin(email, password);
+      console.log('signed in');
+      router.push('/')
+    } catch (err) {
+      console.log(err)
+      console.log('err in');
+    }
+
+    console.log('finished in');
   }
 
   return (
-    <div className={`${styles.flexCenter} flex-col  text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
+    <section className={`${styles.flexCenter} flex-col  text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
       <div className={`${styles.flexCenter} flex-col w-full sm:max-w-[675px]  p-8 gap-8 mb-6 `}>
         <div className={`${styles.flexStart} relative w-full flex-col`}>
             <h1 className={` ${styles.h1Section} text-center mb-0`}>Welcome back to <span className='gradient1'>YukiRythem</span>  </h1>
@@ -70,40 +90,41 @@ export default function Page() {
             <div className='w-full h-[2px] bg-secondary-color dark:bg-primary-color-4 rounded-xl'></div>
         </div>
 
-        <form onSubmit={signin} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
+        <form onSubmit={signinEmail} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
             
             <div className={`${styles.flexCenter} flex-col relative w-full gap-4`}>
-            <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email:</span>
-                <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
-                {emailError && (
-                    <p className=' text-danger-color font-normal mt-2' >
-                        Email address already in use or not valid.
-                    </p>
-                )}
-            </label>
-            <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password:</span>
-                <input required type="password" className='player_input' value={password} onChange={handlePasswordChange} />
-                {passwordError && (
-                    <>
+                <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
+                    <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email</span>
+                    <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
+                    {emailError && (
                         <p className=' text-danger-color font-normal mt-2' >
-                            Passowrd must be between 5 and 30 characters.
+                            Email address already is incorrect.
                         </p>
-                        <p className=' text-danger-color font-normal mt-2' >
-                            Passowrd must be contain atleast one uppercase and lowercase character.
-                        </p>
-                        <p className=' text-danger-color font-normal mt-2' >
-                            Passowrd must be contain atleast one number.
-                        </p>
-                    </>
-                )}
-            </label>
+                    )}
+                </label>
+                <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
+                    <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password</span>
+                    <input required type="password" className='player_input' value={password} onChange={handlePasswordChange} />
+                    {passwordError && (
+                        <>
+                            <p className=' text-danger-color font-normal mt-2' >
+                                Passowrd must be between 5 and 30 characters.
+                            </p>
+                            <p className=' text-danger-color font-normal mt-2' >
+                                Passowrd must be contain atleast one uppercase and lowercase character.
+                            </p>
+                            <p className=' text-danger-color font-normal mt-2' >
+                                Passowrd must be contain atleast one number.
+                            </p>
+                        </>
+                    )}
+                </label>
+                <Link className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77 transition-all duration-300' href={'/signin/forgot-password'}>I forgot my password</Link>
             </div>
 
 
 
-            <button onClick={() => {signin}} className='cta-primary font-bold'>
+            <button onClick={signinEmail} className='cta-primary font-bold'>
             Sign in now
             </button>
 
@@ -111,10 +132,10 @@ export default function Page() {
 
         <div className={` relative ${styles.flexCenter} flex-col w-full gap-4 text-center dark:text-primary-color-4 text-secondary-color `}>
             <p>
-            Don't have an account? <Link href={'/signup'} className='inline-block underline text-primary-color-77 hover:text-primary-color-53 transition-all duration-300'>sign up</Link>.
+            Don't have an account? <Link href={'/signup'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77 transition-all duration-300'>sign up</Link>.
             </p>
         </div>
     </div>
-    </div>
+    </section>
   );
 };

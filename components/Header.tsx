@@ -3,6 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation'
 
+// auth
+import { useAuth } from '@/context/AuthContext'
+
 // styles
 import styles from '../styles/index';
 import stylescss from '../styles/page.module.css';
@@ -13,6 +16,9 @@ import Logo from './Logo';
 import SolidSvg from './SolidSVG';
 
 const Header = () => {
+  const { user } = useAuth()
+
+
   const router = useRouter();
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -52,7 +58,6 @@ const Header = () => {
       <Link href="/"><Logo /></Link>
 
       <div className='lg:flex flex-row-reverse gap-8 items-center hidden content-center cursor-pointer'>
-        <LightModeBtn />
         <ul className='flex items-center gap-4 list-none text-primary-color-83 dark:text-primary-color-53'>
           <li>
             <Link href="/" className={`${pathname === '/' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Home</Link>
@@ -60,7 +65,19 @@ const Header = () => {
           <li >
             <Link href="/player" className={`${pathname === '/player' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
           </li>
+          {/* <li >
+            <Link href="/collections" className={`${pathname === '/collections' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Collections</Link>
+          </li> */}
+          {(user ) ?
+          <li >
+            <Link href="/signin" className={`${pathname === '/signin' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
+          </li> : 
+          <li >
+            <Link href="/profile" className={`${pathname === '/profile' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Profile</Link>
+          </li>
+          }
         </ul>
+        <LightModeBtn />
       </div>
 
       <div className='flex items-center lg:hidden grid-cols-2 gap-8 content-center cursor-pointer'>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -6,14 +7,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from "next-themes";
 
+// auth
+import { useAuth } from '@/context/AuthContext'
+
 // styles
 import styles from '../../styles';
 import stylescss from '../../styles/page.module.css';
 
-export default function Page() {
+// route
+import { useRouter } from 'next/navigation';
 
+export default function Page() {
+  const { user, signup } = useAuth()
+  const router = useRouter();
 
   // inputs
+  const [userAvatar, setUserAvatar] = useState('https://api.dicebear.com/5.x/lorelei/svg?seed=A');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,12 +32,16 @@ export default function Page() {
   const [shareData, setShareData] = useState(false);
 
   const [nameError, setNameError] = useState(false);
+  const [nameErrorTaken, setNameErrorTaken] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [emailErrorTaken, setEmailErrorTaken] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordreError, setPasswordreError] = useState(false);
 
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+    setUserAvatar(`https://api.dicebear.com/5.x/lorelei/svg?seed=${name}`);
     if (e.target.value.length < 3 || e.target.value.length > 20) {
       setNameError(true);
     } else {
@@ -63,12 +76,32 @@ export default function Page() {
     }
   }
 
-  const signup = () => {
+  const signupEmail = async (event: React.MouseEvent<HTMLButtonElement>  | React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log('start');
+
+    try {
+      await signup(email, password);
+      console.log('signed up');
+      router.push('/')
+    } catch (err) {
+      console.log(err)
+      console.log('err up');
+    }
+
+    console.log('finished up');
+  }
+
+  const signupGoogle = () => {
+
+  }
+
+  const signupFacebook = () => {
 
   }
 
   return (
-    <div className={`${styles.flexCenter} flex-col text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
+    <section className={`${styles.flexCenter} flex-col text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
       <div className={`${styles.flexCenter} flex-col w-full sm:max-w-[675px]  p-8 gap-8 mb-6 `}>
         <div className={`${styles.flexStart} relative w-full flex-col`}>
           <h1 className={` ${styles.h1Section} text-center mb-0`}>Welcome to <span className='gradient1'>YukiRythem</span>  </h1>
@@ -92,29 +125,43 @@ export default function Page() {
           <div className='w-full h-[2px] bg-secondary-color dark:bg-primary-color-4 rounded-xl'></div>
         </div>
 
-        <form onSubmit={signup} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
-            
+        <form onSubmit={signupEmail} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
             <div className={`${styles.flexCenter} flex-col relative w-full gap-4`}>
+
+              <div className=' bg-secondary-color rounded w-32 h-32 relative'>
+                <img className='w-full h-full bg-cover' src={userAvatar} alt="avatar" />
+              </div>  
+
               <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Display name: </span>
+                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>@Username </span>
                   <input required type="text" className='player_input' value={name} onChange={handleNameChange} />
                   {nameError && (
                       <p className=' text-danger-color font-normal mt-2' >
-                          Display name must be between 3 and 20 characters 
+                          @Username must be between 3 and 20 characters 
+                      </p>
+                  )}
+                  {nameErrorTaken && (
+                      <p className=' text-danger-color font-normal mt-2' >
+                          This @Username is already taken.
                       </p>
                   )}
               </label>
               <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email:</span>
+                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email</span>
                   <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
                   {emailError && (
                       <p className=' text-danger-color font-normal mt-2' >
-                          Email address already in use or not valid.
+                          Email address is not valid.
+                      </p>
+                  )}
+                  {emailErrorTaken && (
+                      <p className=' text-danger-color font-normal mt-2' >
+                          This Email address is already taken.
                       </p>
                   )}
               </label>
               <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password:</span>
+                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password</span>
                   <input required type="password" className='player_input' value={password} onChange={handlePasswordChange} />
                   {passwordError && (
                       <>
@@ -131,7 +178,7 @@ export default function Page() {
                   )}
               </label>
               <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Confirm Password:</span>
+                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Confirm Password</span>
                   <input required type="password" className='player_input' value={passwordre} onChange={handlePasswordreChange} />
                   {passwordreError && (
                       <p className=' text-danger-color font-normal mt-2' >
@@ -167,21 +214,21 @@ export default function Page() {
               </label>
               <label className={` ${styles.flexCenter} relative font-normal gap-4`}>
                 <input type="checkbox" className='w-4 h-4' value={'true'} onChange={e => setShareData(Boolean(e.target.value))} />
-                Share my registration data with YukiRythem&apas;s content providers for marketing purposes.
+                Share my registration data with YukiRythem's content providers for marketing purposes.
               </label>
             </div>
 
 
             <div className={` relative ${styles.flexStart} flex-col w-3/4 gap-4 text-center text-xs dark:text-primary-color-4 text-secondary-color `}>
               <p>
-                By clicking on sign-up, you agree to  YukiRythem's <Link href={'/legal/end-user-agreement/'} className='inline-block underline text-primary-color-77 hover:text-primary-color-53 transition-all duration-300'>Terms and Conditions of Use</Link>.
+                By clicking on sign-up, you agree to  YukiRythem's <Link href={'/legal/end-user-agreement/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'>Terms and Conditions of Use</Link>.
               </p>
               <p>
-                To learn more about how  YukiRythem collects, uses, shares and protects your personal data, please see <Link href={'/legal/privacy-policy/'} className='inline-block underline text-primary-color-77 hover:text-primary-color-53 transition-all duration-300'> YukiRythem's Privacy Policy</Link>.
+                To learn more about how  YukiRythem collects, uses, shares and protects your personal data, please see <Link href={'/legal/privacy-policy/'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'> YukiRythem's Privacy Policy</Link>.
               </p>
             </div>
 
-            <button onClick={() => {signup}} className='cta-primary font-bold'>
+            <button onClick={signupEmail} disabled={passwordreError || passwordError || emailError || emailErrorTaken || nameError || nameErrorTaken || gender==''} className='cta-primary font-bold'>
               Sign up now
             </button>
 
@@ -189,10 +236,10 @@ export default function Page() {
 
         <div className={` relative ${styles.flexCenter} flex-col w-full gap-4 text-center dark:text-primary-color-4 text-secondary-color `}>
           <p>
-            Already have an account? <Link href={'/signin'} className='inline-block underline text-primary-color-77 hover:text-primary-color-53 transition-all duration-300'>sign in</Link>.
+            Already have an account? <Link href={'/signin'} className='inline-block underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300'>sign in</Link>.
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
