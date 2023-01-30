@@ -28,6 +28,7 @@ const ProfilePage = async ({ params }: any) => {
             <h1>Profile/{profileUser.ID}</h1>
             <h1>Profile/{profileUser.userName}</h1>
             <h1>Profile/{profileUser.email}</h1>
+            {(user.ID === profileUser.ID) ? <p>Follow</p> : <p>Settings</p>}
         </div>
     );
 }
