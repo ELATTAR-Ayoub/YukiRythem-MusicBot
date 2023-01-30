@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@/context/AuthContext'
 
 // styles
@@ -11,7 +13,7 @@ export default async function ProfilePage()  {
 
     return (
         <div>
-            <h1>Collections</h1>
+            <h1>Collections/create</h1>
         </div>
     );
 }

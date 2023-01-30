@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTheme } from "next-themes";
 
 // auth
 import { useAuth } from '@/context/AuthContext'
