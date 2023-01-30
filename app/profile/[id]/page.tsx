@@ -14,7 +14,7 @@ import stylescss from '../../styles/page.module.css';
 import { useRouter } from 'next/navigation';
 
 
-export default async function ProfilePage({ params }: any) {
+const ProfilePage = async ({ params }: any) => {
 
     const { user, getUser } = useAuth();
     const profileUser = await getUser(params.id);
@@ -31,3 +31,5 @@ export default async function ProfilePage({ params }: any) {
         </div>
     );
 }
+
+export default ProfilePage;
