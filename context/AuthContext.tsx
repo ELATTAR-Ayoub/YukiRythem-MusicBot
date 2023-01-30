@@ -48,19 +48,19 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
           getUser(user.uid);
-        } else {
-            setUser({
-                ID: null,
-                avatar: null,
-                userName: null,
-                email: null,
-                gender: null,
-                marketingEmails: null,
-                shareData: null,
-                lovedSongs: [],
-                collections: [],
-                lovedCollections: [],
-            });
+      } else {
+          setUser({
+              ID: null,
+              avatar: null,
+              userName: null,
+              email: null,
+              gender: null,
+              marketingEmails: null,
+              shareData: null,
+              lovedSongs: [],
+              collections: [],
+              lovedCollections: [],
+          });
         }
         setLoading(false)
     });
@@ -185,7 +185,6 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         });
       }).catch((error) => {
         console.log(error);
-        
       });
 
     console.log('user done dead2');

@@ -15,7 +15,12 @@ import LightModeBtn from './LightModeBtn.jsx';
 import Logo from './Logo';
 import SolidSvg from './SolidSVG';
 
-const ProfileNav = () => {
+interface NavProps {
+  mode: 'sm' | 'md',
+  ref?: React.RefObject<HTMLElement>
+}
+
+const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
 
     const { user, logout } = useAuth()  
 
@@ -77,14 +82,14 @@ const ProfileNav = () => {
       }
 
     return (
-      <div className={`relative ${styles.flexStart} flex-col gap-8 p-2  w-64 rounded`}>
-  
-            <div onClick={toggleProfileMenu} className={` ${styles.flexBetween} gap-8 hover:bg-primary-color-83 p-2 rounded`}>
+      <div  className={` ${mode == 'md' ? 'w-64' :  'w-full ' }  relative ${styles.flexStart} flex-col gap-8 p-2 rounded `} >
+            <div onClick={toggleProfileMenu} className={` ${styles.flexBetween} w-full gap-8 text-secondary-color hover:bg-primary-color-83 hover:text-primary-color-4 p-2 rounded`}>
               <div className={` ${styles.flexEnd} gap-2 `}>
                 <div className='w-12 h-12 rounded-full overflow-hidden bg-secondary-color'>
                   <img className=' w-full h-full bg-cover ' src={user.avatar} alt="profile_avatar" />
                 </div>
-                <div className={`relative flex justify-center items-start flex-col text-sm w-24 overflow-hidden text-secondary-color dark:text-primary-color-4`}>
+                <div 
+                className={` ${mode == 'md' ? 'w-24' :  ' w-3/4' } relative flex justify-center items-start flex-col text-sm overflow-hidden`} >
                   <div className=' font-bold'>
                     {user.userName}
                   </div>
@@ -98,7 +103,8 @@ const ProfileNav = () => {
             </div>
   
   
-            <div id={'profile_menu_ref'} className={`${styles.flexStart} flex-col absolute w-full top-24 transition-all duration-300 left-0 text-primary-color-4 bg-primary-color-83 rounded h-0 overflow-hidden`}>
+            <div id={'profile_menu_ref'}
+            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-primary-color-83 rounded h-0 overflow-hidden`} >
               <div className={`${styles.flexCenter} flex-col relative w-full gap-4 p-4`}>
                 <ul className={` ${styles.flexStart} flex-col list-none w-full gap-4 `}>
                   {Profile_menu.map(({ title, path, iconPath }) => (

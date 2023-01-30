@@ -101,7 +101,7 @@ const Header = () => {
           <li >
             <Link href="/signin" className={`${pathname === '/signin' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
           </li> : 
-            <ProfileNav />
+            <ProfileNav mode={'md'} />
           }
         </ul>
         <LightModeBtn />
