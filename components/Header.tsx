@@ -66,8 +66,10 @@ const Header = () => {
       setLastScrollTop(currentScrollTop);
     }
 
+    if (typeof window !== 'undefined') 
     window.addEventListener("scroll", handleScroll);
     return () => {
+      if (typeof window !== 'undefined') 
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollTop]);

@@ -14,10 +14,10 @@ import stylescss from '../../styles/page.module.css';
 import { useRouter } from 'next/navigation';
 
 
-const ProfilePage = async ({ params }: any) => {
+const ProfilePage =  ({ params }: any) => {
 
     const { user, getUser } = useAuth();
-    const profileUser = await getUser(params.id);
+    const profileUser = getUser(params.id);
 
     console.log('profileUser');
     console.log(profileUser);
@@ -28,7 +28,7 @@ const ProfilePage = async ({ params }: any) => {
             <h1>Profile/{profileUser.ID}</h1>
             <h1>Profile/{profileUser.userName}</h1>
             <h1>Profile/{profileUser.email}</h1>
-            {(user.ID === profileUser.ID) ? <p>Follow</p> : <p>Settings</p>}
+            {(user.ID !== profileUser.ID) ? <p>Follow</p> : <p>Settings</p>}
         </div>
     );
 }

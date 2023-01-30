@@ -9,7 +9,7 @@ import stylescss from '../../styles/page.module.css';
 // route
 import { useRouter } from 'next/navigation';
   
-export default async function ProfilePage()  {
+export default function ProfilePage()  {
 
     return (
         <div>
