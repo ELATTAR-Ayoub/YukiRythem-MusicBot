@@ -14,14 +14,11 @@ import stylescss from '../../styles/page.module.css';
 import { useRouter } from 'next/navigation';
 
 
-async function GetProfile(noteId: string) {
-    const { getUser } = useAuth();
-    return await getUser(noteId);
-    
-}
-  
 export default async function ProfilePage({ params }: any) {
-    const profileUser = await GetProfile(params.id);
+
+    const { user, getUser } = useAuth();
+    const profileUser = await getUser(params.id);
+
     console.log('profileUser');
     console.log(profileUser);
     
