@@ -1,3 +1,6 @@
+// auth
+import { useAuth } from '@/context/AuthContext'
+
 export const App_Features = [
   {
     title: 'Focus and Motivate',
@@ -97,3 +100,4 @@ export const Footer_links = [
     ]
   },
 ]
+

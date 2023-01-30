@@ -119,6 +119,19 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   }
 
   const getUser = async (uid:string) => {
+    const userData = {
+      ID: null,
+      avatar: null,
+      userName: null,
+      email: null,
+      gender: null,
+      marketingEmails: null,
+      shareData: null,
+      lovedSongs: [],
+      collections: [],
+      lovedCollections: [],
+    }
+
     const q = query(collection(firestore, "users"), where("userData.ID", "==", uid));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -137,6 +150,21 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         collections: doc.data().userData.collections,
         lovedCollections: doc.data().userData.lovedCollections,
       });
+
+      const userData = {
+        ID: doc.data().userData.ID,
+        avatar: doc.data().userData.avatar,
+        userName: doc.data().userData.name,
+        email: doc.data().userData.email,
+        gender: doc.data().userData.gender,
+        marketingEmails: doc.data().userData.marketingEmails,
+        shareData: doc.data().userData.shareData,
+        lovedSongs: doc.data().userData.lovedSongs,
+        collections: doc.data().userData.collections,
+        lovedCollections: doc.data().userData.lovedCollections,
+      }
+
+      return userData;
     });
   }
 
@@ -165,7 +193,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   }
 
   return (
-    <AuthContext.Provider value={{ user, signin, signup, logout }}>
+    <AuthContext.Provider value={{ user, signin, signup, logout, getUser }}>
       {children}
     </AuthContext.Provider>
   )

@@ -14,9 +14,33 @@ import stylescss from '../styles/page.module.css';
 import LightModeBtn from './LightModeBtn.jsx';
 import Logo from './Logo';
 import SolidSvg from './SolidSVG';
+import ProfileNav from './ProfileNav'
 
 const Header = () => {
   const { user, logout } = useAuth()  
+
+  const Profile_menu = [
+    {
+      title: "Profile",
+      path: `/profile/${user.ID}`,
+      iconPath: "/profile.svg"
+    },
+    {
+      title: "My Collections",
+      path: `/profile/${user.ID}/collections`,
+      iconPath: "/collections.svg"
+    },
+    {
+      title: "My Loved songs",
+      path: `/profile/${user.ID}/loved-songs`,
+      iconPath: "/loved-songs.svg"
+    },
+    {
+      title: "My Loved collections",
+      path: `/profile/${user.ID}/loved-collections`,
+      iconPath: "/loved-collections.svg"
+    }
+  ]
 
 
   const router = useRouter();
@@ -50,26 +74,11 @@ const Header = () => {
 
   const pathname = usePathname();
 
-  const logoutEmail = async () => {
-    console.log('start');
-
-    try {
-      console.log('start2');
-      await logout();
-      console.log('logout');
-      console.log(user);
-      router.push(`/`)
-    } catch (err) {
-      console.log(err)
-      console.log('err in');
-    }
-
-    console.log('finished logout');
-  }
+  
 
   return (
     <section
-      className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden ${
+      className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 ${
         isScrollingUp ? " h-0" : "h-[10vh]"
       }`}
     >
@@ -90,14 +99,14 @@ const Header = () => {
           <li >
             <Link href="/signin" className={`${pathname === '/signin' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
           </li> : 
-          <li >
-            <Link href={`/profile/${user.ID}`} className={`${pathname === `/profile/${user.ID}` ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Profile</Link>
-          </li>
+            <ProfileNav />
           }
         </ul>
         <LightModeBtn />
 
-        <button onClick={logoutEmail} className=' bg-red-600 text-secondary-color p-4'>Logout</button>
+        
+
+
       </div>
 
       <div className='flex items-center lg:hidden grid-cols-2 gap-8 content-center cursor-pointer'>
@@ -111,3 +120,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

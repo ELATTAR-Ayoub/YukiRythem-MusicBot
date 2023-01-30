@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-
 import Link from 'next/link';
 
 // auth
@@ -15,19 +14,23 @@ import stylescss from '../../styles/page.module.css';
 import { useRouter } from 'next/navigation';
 
 
-async function getUser(noteId: string) {
+async function GetProfile(noteId: string) {
+    const { getUser } = useAuth();
+    return await getUser(noteId);
     
 }
   
-export default function ProfilePage({ params }: any) {
-    const { user } = useAuth()
-    // const user = await getUser(params.id);
+export default async function ProfilePage({ params }: any) {
+    const profileUser = await GetProfile(params.id);
+    console.log('profileUser');
+    console.log(profileUser);
+    
 
     return (
         <div>
-            <h1>Profile/{user.ID}</h1>
-            <h1>Profile/{user.userName}</h1>
-            <h1>Profile/{user.email}</h1>
+            <h1>Profile/{profileUser.ID}</h1>
+            <h1>Profile/{profileUser.userName}</h1>
+            <h1>Profile/{profileUser.email}</h1>
         </div>
     );
 }
