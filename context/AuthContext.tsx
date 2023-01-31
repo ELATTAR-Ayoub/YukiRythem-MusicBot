@@ -279,7 +279,13 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       };
       try {
         console.log('try data - likeMusic ');
-        const docRef = doc(firestore, "users", user.UID_Col);
+        var UID = ''
+        // to make sure user.UID_Col is not null
+        if (user.UID_Col) {
+          UID = user.UID_Col
+        }
+
+        const docRef = doc(firestore, "users", UID);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
@@ -322,8 +328,13 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       };
 
       try {
-        console.log('try data - dislikeMusic ');
-        const docRef = doc(firestore, "users", user.UID_Col);
+        var UID = ''
+        // to make sure user.UID_Col is not null
+        if (user.UID_Col) {
+          UID = user.UID_Col
+        }
+
+        const docRef = doc(firestore, "users", UID);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
@@ -337,7 +348,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     }
     console.log('out - dislikeMusic ');
 
-}
+  }
 
   return (
     <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic }}>
