@@ -23,11 +23,13 @@ export default function Page() {
 
   // inputs
   const [userAvatar, setUserAvatar] = useState('https://api.dicebear.com/5.x/lorelei/svg?seed=A');
-  const [name, setName] = useState('elattar');
-  const [email, setEmail] = useState('elattarayoub000@gmail.com');
-  const [password, setPassword] = useState('asa123A');
-  const [passwordre, setPasswordre] = useState('asa123A');
-  const [gender, setGender] = useState('male');
+  const [name, setName] = useState('');
+  // const [name, setName] = useState('elattar');
+  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('elattarayoub000@gmail.com');
+  const [password, setPassword] = useState('');
+  const [passwordre, setPasswordre] = useState('');
+  const [gender, setGender] = useState('');
   const [marketingEmails, setMarketingEmails] = useState(false);
   const [shareData, setShareData] = useState(false);
 
@@ -83,7 +85,8 @@ export default function Page() {
     try {
       await signup(email, password, userAvatar, name, gender, marketingEmails, shareData);
       console.log('signed in');
-      router.push(`/profile/${user.uid}`)
+      // router.push(`/profile/${user.uid}`)
+      router.push(`/`)
     } catch (err) {
       console.log(err)
       console.log('err up');

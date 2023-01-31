@@ -50,14 +50,18 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
 
     function toggleProfileMenu() {
         const profileMenu = document.getElementById("profile_menu_ref");
-        if (profileMenu)
-        if (profileMenu.style.height === "0px" || profileMenu.style.height === "") {
+        if (profileMenu) {
+          if (profileMenu.style.height === "0px" || profileMenu.style.height === "") {
             profileMenu.style.height = "auto";
             profileMenu.style.overflow = "visible";
-        } else {
-            profileMenu.style.height = "0px";
-            profileMenu.style.overflow = "hidden";
+            return;
+          } else {
+              profileMenu.style.height = "0px";
+              profileMenu.style.overflow = "hidden";
+              return;
+          }
         }
+        
     }
 
     const router = useRouter();
@@ -104,7 +108,7 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
   
   
             <div id={'profile_menu_ref'}
-            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-gray-100 rounded h-0 overflow-hidden shadow-md`} >
+            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-gray-100 rounded h-0 z-[51] overflow-hidden shadow-md`} >
               <div className={`${styles.flexCenter} flex-col relative w-full gap-4 p-4`}>
                 <ul className={` ${styles.flexStart} flex-col list-none w-full gap-2 `}>
                   {Profile_menu.map(({ title, path, iconPath }) => (

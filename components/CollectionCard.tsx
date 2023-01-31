@@ -71,8 +71,8 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
   };
 
   return (
-    <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col `}>
-      <div className={`relative grid grid-cols-[84px_1fr_64px] sm:grid-cols-[96px_1fr_72px] gap-3 py-4 px-3 items-center w-full rounded-lg `}>
+    <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col rounded-lg  `}>
+      <div className={`relative grid grid-cols-[84px_1fr_64px] sm:grid-cols-[96px_1fr_72px] gap-3 py-4 px-3 items-center w-full `}>
           <div className='h-full'>
             <img className='w-full bg-cover' src={(Collection.thumbnails) ? Collection.thumbnails[0] : ''} alt="music_thumbnails" />
           </div>

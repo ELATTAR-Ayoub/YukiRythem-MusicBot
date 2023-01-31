@@ -90,6 +90,8 @@ export default function Page() {
         element.style.height = '60vh';
         element.style.overflow = 'visible';
         }
+        console.log(user);
+        
     }
 
     // check window with and update the scrolling animation:
@@ -109,13 +111,23 @@ export default function Page() {
     };
 
 
-    const handleLikeMusic = async (ID: string) => {
-        if ( user.lovedSongs.includes(musicState[current].ID) ) {
-            await dislikeMusic(ID);
+    const handleLikeMusic = async (music: Data) => {
+        if (!musicState[current].ID) {
+          return;  
+        }
+
+        const Music_small = {
+            ID: music.ID,
+            title: music.title,
+            thumbnails: [music.thumbnails[0]],
+        }
+
+        if ( user.lovedSongs.some((lovedSong:any) => lovedSong.ID === musicState[current].ID) ) {
+            await dislikeMusic(Music_small);
             return;
         }
         
-        await likeMusic(ID);
+        await likeMusic(Music_small);
     };
 
 
@@ -165,8 +177,8 @@ export default function Page() {
 
             <div className={` grid grid-cols-[24px_2fr_24px] sm:grid-cols-[2fr_24px_24px] lg:grid-cols-[2fr_24px_24px_24px_24px_24px] gap-10 relative  text-primary-color-83 dark:text-primary-color-4 p-8 md:px-0 sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] w-full`}>
                 <div className='grid content-center'>
-                    <button onClick={() => handleLikeMusic(musicState[current].ID)} aria-label="Add_to_my_favorite_list">
-                        {( musicState[current] && user.lovedSongs.includes(musicState[current].ID) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={''} path={'/heart.svg'} />
+                    <button onClick={() => handleLikeMusic(musicState[current])} aria-label="Add_to_my_favorite_list">
+                        {( musicState[current] && user.lovedSongs.some((lovedSong:any) => lovedSong.ID === musicState[current].ID) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={''} path={'/heart.svg'} />
                         : <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/heart_empty.svg'} />}
                     </button>
                 </div>

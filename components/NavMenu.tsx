@@ -41,6 +41,7 @@ const Header = () => {
           <nav className={` ${styles.flexStart} flex-col w-full gap-6 text-xl p-7 `}>
               <Link href="/" className={`${pathname === '/' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Home</Link>
               <Link href="/player" className={`${pathname === '/player' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
+              <Link href="/collections" className={`${pathname === '/collections' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Collections</Link>
               { (!user.ID ) ?
                   <Link href="/signin" className={`${pathname === '/signin' ? 'activeLinksm' : 'linksm'} w-full transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
                   : 
@@ -48,7 +49,7 @@ const Header = () => {
               }
           </nav>
 
-          <div className='w-full absolute bottom-0 left-0'>
+          <div className={` w-full px-4 absolute bottom-0 left-0`}>
             <ProfileNav mode={'sm'} />
           </div>
         

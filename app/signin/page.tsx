@@ -55,7 +55,7 @@ export default function Page() {
       await signin(email, password);
       console.log('signed in');
       console.log(user);
-      router.push(`/profile/${user.ID}`)
+      router.push(`/`)
     } catch (err) {
       console.log(err)
       console.log('err in');

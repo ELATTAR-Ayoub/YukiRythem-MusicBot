@@ -31,15 +31,18 @@ async function getData(uid:string) {
     querySnapshot.forEach((doc) => {
         userData = {
             ID: doc.data().userData.ID,
+            UID_Col: doc.id,
             avatar: doc.data().userData.avatar,
-            userName: doc.data().userData.name,
+            userName: doc.data().userData.userName,
             email: doc.data().userData.email,
             gender: doc.data().userData.gender,
             marketingEmails: doc.data().userData.marketingEmails,
             shareData: doc.data().userData.shareData,
-            lovedSongs: doc.data().userData.lovedSongs,
-            collections: doc.data().userData.collections,
-            lovedCollections: doc.data().userData.lovedCollections,
+            lovedSongs: [...doc.data().userData.lovedSongs],
+            collections: [...doc.data().userData.collections],
+            lovedCollections: [...doc.data().userData.lovedCollections],
+            followers: [...doc.data().userData.followers] || [],
+            following: [...doc.data().userData.following] || [],
         }
     });
     return userData;
@@ -117,7 +120,7 @@ const ProfilePage = ({ params }: any) => {
             </div>
             <div className={` ${styles.flexBetween} w-full`}>
                 <div className={` ${styles.flexStart} flex-col gap-1`}>
-                    <p className={` ${styles.Paragraph_sm} my-0`}> {(profileUser.followers ) ? profileUser.followers.length() : 0} Followers - {(profileUser.following ) ? profileUser.following.length() : 0} Following </p>
+                    <p className={` ${styles.Paragraph_sm} my-0`}> {(profileUser.followers ) ? profileUser.followers.length : 0} Followers - {(profileUser.following ) ? profileUser.following.length : 0} Following </p>
                     {
                         (profileUser.ID !== user.ID) 
                         ?   <button className={` hover:bg-primary-color-53 hover:text-secondary-color text-primary-color-53 border border-primary-color-53 p-2 px-6 transition-all duration-300`}>
@@ -140,59 +143,67 @@ const ProfilePage = ({ params }: any) => {
                 
             </div>
 
-            <div id='profile_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
-                <div className={` ${styles.flexBetween} w-full`}>
-                    <h2 className={` ${styles.h2Section} `}>{`${profileUser.userName}'s collections`}</h2>
-                    {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/collections`}>See all</Link> */}
-                </div>
-                <div className={` ${styles.flexBetween} flex-col w-full gap-2`}>
-                    {
-                        (profileUser.collections && profileUser.collections.length > 0) 
-                        ?   profileUser.collections.map((collection:Collection) => (
-                                <CollectionCard key={collection.ID} Collection={collection} />
-                            ))
-                        : <EmptyListDiv
-                            header="This list is empty"
-                            svgPath={(profileUser.ID === user.ID)?"/galaxy-02.svg": '/galaxy-01.svg'}
-                            subHeader={(profileUser.ID === user.ID)?"Create a collection at": ''}
-                            subHeaderPath={(profileUser.ID === user.ID)?"/collections/create": ''}
-                            />
-                    }
+            <div className={` grid grid-cols-1 flex-col w-full gap-4`}>
+                <div id='profile_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
+                    <div className={` ${styles.flexBetween} w-full mb-4`}>
+                        <h2 className={` ${styles.h2Section} `}>{`${profileUser.userName}'s collections`}</h2>
+                        {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/collections`}>See all</Link> */}
+                    </div>
+                    <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
+                        {
+                            (profileUser.collections && profileUser.collections.length > 0) 
+                            ?   profileUser.collections.map((collection:Collection) => (
+                                    <CollectionCard key={collection.ID} Collection={collection} />
+                                ))
+                            : <EmptyListDiv
+                                header="This list is empty"
+                                svgPath={(profileUser.ID === user.ID)?"/galaxy-02.svg": '/galaxy-01.svg'}
+                                subHeader={(profileUser.ID === user.ID)?"Create a collection at": ''}
+                                subHeaderPath={(profileUser.ID === user.ID)?"/collections/create": ''}
+                                />
+                        }
 
-                    
+                        
+                    </div>
+                </div>
+                <div id='profile_loved_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
+                    <div className={` ${styles.flexBetween} w-full mb-4`}>
+                        <h2 className={` ${styles.h2Section} `}>{`Loved collections`}</h2>
+                        {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link> */}
+                    </div>
+                    <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
+                        {
+                            (profileUser.lovedCollections && profileUser.lovedCollections.length > 0) 
+                            ?   profileUser.lovedCollections.map((collection:Collection) => (
+                                    <CollectionCard key={collection.ID} Collection={collection} />
+                                ))
+                            : <EmptyListDiv
+                                header="This list is empty"
+                                svgPath={(profileUser.ID === user.ID)?"/galaxy-02.svg": '/galaxy-01.svg'}
+                                subHeader={(profileUser.ID === user.ID)?"Check new collections at": ''}
+                                subHeaderPath={(profileUser.ID === user.ID)?"/collections": ''}
+                                />
+                        }
+                    </div>
                 </div>
             </div>
-            <div id='profile_loved_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
-                <div className={` ${styles.flexBetween} w-full`}>
-                    <h2 className={` ${styles.h2Section} `}>{`Loved collections`}</h2>
-                    {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link> */}
-                </div>
-                <div className={` ${styles.flexBetween} flex-col w-full gap-2`}>
-                    {
-                        (profileUser.lovedCollections && profileUser.lovedCollections.length > 0) 
-                        ?   profileUser.lovedCollections.map((collection:Collection) => (
-                                <CollectionCard key={collection.ID} Collection={collection} />
-                            ))
-                        : <EmptyListDiv
-                            header="This list is empty"
-                            svgPath={(profileUser.ID === user.ID)?"/galaxy-02.svg": '/galaxy-01.svg'}
-                            subHeader={(profileUser.ID === user.ID)?"Check new collections at": ''}
-                            subHeaderPath={(profileUser.ID === user.ID)?"/collections": ''}
-                            />
-                    }
-                </div>
-            </div>
+
             <div id='profile_loved_songs' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
-                <div className={` ${styles.flexBetween} w-full`}>
+                <div className={` ${styles.flexBetween} w-full mb-4`}>
                     <h2 className={` ${styles.h2Section} `}>{`Loved songs`}</h2>
                     {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-songs`}>See all</Link> */}
                 </div>
-                <div className={` ${styles.flexBetween} flex-col w-full gap-2`}>
+                <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                     {
                         (profileUser.lovedSongs && profileUser.lovedSongs.length > 0) 
-                        ?   profileUser.lovedSongs.map((music:Music) => (
-                                <MusicCard key={music.ID} Music={music} />
-                            ))
+                        ?   
+                        
+                        <div className={` grid grid-cols-1 lg:grid-cols-2 flex-col w-full gap-4`}>
+                            {profileUser.lovedSongs.map((music:Music) => (
+                                    <MusicCard key={music.ID} Music={music} />
+                                ))}
+                        </div>
+
                         : <EmptyListDiv
                             header="This list is empty"
                             svgPath={(profileUser.ID === user.ID)?"/galaxy-02.svg": '/galaxy-01.svg'}

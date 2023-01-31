@@ -19,7 +19,7 @@ const EmptyListDiv: React.FC<EmptyListDivProps> = ({ header, svgPath, subHeader,
     <div className={` ${styles.flexCenter} w-56 flex-col my-6 `}>
       <Image className='oscillating-div' src={svgPath} alt={'Empty list'} width={218} height={218} />
       <p className={` text-lg lg:text-xl my-2 w-full text-center `}>{header}</p>
-      <p className={` ${styles.Paragraph_sm} w-full text-center whitespace-nowrap `}>
+      <p className={` ${styles.Paragraph_sm} w-full text-center`}>
         {subHeader} <Link className='link_footer' href={subHeaderPath}>{subHeaderPath}</Link>
       </p>
     </div>

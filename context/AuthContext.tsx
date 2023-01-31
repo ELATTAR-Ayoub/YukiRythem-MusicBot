@@ -51,13 +51,14 @@ interface Collection {
 // Type for our user
 export interface userState {
     ID: string | null;
+    UID_Col: string | null;
     avatar: string | null;
     userName: string | null;
     email: string | null;
     gender: string | null;
     marketingEmails: boolean | null;
     shareData: boolean | null;
-    lovedSongs: string[];
+    lovedSongs: Music_small[];
     collections: string[];
     lovedCollections: string[];
     followers: string[];
@@ -69,6 +70,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   const [user, setUser] = useState<userState>({
       ID: null,
+      UID_Col: null,
       avatar: null,
       userName: null,
       email: null,
@@ -90,6 +92,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       } else {
           setUser({
               ID: null,
+              UID_Col: null,
               avatar: null,
               userName: null,
               email: null,
@@ -115,6 +118,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         const user = userCredential.user;
         const userData = {
           ID: user.uid,
+          UID_Col: '',
           name: (user.displayName ) ? user.displayName : name,
           email: user.email,
           avatar: avatar,
@@ -164,6 +168,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   const getUser = async (uid:string) => {
     const userData = {
       ID: null,
+      UID_Col: null,
       avatar: null,
       userName: null,
       email: null,
@@ -185,32 +190,34 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
       setUser({
         ID: doc.data().userData.ID,
+        UID_Col: doc.id,
         avatar: doc.data().userData.avatar,
-        userName: doc.data().userData.name,
+        userName: doc.data().userData.userName,
         email: doc.data().userData.email,
         gender: doc.data().userData.gender,
         marketingEmails: doc.data().userData.marketingEmails,
         shareData: doc.data().userData.shareData,
-        lovedSongs: doc.data().userData.lovedSongs,
-        collections: doc.data().userData.collections,
-        lovedCollections: doc.data().userData.lovedCollections,
-        followers: doc.data().userData.followers,
-        following: doc.data().userData.following,
+        lovedSongs: [...doc.data().userData.lovedSongs],
+        collections: [...doc.data().userData.collections],
+        lovedCollections: [...doc.data().userData.lovedCollections],
+        followers: [...doc.data().userData.followers] || [],
+        following: [...doc.data().userData.following] || [],
       });
 
       const userData = {
         ID: doc.data().userData.ID,
+        UID_Col: doc.id,
         avatar: doc.data().userData.avatar,
-        userName: doc.data().userData.name,
+        userName: doc.data().userData.userName,
         email: doc.data().userData.email,
         gender: doc.data().userData.gender,
         marketingEmails: doc.data().userData.marketingEmails,
         shareData: doc.data().userData.shareData,
-        lovedSongs: doc.data().userData.lovedSongs,
-        collections: doc.data().userData.collections,
-        lovedCollections: doc.data().userData.lovedCollections,
-        followers: doc.data().userData.followers,
-        following: doc.data().userData.following,
+        lovedSongs: [...doc.data().userData.lovedSongs],
+        collections: [...doc.data().userData.collections],
+        lovedCollections: [...doc.data().userData.lovedCollections],
+        // followers: [...doc.data().userData.followers] || [],
+        // following: [...doc.data().userData.following] || [],
       }
 
       return userData;
@@ -242,12 +249,36 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   }
 
-  const likeMusic = async (ID: string) => {
-    if (user.ID) {
+  const likeMusic = async (music: Music_small) => {
+    console.log('enter - likeMusic ');
 
-      const data = { lovedSongs: [...user.lovedSongs, ID] };
+    console.log(music);
+    
+    
+    if (user.ID) {
+      console.log('secure user - likeMusic ');
+      console.log(user);
+      
+      const data = { 
+        userData : {
+          ID: user.ID,
+          UID_Col: user.UID_Col,
+          avatar: user.avatar,
+          userName: user.userName,
+          email: user.email,
+          gender: user.gender,
+          marketingEmails: user.marketingEmails,
+          shareData: user.shareData,
+          collections: [...user.collections],
+          lovedCollections: [...user.lovedCollections],
+          followers: [...user.followers] || [],
+          following: [...user.following] || [],
+          lovedSongs: [...user.lovedSongs, music] 
+        }
+      };
       try {
-        const docRef = doc(firestore, "users", user.ID);
+        console.log('try data - likeMusic ');
+        const docRef = doc(firestore, "users", user.UID_Col);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
@@ -259,15 +290,39 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         console.error('Error updating loved songs: ', error);
       }
     }
+    console.log('out - likeMusic ');
 
   }
 
-  const dislikeMusic = async (ID: string) => {
+  const dislikeMusic = async (music: Music_small) => {
+    console.log('enter - dislikeMusic ');
+
     if (user.ID) {
-      const result = user.lovedSongs.filter(item => item !== ID);
-      const data = { lovedSongs: result };
+      console.log('secure user - dislikeMusic ');
+
+      const result = user.lovedSongs.filter(item => item.ID !== music.ID);
+
+      const data = { 
+        userData : {
+          ID: user.ID,
+          UID_Col: user.UID_Col,
+          avatar: user.avatar,
+          userName: user.userName,
+          email: user.email,
+          gender: user.gender,
+          marketingEmails: user.marketingEmails,
+          shareData: user.shareData,
+          collections: [...user.collections],
+          lovedCollections: [...user.lovedCollections],
+          followers: [...user.followers] || [],
+          following: [...user.following] || [],
+          lovedSongs: result,
+        }
+      };
+
       try {
-        const docRef = doc(firestore, "users", user.ID);
+        console.log('try data - dislikeMusic ');
+        const docRef = doc(firestore, "users", user.UID_Col);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
@@ -279,6 +334,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         console.error('Error updating loved songs: ', error);
       }
     }
+    console.log('out - dislikeMusic ');
+
 }
 
   return (
