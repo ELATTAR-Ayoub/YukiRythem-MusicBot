@@ -146,7 +146,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                 <button onClick={() => skipMusic(0)} disabled={current === 0} aria-label="skip_to_previous_song" className=' scale-[-1] disabled:opacity-50 transition-all duration-300 cursor-pointer' >
                     <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W'} path={'/next_song.svg'} />
                 </button>
-                <button onClick={handlePlayPause} aria-label="play/pause_song_button" className={` ${styles.flexCenter} transition-all hover:scale-110 focus:scale-90 w-[64px] h-[64px] sm:w-[75px] sm:h-[75px] rounded-full bg-primary-color-53 `}>
+                <button onClick={handlePlayPause} aria-label="play/pause_song_button" className={` ${styles.flexCenter} transition-all hover:scale-110 w-[64px] h-[64px] sm:w-[75px] sm:h-[75px] rounded-full bg-primary-color-53 `}>
                     {(!playing) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/play.svg'} />
                     : <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W'} path={'/pause.svg'} />}
                 </button>
@@ -155,7 +155,7 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
                 </button>
             </div>
             <div onClick={() => setLooping(!looping)}  className='grid content-center'>
-                <button disabled={looping == false} aria-label="loop_song" className=' disabled:opacity-50 transition-all duration-300 hover:rotate-[360deg] focus:scale-90'>
+                <button disabled={looping == false} aria-label="loop_song" className=' disabled:opacity-50 transition-all duration-300 hover:rotate-[360deg] '>
                     <SolidSvg width={'24px'} height={'24px'} className={'SVGBlue2W'} color={'#507DBC'} path={'/loop.svg'} />
                 </button>
             </div>

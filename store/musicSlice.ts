@@ -44,7 +44,11 @@ export const musicSlice = createSlice({
 
     // Action to set the music status
     setMusicState(state, action) {
-      state.musicState = action.payload;
+      state.musicState = [...action.payload];
+    },
+
+    DELETE_ARR(state, action) {
+      state.musicState = [];
     },
 
     ADD_ITEM(state, action) {
@@ -115,7 +119,7 @@ export const musicSlice = createSlice({
     }, */
 });
 
-export const { setMusicState, SET_CURRENT, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } = musicSlice.actions;
+export const { setMusicState, SET_CURRENT, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING, DELETE_ARR } = musicSlice.actions;
 
 export const selectMusicState = (state: AppState) => state.music.musicState;
 

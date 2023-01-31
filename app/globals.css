@@ -128,6 +128,10 @@ body {
   @apply rounded-full bg-primary-color-77 dark:bg-primary-color-53 hover:bg-primary-color-53 dark:hover:bg-primary-color-77 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
 }
 
+.link_footer {
+  @apply underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300;
+}
+
 .gradient1 {
   background: linear-gradient(107.05deg, #9747FF 5.04%, #507DBC 68.89%) 150% 50%;
   background-size: 400% 400%;
@@ -173,6 +177,21 @@ body {
   transform-origin: center center;
 }
 
+.oscillating-div {
+  animation: oscillate 6s ease-in-out infinite;
+}
+
+@keyframes oscillate {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(10px) rotate(3deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
 
 
 @keyframes rotateInfinite-animation {

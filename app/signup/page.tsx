@@ -128,7 +128,7 @@ export default function Page() {
         <form onSubmit={signupEmail} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
             <div className={`${styles.flexCenter} flex-col relative w-full gap-4`}>
 
-              <div className=' bg-secondary-color rounded w-32 h-32 relative'>
+              <div className=' bg-white rounded w-32 h-32 relative'>
                 <img className='w-full h-full bg-cover' src={userAvatar} alt="avatar" />
               </div>  
 

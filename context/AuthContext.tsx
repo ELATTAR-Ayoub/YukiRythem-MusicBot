@@ -5,13 +5,48 @@ import {
   signInWithEmailAndPassword,
   signOut, updateProfile
 } from 'firebase/auth'
-import { collection, addDoc, getDocs, query, where, } from "firebase/firestore";
+import { collection, addDoc, getDocs, setDoc, doc, updateDoc, query, where, } from "firebase/firestore";
 import { auth, firestore } from '../config/firebase'
 import { async } from '@firebase/util';
 
 const AuthContext = createContext<any>({})
 
 export const useAuth = () => useContext(AuthContext)
+
+interface owner {
+  name: string;
+  ID: string;
+  canonicalURL: string;
+  thumbnails?: string[];
+}
+
+interface Music {
+  ID: string;
+  URL: string;
+  title: string;
+  thumbnails: string[];
+  owner: owner;
+  musicLengthSec?: number;
+  message?: string;
+}
+
+interface Music_small {
+  ID: string;
+  title: string;
+  thumbnails: string[];
+}
+
+interface Collection {
+  ID: string;
+  title: string;
+  desc: string;
+  thumbnails: string;
+  ownerID: string;
+  music: Music[];
+  likes: number;
+  categories: string[];
+  date: Date;
+}
 
 // Type for our user
 export interface userState {
@@ -22,9 +57,11 @@ export interface userState {
     gender: string | null;
     marketingEmails: boolean | null;
     shareData: boolean | null;
-    lovedSongs: string[] | null;
-    collections: string[] | null;
-    lovedCollections: string[] | null;
+    lovedSongs: string[];
+    collections: string[];
+    lovedCollections: string[];
+    followers: string[];
+    following: string[];
 }
 
 
@@ -41,6 +78,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       lovedSongs: [],
       collections: [],
       lovedCollections: [],
+      followers: [],
+      following: [],
   });
   const [loading, setLoading] = useState(true)
 
@@ -60,6 +99,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
               lovedSongs: [],
               collections: [],
               lovedCollections: [],
+              followers: [],
+              following: [],
           });
         }
         setLoading(false)
@@ -83,6 +124,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
           collections: [],
           lovedSongs: [],
           lovedCollections: [],
+          followers: [],
+          following: [],
         }
         if (user.uid) {
             console.log('sasas');
@@ -130,6 +173,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       lovedSongs: [],
       collections: [],
       lovedCollections: [],
+      followers: [],
+      following: [],
     }
 
     const q = query(collection(firestore, "users"), where("userData.ID", "==", uid));
@@ -149,6 +194,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         lovedSongs: doc.data().userData.lovedSongs,
         collections: doc.data().userData.collections,
         lovedCollections: doc.data().userData.lovedCollections,
+        followers: doc.data().userData.followers,
+        following: doc.data().userData.following,
       });
 
       const userData = {
@@ -162,6 +209,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         lovedSongs: doc.data().userData.lovedSongs,
         collections: doc.data().userData.collections,
         lovedCollections: doc.data().userData.lovedCollections,
+        followers: doc.data().userData.followers,
+        following: doc.data().userData.following,
       }
 
       return userData;
@@ -182,6 +231,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
             lovedSongs: [],
             collections: [],
             lovedCollections: [],
+            followers: [],
+            following: [],
         });
       }).catch((error) => {
         console.log(error);
@@ -191,8 +242,47 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   }
 
+  const likeMusic = async (ID: string) => {
+    if (user.ID) {
+
+      const data = { lovedSongs: [...user.lovedSongs, ID] };
+      try {
+        const docRef = doc(firestore, "users", user.ID);
+        updateDoc(docRef, data)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating loved songs: ', error);
+      }
+    }
+
+  }
+
+  const dislikeMusic = async (ID: string) => {
+    if (user.ID) {
+      const result = user.lovedSongs.filter(item => item !== ID);
+      const data = { lovedSongs: result };
+      try {
+        const docRef = doc(firestore, "users", user.ID);
+        updateDoc(docRef, data)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating loved songs: ', error);
+      }
+    }
+}
+
   return (
-    <AuthContext.Provider value={{ user, signin, signup, logout, getUser }}>
+    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic }}>
       {children}
     </AuthContext.Provider>
   )

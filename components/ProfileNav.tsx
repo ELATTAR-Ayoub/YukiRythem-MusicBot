@@ -83,10 +83,10 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
 
     return (
       <div  className={` ${mode == 'md' ? 'w-64' :  'w-full ' }  relative ${styles.flexStart} flex-col gap-8 p-2 rounded `} >
-            <div onClick={toggleProfileMenu} className={` ${styles.flexBetween} w-full gap-8 text-secondary-color hover:bg-primary-color-83 hover:text-primary-color-4 p-2 rounded`}>
+            <div onClick={toggleProfileMenu} className={` ${styles.flexBetween} w-full gap-8 text-secondary-color dark:text-primary-color-4 hover:bg-gray-100 dark:hover:bg-gray-200 hover:text-primary-color-4 p-2 rounded`}>
               <div className={` ${styles.flexEnd} gap-2 `}>
-                <div className='w-12 h-12 rounded-full overflow-hidden bg-secondary-color'>
-                  <img className=' w-full h-full bg-cover ' src={user.avatar} alt="profile_avatar" />
+                <div className='w-12 h-12 rounded-full overflow-hidden bg-white'>
+                  <img className=' w-full h-full bg-cover ' src={user.avatar} alt="user_avatar" />
                 </div>
                 <div 
                 className={` ${mode == 'md' ? 'w-24' :  ' w-3/4' } relative flex justify-center items-start flex-col text-sm overflow-hidden`} >
@@ -104,12 +104,12 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
   
   
             <div id={'profile_menu_ref'}
-            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-primary-color-83 rounded h-0 overflow-hidden`} >
+            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-gray-100 rounded h-0 overflow-hidden shadow-md`} >
               <div className={`${styles.flexCenter} flex-col relative w-full gap-4 p-4`}>
-                <ul className={` ${styles.flexStart} flex-col list-none w-full gap-4 `}>
+                <ul className={` ${styles.flexStart} flex-col list-none w-full gap-2 `}>
                   {Profile_menu.map(({ title, path, iconPath }) => (
-                    <li key={title} className={`${pathname === path ? ' activeLink' : ''} ${styles.flexStart} gap-2 transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 hover:text-secondary-color px-4 py-2 w-full rounded`}>
-                      <div className={` ${styles.flexCenter} w-6 h-6 bg-primary-color-83 rounded-full`}>
+                    <li key={title} className={`${pathname === path ? 'font-bold bg-primary-color-77' : ''} ${styles.flexStart} gap-2 transition-all duration-200 hover:bg-gray-200 px-4 py-2 w-full rounded`}>
+                      <div className={` ${styles.flexCenter} w-6 h-6 rounded-full`}>
                         <SolidSvg width={'24px'} height={'24px'} className={' z-10 scale-[0.7]'} color={'#04080F'} path={iconPath} />
                       </div>
                       <Link href={path} className='w-full h-full'>{title}</Link>
@@ -117,7 +117,7 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
                   ))}
                 </ul>
   
-                <div className='w-full h-[2px] bg-primary-color-77 opacity-50'></div>
+                <div className='w-full h-[2px] bg-gray-200 opacity-50'></div>
   
                 <button onClick={logoutEmail} className=' w-full p-1 bg-red-500 hover:bg-red-400 text-secondary-color rounded'>
                     Logout

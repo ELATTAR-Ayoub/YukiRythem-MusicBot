@@ -16,9 +16,12 @@ import stylescss from '@/styles/page.module.css';
 import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, ADD_ITEM } from "@/store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+// auth
+import { useAuth } from '@/context/AuthContext'
 
 // 
 export default function Page() {
+    const { user, likeMusic, dislikeMusic } = useAuth();
     // call redux states
     const musicState = useSelector(selectMusicState);
     const current = useSelector(selectCurrentMusic);
@@ -29,8 +32,8 @@ export default function Page() {
     // var
     const [moveLeftPX, setMoveLeftPX] = useState(-355);
 
-    console.log('musicState =>>>');
-    console.log(musicState);
+    // console.log('musicState =>>>');
+    // console.log(musicState);
     
 
     interface owner {
@@ -106,6 +109,16 @@ export default function Page() {
     };
 
 
+    const handleLikeMusic = async (ID: string) => {
+        if ( user.lovedSongs.includes(musicState[current].ID) ) {
+            await dislikeMusic(ID);
+            return;
+        }
+        
+        await likeMusic(ID);
+    };
+
+
   return (
     <section className={` ${styles.flexCenter} flex-col relative overflow-hidden w-full h-[90vh]`} >
         <div id='player' className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative bg-primary-color-4 dark:bg-secondary-color overflow-hidden  h-full w-full `}>
@@ -152,8 +165,9 @@ export default function Page() {
 
             <div className={` grid grid-cols-[24px_2fr_24px] sm:grid-cols-[2fr_24px_24px] lg:grid-cols-[2fr_24px_24px_24px_24px_24px] gap-10 relative  text-primary-color-83 dark:text-primary-color-4 p-8 md:px-0 sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] w-full`}>
                 <div className='grid content-center'>
-                    <button aria-label="Add_to_my_favorite_list">
-                        <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/heart_empty.svg'} />
+                    <button onClick={() => handleLikeMusic(musicState[current].ID)} aria-label="Add_to_my_favorite_list">
+                        {( musicState[current] && user.lovedSongs.includes(musicState[current].ID) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={''} path={'/heart.svg'} />
+                        : <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/heart_empty.svg'} />}
                     </button>
                 </div>
 
