@@ -216,8 +216,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         lovedSongs: [...doc.data().userData.lovedSongs],
         collections: [...doc.data().userData.collections],
         lovedCollections: [...doc.data().userData.lovedCollections],
-        // followers: [...doc.data().userData.followers] || [],
-        // following: [...doc.data().userData.following] || [],
+        followers: [...doc.data().userData.followers] || [],
+        following: [...doc.data().userData.following] || [],
       }
 
       return userData;
@@ -229,6 +229,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     signOut(auth).then(() => {
         setUser({
             ID: null,
+            UID_Col: null,
             avatar: null,
             userName: null,
             email: null,
