@@ -6,6 +6,9 @@ import Link from 'next/link';
 // styles
 import styles from '../styles';
 
+// auth
+import { useAuth } from '@/context/AuthContext'
+
 // /componenets
 import SolidSvg from '@/components/SolidSVG';
 
@@ -19,6 +22,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
+  const { user } = useAuth()  
   
   return (
     <motion.section ref={ref}
@@ -45,7 +49,11 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
         variants={fadeIn('left', 'spring', 0.5, 2)}
         className={`relative ${styles.flexStart} gap-6 flex-col sm:flex-row z-10`}>
             <Link href="/player" className='cta-primary'>Try YUKIRYTHEM now</Link>
-            <Link href="/signup" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Login for free</Link>
+            { (!user.ID ) ?
+                  <Link href="/signup" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Login for free</Link>
+                  : 
+                  <Link href="/collections/create" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Ceate a collection</Link>
+            }
         </motion.div>
         
         <motion.div

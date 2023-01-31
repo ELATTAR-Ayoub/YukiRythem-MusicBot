@@ -49,9 +49,15 @@ const Header = () => {
               }
           </nav>
 
-          <div className={` w-full px-4 absolute bottom-0 left-0`}>
-            <ProfileNav mode={'sm'} />
-          </div>
+          { (user.ID ) ?
+                <div className={` w-full px-4 absolute bottom-0 left-0`}>
+                  <ProfileNav mode={'sm'} />
+                </div>
+            : 
+            <></>
+          }
+
+          
         
           
 
