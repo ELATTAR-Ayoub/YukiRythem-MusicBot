@@ -88,9 +88,16 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let mounted = true;
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      console.log('auth--------------');
+      console.log(user);
+      console.log(auth);
+      console.log('auth--------------');
+      
+      if (mounted && user) {
           getUser(user.uid);
+          console.log('STOOOOOOOOOOOOOOOOOOP ME');
       } else {
           setUser({
               ID: null,
@@ -108,10 +115,13 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
               following: [],
           });
         }
-        setLoading(false)
+      setLoading(false)
     });
-        return () => unsubscribe();
-    }, )
+      return () => {
+        unsubscribe();
+        mounted = false;
+      };
+    }, []);
 
   const signup = (email: string, password: string, avatar:string, name:string, gender:string, marketingEmails:Boolean, shareData:Boolean) => {
       return createUserWithEmailAndPassword(auth, email, password)
@@ -168,22 +178,6 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   }
 
   const getUser = async (uid:string) => {
-    const userData = {
-      ID: null,
-      UID_Col: null,
-      avatar: null,
-      userName: null,
-      email: null,
-      gender: null,
-      marketingEmails: null,
-      shareData: null,
-      lovedSongs: [],
-      collections: [],
-      lovedCollections: [],
-      followers: [],
-      following: [],
-    }
-
     const q = query(collection(firestore, "users"), where("userData.ID", "==", uid));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
