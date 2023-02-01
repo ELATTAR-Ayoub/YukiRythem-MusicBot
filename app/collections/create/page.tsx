@@ -52,7 +52,7 @@ interface Collection {
 }
   
 export default function ProfilePage()  {
-
+    const router = useRouter();
     const { user, AddCollection } = useAuth();
     // call redux states
     const musicState = useSelector(selectMusicState);
@@ -157,25 +157,29 @@ export default function ProfilePage()  {
             return
         }
 
-        const collectionLengthSec = 0;
-        const date = 0;
+        var collectionLengthSecTotal = 0;
+        const date = new Date();
+
+        musicState.forEach(music => {
+            if (music.musicLengthSec) {
+                collectionLengthSecTotal += music.musicLengthSec;
+            }
+        });
 
         const collectionData = {
             title: title,
             desc: description,
             thumbnails: [musicState[0].thumbnails[0], musicState[1].thumbnails[0], musicState[2].thumbnails[0], musicState[3]!.thumbnails[0] ],
-            ownerID: user.ID,
             music: [...musicState],
             likes: 0,
             tags: [...tagsArr],
             date: date,
             private: false,
-            collectionLengthSec: collectionLengthSec,
+            collectionLengthSec: collectionLengthSecTotal,
         }
-
-
         
-        // await AddCollection(collectionData);
+        await AddCollection(collectionData);
+        router.push('/');
     }
 
 

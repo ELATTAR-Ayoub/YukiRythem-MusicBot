@@ -134,24 +134,17 @@ export default function Page() {
 
     function nextoggleVolumeSeekBartStep() {
         const volume_seekBar = document.getElementById('volume_seekBar_container');
-        console.log('yo');
-        
 
         if (volume_seekBar) {
-            console.log('yo yo');
-            console.log(volume_seekBar.style.display);
-            console.log(volume_seekBar.style);
             
             if (volume_seekBar.style.display == 'flex') {
                 volume_seekBar.style.display = 'hidden';
-                console.log('yo yo hidden');
-                return
+                return;
             }
 
             if (volume_seekBar.style.display == 'hidden') {
                 volume_seekBar.style.display = 'flex';
-                console.log('yo yo flex');
-                return
+                return;
             }
         }
 
@@ -211,11 +204,11 @@ export default function Page() {
                 </div>
 
                 <div className='relative hidden lg:grid content-center'>
-                    <button onClick={nextoggleVolumeSeekBartStep} className='relative grid content-center list-opener' aria-label="volume">
+                    <button onClick={() => nextoggleVolumeSeekBartStep()} className='relative grid content-center list-opener' aria-label="volume">
                         {( volume === 0 ) ? <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/no-volume.svg'} />
                         : <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/volume.svg'} />}
                     </button>
-                    <div id='volume_seekBar_container' className='absolute rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20'>
+                    <div id='volume_seekBar_container' className='absolute hidden rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20'>
                         <div className='seekBar scale-75'>
                             <input 
                                 aria-label="Seek bar"

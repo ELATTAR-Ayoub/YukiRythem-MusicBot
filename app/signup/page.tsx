@@ -15,7 +15,6 @@ import stylescss from '../../styles/page.module.css';
 
 // route
 import { useRouter } from 'next/navigation';
-import { Avatar } from '@nextui-org/react';
 
 export default function Page() {
   const { user, signup } = useAuth()

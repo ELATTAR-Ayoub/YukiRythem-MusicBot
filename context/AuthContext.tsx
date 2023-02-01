@@ -352,27 +352,27 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   }
 
-  const AddCollection = async (collection:Collection) => {
+  const AddCollection = async (collection:any) => {
     if( user.ID && user.UID_Col ) {
       // 
       const collectionData = {
         title: collection.title,
         desc: collection.desc,
         thumbnails: [...collection.thumbnails],
-        ownerID: collection.ownerID,
+        ownerID: user.ID,
+        ownerUID_Col: user.UID_Col,
         music: [...collection.music],
-        likes: collection.likes,
+        likes: 0,
         tags: [...collection.tags],
         date: collection.date,
         private: collection.private,
         collectionLengthSec: collection.collectionLengthSec,
       }
       if (collectionData.title) {
-          console.log('sasas');
           console.log(collectionData);
           try {
-            // const docRef = await addDoc(collection(firestore, "music_collections"), {collectionData});
-            // console.log("Document written with ID: ", docRef.id);
+            const docRef = await addDoc(collection(firestore, "collections"), {collectionData});
+            console.log("Document written with ID: ", docRef.id);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
