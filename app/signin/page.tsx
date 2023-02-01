@@ -92,8 +92,8 @@ export default function Page() {
         <form onSubmit={signinEmail} className={` relative ${styles.flexBetween} flex-col gap-12 w-full text-primary-color-4 dark:text-secondary-color `}>
             
             <div className={`${styles.flexCenter} flex-col relative w-full gap-4`}>
-                <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                    <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email</span>
+                <label className={` primary_label_form `}>
+                    <span  >Email</span>
                     <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
                     {emailError && (
                         <p className=' text-danger-color font-normal mt-2' >
@@ -101,8 +101,8 @@ export default function Page() {
                         </p>
                     )}
                 </label>
-                <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                    <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password</span>
+                <label className={` primary_label_form `}>
+                    <span  >Password</span>
                     <input required type="password" className='player_input' value={password} onChange={handlePasswordChange} />
                     {passwordError && (
                         <>

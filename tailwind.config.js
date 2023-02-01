@@ -18,6 +18,9 @@ module.exports = {
         'primary-color-83': '#BBD1EA',
         'danger-color': '#FF4343',
       },
+      backgroundImage: {
+        'gradient-to-r-90': 'linear-gradient(90deg, bg-primary-color-53 34.48%, #000000 34.48%)',
+      },
       transitionTimingFunction: {
         'out-flex': 'cubic-bezier(0.05, 0.6, 0.4, 0.9)',
       },

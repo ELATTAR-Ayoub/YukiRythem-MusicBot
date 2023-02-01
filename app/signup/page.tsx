@@ -135,8 +135,8 @@ export default function Page() {
                 <img className='w-full h-full bg-cover' src={userAvatar} alt="avatar" />
               </div>  
 
-              <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>@Username </span>
+              <label className={` primary_label_form `}>
+                  <span  >@Username </span>
                   <input required type="text" className='player_input' value={name} onChange={handleNameChange} />
                   {nameError && (
                       <p className=' text-danger-color font-normal mt-2' >
@@ -149,8 +149,8 @@ export default function Page() {
                       </p>
                   )}
               </label>
-              <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Email</span>
+              <label className={` primary_label_form `}>
+                  <span  >Email</span>
                   <input required type="text" className='player_input' value={email} onChange={handleEmailChange} />
                   {emailError && (
                       <p className=' text-danger-color font-normal mt-2' >
@@ -163,8 +163,8 @@ export default function Page() {
                       </p>
                   )}
               </label>
-              <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Password</span>
+              <label className={` primary_label_form `}>
+                  <span  >Password</span>
                   <input required type="password" className='player_input' value={password} onChange={handlePasswordChange} />
                   {passwordError && (
                       <>
@@ -180,8 +180,8 @@ export default function Page() {
                       </>
                   )}
               </label>
-              <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                  <span className='relative top-[38px] left-4 transition-all duration-300 pointer-events-none '>Confirm Password</span>
+              <label className={` primary_label_form `}>
+                  <span  >Confirm Password</span>
                   <input required type="password" className='player_input' value={passwordre} onChange={handlePasswordreChange} />
                   {passwordreError && (
                       <p className=' text-danger-color font-normal mt-2' >
@@ -192,7 +192,7 @@ export default function Page() {
             </div>
 
 
-            <label className={` relative ${stylescss.label} w-full font-semibold text-base dark:text-primary-color-4 text-secondary-color`}>
+            <label className={` primary_label_form dark:text-primary-color-4 text-secondary-color`}>
                 <p className='relative  my-4'>What&apos;s your gender?</p>
                 <div className={` relative ${styles.flexStart} w-full `}>
                     <label className={` ${styles.flexCenter} relative font-normal gap-4 mr-12`}>

@@ -107,7 +107,7 @@ const ProfilePage = ({ params }: any) => {
     };
 
     return (
-        <div className={` ${styles.flexStart} text-secondary-color bg-primary-color-4  dark:text-primary-color-4 dark:bg-secondary-color relative w-full p-8 flex-col gap-16 overflow-hidden `}>
+        <section className={` ${styles.flexStart} text-secondary-color bg-primary-color-4  dark:text-primary-color-4 dark:bg-secondary-color relative w-full p-8 flex-col gap-16 overflow-hidden `}>
             <div className={` relative bg-primary-color-53 w-full h-[20vh]`}>
                 <div className={` grid grid-cols-[1fr_1fr] content-end absolute -bottom-8 left-0 gap-2 w-72 `}>
                     <div className='w-32 h-32 rounded overflow-hidden bg-white pointer-events-none'>
@@ -213,7 +213,7 @@ const ProfilePage = ({ params }: any) => {
                     }
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 // components
 import SolidSvg from '@/components/SolidSVG';
+import EmptyListDiv from './EmptyListDiv';
 
 // styles
 import styles from '../styles';
@@ -13,7 +14,11 @@ import stylescss from '../styles/page.module.css';
 import { selectMusicState, SET_CURRENT, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, ADD_ITEM, DELETE_ITEM, SET_PLAYING } from "@/store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const MusicList = () => {
+interface MusicListProb {
+  mode: 'player' | 'collection',
+}
+
+const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
    // call redux states
    const musicState = useSelector(selectMusicState);
    const current = useSelector(selectCurrentMusic);
@@ -93,46 +98,75 @@ const MusicList = () => {
   }
 
   return (
-    <div className={`relative ${styles.flexEnd} flex-col w-full h-full bg-primary-color-83 dark:bg-primary-color-4 p-8 rounded-t-lg `}>
+    <div 
+    className={` ${mode == 'player' ?
+     'dark:bg-primary-color-83 bg-primary-color-53 p-8' : 
+     ''
+    } 
+      relative ${styles.flexEnd} flex-col w-full h-full min-h-[40vh] rounded-t-lg 
+    `} >
 
-      <div className='grid content-center absolute -top-8 bg-primary-color-83 dark:bg-primary-color-4 rounded-t-lg p-1 right-8'>
+      {(mode == "player")
+      
+      ?
+      <div className='grid content-center absolute -top-8 dark:bg-primary-color-83 bg-primary-color-53 rounded-t-lg p-1 right-8'>
           <button onClick={() => closeMusicList()} title='Close music list' aria-label="close music list">
-              <SolidSvg width={'24px'} height={'24px'} color={'#04080F'} className={'SVGB2W'} path={'/close.svg'} />
+              <SolidSvg width={'24px'} height={'24px'} color={'#BBD1EA'} className={'SVGW2B'} path={'/close.svg'} />
           </button>
       </div>
+      :
+      <></>
+      }
 
-      <div className={`relative ${styles.flexStart} gap-4 flex-col w-full h-full overflow-y-auto `}>
-        {musicState.map((musicStateSimble, index) => (
-            <div key={musicStateSimble.ID} className={`relative grid grid-cols-[84px_1fr_118px] sm:grid-cols-[96px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
-                <div className='h-full'>
-                  <img className='w-full bg-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
-                </div>
-                <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
-                <div className={`relative ${styles.flexCenter} gap-4`}>
-                  <div className='grid content-center btn-rounded-primary'>
-                    <button onClick={() => handlePlayPause(index)} aria-label="play/pause_song_button">
-                      {(!playing || current !== index) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
-                      : <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/pause.svg'} />}
-                    </button>
+      { (musicState && musicState.length > 0) 
+      
+      ? 
+
+      <div className={`relative ${styles.flexStart} gap-4 flex-col w-full h-full max-h-[500px] py-2 overflow-y-auto `}>
+          {musicState.map((musicStateSimble, index) => (
+              <div key={musicStateSimble.ID} className={`relative grid grid-cols-[74px_1fr_118px] sm:grid-cols-[84px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
+                  <div className='h-full'>
+                    <img className='w-full h-full bg-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
                   </div>
-                  <div className='grid content-center btn-rounded-primary'>
-                      <button onClick={() => handleDelete(musicStateSimble.ID)} aria-label="open_music_list">
-                          <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-[1.5]'} path={'/garbage.svg'} />
+                  <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
+                  <div className={`relative ${styles.flexCenter} gap-4`}>
+                    <div className='grid content-center btn-rounded-primary'>
+                      <button onClick={() => handlePlayPause(index)} aria-label="play/pause_song_button">
+                        {(!playing || current !== index) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
+                        : <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/pause.svg'} />}
                       </button>
+                    </div>
+                    <div className='grid content-center btn-rounded-primary'>
+                        <button onClick={() => handleDelete(musicStateSimble.ID)} aria-label="open_music_list">
+                            <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-[1.5]'} path={'/garbage.svg'} />
+                        </button>
+                    </div>
                   </div>
-                </div>
-            </div>
-          ))}
+              </div>
+            ))}
+        </div>
+
+      :
+
+      <div className={`relative ${styles.flexCenter} gap-4 flex-col w-full h-full overflow-y-auto `}>
+          <EmptyListDiv
+            header="This list is empty"
+            svgPath={"/robot_resting.svg"}
+            subHeader={"Try using the input bellow to add some beat!!"}
+            subHeaderPath={''}
+          />
       </div>
-        
+    
+    }
+      
       <form onSubmit={searchMusic} className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 dark:text-secondary-color `}>
-          <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-              <span className='relative top-[38px] left-4 transition-all duration-300'>Music name/URL:</span>
+          <label className={` primary_label_form `}>
+              <span  >Music name/URL:</span>
               <input required type="text" value={inputValue} onChange={handleChange} className='player_input'  />
           </label>
           
           <button aria-label="search_music" type="button" onClick={searchMusic} className='absolute right-2 top-[30px] btn-rounded-primary' >
-              <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W'} path={'/search.svg'} />
+              <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W'} path={(mode == 'player') ? '/search.svg' : '/plus.svg'} />
           </button>
       </form>
     </div>

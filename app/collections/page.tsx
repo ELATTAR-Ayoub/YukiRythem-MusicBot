@@ -12,8 +12,8 @@ import { useRouter } from 'next/navigation';
 export default function ProfilePage()  {
 
     return (
-        <div>
+        <section>
             <h1>Collections/create</h1>
-        </div>
+        </section>
     );
 }

@@ -40,12 +40,14 @@ interface Collection {
   ID: string;
   title: string;
   desc: string;
-  thumbnails: string;
+  thumbnails: string[];
   ownerID: string;
   music: Music[];
   likes: number;
-  categories: string[];
+  tags: string[];
   date: Date;
+  private: Boolean;
+  collectionLengthSec?: number;
 }
 
 // Type for our user
@@ -350,9 +352,37 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   }
 
+  const AddCollection = async (collection:Collection) => {
+    if( user.ID && user.UID_Col ) {
+      // 
+      const collectionData = {
+        title: collection.title,
+        desc: collection.desc,
+        thumbnails: [...collection.thumbnails],
+        ownerID: collection.ownerID,
+        music: [...collection.music],
+        likes: collection.likes,
+        tags: [...collection.tags],
+        date: collection.date,
+        private: collection.private,
+        collectionLengthSec: collection.collectionLengthSec,
+      }
+      if (collectionData.title) {
+          console.log('sasas');
+          console.log(collectionData);
+          try {
+            const docRef = await addDoc(collection(firestore, "music_collections"), {collectionData});
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+      }
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic }}>
-      {children}
+    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic, AddCollection }}>
+      {loading ? null : children}
     </AuthContext.Provider>
   )
 }

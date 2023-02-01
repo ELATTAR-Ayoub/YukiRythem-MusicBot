@@ -80,7 +80,7 @@ const Header = () => {
 
   return (
     <section
-      className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 ${
+      className={` ${styles.flexBetween} fixed top-0 w-full 2xl:max-w-[1440px] sm:px-7 px-7 z-40 bg-primary-color-4 dark:bg-secondary-color transition-all duration-300 overflow-hidden lg:overflow-visible ${
         isScrollingUp ? " h-0" : "h-[10vh]"
       }`}
     >
@@ -98,9 +98,15 @@ const Header = () => {
             <Link href="/collections" className={`${pathname === '/collections' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Collections</Link>
           </li> */}
           { (!user.ID ) ?
+          <>
           <li >
             <Link href="/signin" className={`${pathname === '/signin' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign in</Link>
-          </li> : 
+          </li>
+          <li >
+            <Link href="/signup" className={`${pathname === '/signup' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Sign up</Link>
+          </li>
+          </>
+           : 
             <ProfileNav mode={'md'} />
           }
         </ul>

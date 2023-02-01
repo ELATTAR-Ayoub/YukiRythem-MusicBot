@@ -26,6 +26,7 @@ export interface MusicState {
     currentMusic: number;
     musicLoading: boolean;
     musicPlaying: boolean;
+    musicVolume: number;
 }
 
 // Initial state
@@ -34,6 +35,7 @@ const initialState: MusicState = {
     currentMusic: 0,
     musicLoading: false,
     musicPlaying: true,
+    musicVolume: 0.7,
 };
 
 // Actual Slice
@@ -92,6 +94,13 @@ export const musicSlice = createSlice({
       };
     },
 
+    SET_VOLUME(state, action) {
+      return {
+        ...state,
+        musicVolume: action.payload,
+      };
+    },
+
     SET_CURRENT(state, action) {
       return {
         ...state,
@@ -119,7 +128,7 @@ export const musicSlice = createSlice({
     }, */
 });
 
-export const { setMusicState, SET_CURRENT, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING, DELETE_ARR } = musicSlice.actions;
+export const { setMusicState, SET_CURRENT, ADD_ITEM, DELETE_ITEM, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING, SET_VOLUME, DELETE_ARR } = musicSlice.actions;
 
 export const selectMusicState = (state: AppState) => state.music.musicState;
 
@@ -128,5 +137,7 @@ export const selectCurrentMusic = (state: AppState) => state.music.currentMusic;
 export const selectMusicLoading = (state: AppState) => state.music.musicLoading;
 
 export const selectMusicPlaying = (state: AppState) => state.music.musicPlaying;
+
+export const selectMusicVolume = (state: AppState) => state.music.musicVolume;
 
 export default musicSlice.reducer;

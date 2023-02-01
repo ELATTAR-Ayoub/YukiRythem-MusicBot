@@ -13,7 +13,7 @@ import stylescss from '../styles/page.module.css';
 import SolidSvg from './SolidSVG';
 
 // redux
-import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "../store/musicSlice";
+import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, selectMusicVolume, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "../store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const NativeVideo = ({ videoId }: { videoId: string }) => {
@@ -22,10 +22,10 @@ const NativeVideo = ({ videoId }: { videoId: string }) => {
     const current = useSelector(selectCurrentMusic);
     const playing = useSelector(selectMusicPlaying);
     const MusicLoading = useSelector(selectMusicLoading);
+    const volume = useSelector(selectMusicVolume);
     const dispatch = useDispatch();
 
     // player config
-    const [volume, setVolume] = useState(0.3);
     const [looping, setLooping] = useState(false);
     const [shuffling, setShuffling] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);

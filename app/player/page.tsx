@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link';
 
 // components
 import NativeVideo from '@/components/NativeVideo';
@@ -13,7 +14,7 @@ import styles from '@/styles/index';
 import stylescss from '@/styles/page.module.css';
 
 // redux
-import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, ADD_ITEM } from "@/store/musicSlice";
+import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, selectMusicVolume, ADD_ITEM, SET_VOLUME } from "@/store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 // auth
@@ -25,6 +26,7 @@ export default function Page() {
     // call redux states
     const musicState = useSelector(selectMusicState);
     const current = useSelector(selectCurrentMusic);
+    const volume = useSelector(selectMusicVolume);
     const musicPlaying = useSelector(selectMusicPlaying);
     const musicLoading = useSelector(selectMusicLoading);
     const dispatch = useDispatch();
@@ -130,6 +132,31 @@ export default function Page() {
         await likeMusic(Music_small);
     };
 
+    function nextoggleVolumeSeekBartStep() {
+        const volume_seekBar = document.getElementById('volume_seekBar_container');
+        console.log('yo');
+        
+
+        if (volume_seekBar) {
+            console.log('yo yo');
+            console.log(volume_seekBar.style.display);
+            console.log(volume_seekBar.style);
+            
+            if (volume_seekBar.style.display == 'flex') {
+                volume_seekBar.style.display = 'hidden';
+                console.log('yo yo hidden');
+                return
+            }
+
+            if (volume_seekBar.style.display == 'hidden') {
+                volume_seekBar.style.display = 'flex';
+                console.log('yo yo flex');
+                return
+            }
+        }
+
+    }
+
 
   return (
     <section className={` ${styles.flexCenter} flex-col relative overflow-hidden w-full h-[90vh]`} >
@@ -183,6 +210,28 @@ export default function Page() {
                     </button>
                 </div>
 
+                <div className='relative hidden lg:grid content-center'>
+                    <button onClick={nextoggleVolumeSeekBartStep} className='relative grid content-center list-opener' aria-label="volume">
+                        {( volume === 0 ) ? <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/no-volume.svg'} />
+                        : <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/volume.svg'} />}
+                    </button>
+                    <div id='volume_seekBar_container' className='absolute rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20'>
+                        <div className='seekBar scale-75'>
+                            <input 
+                                aria-label="Seek bar"
+                                className='w-full SeekBar'
+                                id='seekBar_range'
+                                type='range' 
+                                min={0} 
+                                max={1} 
+                                step={0.1}
+                                value={volume} 
+                                onChange={e => (dispatch(SET_VOLUME(e.target.value)))} 
+                                />
+                        </div>
+                    </div>
+                </div>
+
                 <div className={` ${styles.flexBetween}  flex-col relative overflow-hidden text-center sm:text-left sm:order-first`}>
                     <div title={(musicState[current]) ? musicState[current].title : "Search for music by inserting the name or the URL in the input below, let's jam!"} className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{(musicState[current]) ? musicState[current].title : "Search for music by inserting the name or the URL in the input below, let's jam!"}</div>
                     <div title={(musicState[current]) ? musicState[current].owner.name : ''} className={`${stylescss.elleipsAfterFirstLine} text-sm w-full`}>by {(musicState[current]) ? musicState[current].owner.name : 'ELATTAR Ayub'}</div>
@@ -195,9 +244,9 @@ export default function Page() {
                 </div>
 
                 <div  className='grid content-center'>
-                    <button aria-label="Add_to_my_list">
+                    <Link href={'collections/create'} aria-label="Add_to_my_list">
                         <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/plus.svg'} />
-                    </button>
+                    </Link>
                 </div>
 
                 <div className={`hidden lg:flex items-center justify-end gap-6`}>
@@ -223,8 +272,8 @@ export default function Page() {
                 </div>
                 <div className='w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
                     <form onSubmit={searchMusic} className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 dark:text-secondary-color `}>
-                        <label className={` relative ${stylescss.label} w-full font-semibold text-base `}>
-                            <span className='relative top-[38px] left-4 transition-all duration-300'>Music name/URL:</span>
+                        <label className={` primary_label_form `}>
+                            <span  >Music name/URL:</span>
                             <input required type="text" value={inputValue} onChange={handleChange} className='player_input'  />
                         </label>
                         
@@ -237,7 +286,7 @@ export default function Page() {
         </div>
 
         <div id='music_list_popup' className='fixed bottom-0 h-0 overflow-hidden w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px] rounded-t-lg z-30 transition-all duration-300'>
-            <MusicList />
+            <MusicList mode={'player'}/>
         </div>
         
     </section>

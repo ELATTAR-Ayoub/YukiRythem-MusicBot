@@ -153,6 +153,42 @@ body {
   animation: radiant-animation 5s ease-in-out infinite;
 }
 
+
+.progress_bar, .progress_bar_2 {
+  position: relative;
+  height: 3px;
+  /* background: linear-gradient(90deg, var(--primary-color-53) 34.48%, var(--primary-color-4) 34.48%); */
+  @apply z-10 bg-gradient-to-r from-primary-color-53 dark:via-primary-color-4 dark:to-primary-color-4 via-secondary-color to-secondary-color;
+}
+
+.progress_bar_2 {
+  @apply z-10 bg-gradient-to-r from-primary-color-53 via-primary-color-53 dark:via-primary-color-53 dark:to-primary-color-4  to-secondary-color;
+}
+
+.progress_bar::before, .progress_bar::after,
+.progress_bar_2::before, .progress_bar_2::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 100%;
+  background-color: var(--primary-color-53);
+  opacity: inherit;
+  width: 12px;
+  height: 12px;
+}
+
+.progress_bar::before,
+.progress_bar_2::before{
+  left: -3px;
+}
+
+.progress_bar::after,
+.progress_bar_2::after{
+  right: -3px;
+  @apply dark:bg-primary-color-4 bg-secondary-color
+}
+
 .list-opener:focus ul {
   display: block;
 }
@@ -226,8 +262,30 @@ body {
 
 /*styling the seek bar of the music in the player*/
 
+.primary_label_form {
+  @apply w-full font-semibold text-base text-secondary-color dark:text-primary-color-4  relative ;
+}
+
+.primary_label_form span {
+ @apply relative top-[38px] left-4 transition-all duration-300 pointer-events-none 
+}
+
+.primary_label_form .wide_span {
+ @apply relative top-[2.5px] left-1 transition-all duration-300 pointer-events-none w-full pr-8 ;
+}
+
+.primary_label_form:has(input:focus) span, .primary_label_form:has(input:valid) span {
+  top: -3px;
+  left: 0;
+  @apply dark:text-primary-color-53 text-primary-color-77 pr-0;
+}
+
 .player_input {
-  @apply transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-2 focus:outline-primary-color-53 focus:outline-2 dark:bg-primary-color-4;
+  @apply dark:bg-secondary-color bg-primary-color-4 transition-all rounded-md overflow-hidden w-full p-3 border-primary-color-77 border-[3px] ;
+}
+
+.player_input:focus {
+  outline: 1px solid var(--primary-color-77);
 }
 
 input[type=range] {

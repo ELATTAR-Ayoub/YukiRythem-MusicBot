@@ -14,12 +14,6 @@
     -webkit-box-orient: vertical;
 }
 
-.label:has(input:focus) span, .label:has(input:valid) span {
-    top: 0;
-    left: 0;
-    color: var(--primary-color-53);
-}
-
 .darkOverlay::after {
     content: '';
     position: absolute;
