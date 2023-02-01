@@ -371,8 +371,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
           console.log('sasas');
           console.log(collectionData);
           try {
-            const docRef = await addDoc(collection(firestore, "music_collections"), {collectionData});
-            console.log("Document written with ID: ", docRef.id);
+            // const docRef = await addDoc(collection(firestore, "music_collections"), {collectionData});
+            // console.log("Document written with ID: ", docRef.id);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
