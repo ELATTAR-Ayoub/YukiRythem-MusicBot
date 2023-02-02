@@ -101,6 +101,32 @@ const PlayerUI = () => {
         await likeMusic(Music_small);
     };
 
+    function copy2ClipBoard(text: string) {
+        navigator.clipboard.writeText(text)
+        .then(() => {
+          console.log('Link copied to clipboard');
+        })
+        .catch((error) => {
+          console.error('Failed to copy link: ', error);
+        });
+      }
+    
+      const shareLink = async (url: string, title:string) => {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: title,
+              url: url,
+            });
+            console.log('Link shared successfully');
+          } catch (error) {
+            console.error('Error sharing the link: ', error);
+          }
+        } else {
+          console.error('This browser does not support the Web Share API');
+        }
+      };
+
 
   return (
     <div className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative overflow-hidden h-full w-full `}>
@@ -118,10 +144,10 @@ const PlayerUI = () => {
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/small_menu.svg'} />
 
                     <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 top-10 right-0 z-50'>
-                        <li className=' py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                        <li className=' disabled py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Download this song
                         </li>
-                        <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                        <li onClick={()=>shareLink(`${musicState[current]!.URL}`, `Listen to this amazing Song!, ${musicState[current]!.title}`)} className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Share this song URL
                         </li>
                     </ul>
@@ -198,11 +224,11 @@ const PlayerUI = () => {
                 <button className='relative grid content-center list-opener' aria-label="open_player_menu">
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/small_menu.svg'} />
 
-                    <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 top-10 right-0 z-50'>
-                        <li className=' py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                    <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 bottom-10 right-0 z-50'>
+                        <li className=' disabled py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Download this song
                         </li>
-                        <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                        <li onClick={()=>shareLink(`${musicState[current]!.URL}`, `Listen to this amazing Song!, ${musicState[current]!.title}`)} className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Share this song URL
                         </li>
                     </ul>

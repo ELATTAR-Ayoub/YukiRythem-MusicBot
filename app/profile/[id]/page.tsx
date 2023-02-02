@@ -235,7 +235,7 @@ const ProfilePage = ({ params }: any) => {
                 
             </div>
 
-            <div className={` grid grid-cols-2 flex-col w-full gap-4`}>
+            <div className={` grid grid-cols-1 lg:grid-cols-2 flex-col w-full gap-4`}>
                 <div id='profile_collections' className={` ${styles.flexStart} flex-col w-full`}>
                     <div className={` ${styles.flexBetween} w-full mb-4`}>
                         <h2 className={` ${styles.h2Section} `}>{`${profileUser.userName}'s collections`}</h2>

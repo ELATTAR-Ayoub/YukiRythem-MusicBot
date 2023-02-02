@@ -140,13 +140,13 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
                   </div>
                   <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
                   <div className={`relative ${styles.flexCenter} gap-4`}>
-                    <div className='grid content-center btn-rounded-primary'>
+                    <div className='grid content-center btn-rounded-secondary'>
                       <button onClick={() => handlePlayPause(index)} aria-label="play/pause_song_button">
                         {(!playing || current !== index) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
                         : <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/pause.svg'} />}
                       </button>
                     </div>
-                    <div className='grid content-center btn-rounded-primary'>
+                    <div className='grid content-center btn-rounded-secondary'>
                         <button onClick={() => handleDelete(musicStateSimble.ID)} aria-label="open_music_list">
                             <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-[1.5]'} path={'/garbage.svg'} />
                         </button>
@@ -177,7 +177,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
               <input required type="text" value={inputValue} onChange={handleChange} className='player_input'  />
           </label>
           
-          <button aria-label="search_music" type="button" onClick={searchMusic} className='absolute right-2 top-[30px] btn-rounded-primary' >
+          <button aria-label="search_music" type="button" onClick={searchMusic} className='absolute right-2 top-[30px] btn-rounded-secondary' >
               <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W'} path={(mode == 'player') ? '/search.svg' : '/plus.svg'} />
           </button>
       </form>

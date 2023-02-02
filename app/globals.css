@@ -128,6 +128,10 @@ body {
   @apply rounded-full bg-primary-color-4 dark:bg-secondary-color hover:bg-primary-color-77 dark:hover:bg-primary-color-83 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
 }
 
+.btn-rounded-secondary {
+  @apply rounded-full bg-primary-color-77 dark:bg-primary-color-53 hover:bg-secondary-color dark:hover:bg-primary-color-4 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
+}
+
 .link_footer {
   @apply underline text-primary-color-77 dark:text-primary-color-53 hover:text-primary-color-53 dark:hover:text-primary-color-77  transition-all duration-300;
 }
@@ -155,6 +159,10 @@ body {
 
 .volume_seekBar_father:hover #volume_seekBar_container {
   display: flex;
+}
+
+.disabled {
+  @apply opacity-50 pointer-events-none;
 }
 
 

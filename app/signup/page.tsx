@@ -13,6 +13,9 @@ import { useAuth } from '@/context/AuthContext'
 import styles from '../../styles';
 import stylescss from '../../styles/page.module.css';
 
+// components
+import Loader from '@/components/loader';
+
 // route
 import { useRouter } from 'next/navigation';
 
@@ -38,6 +41,7 @@ export default function Page() {
   const [emailErrorTaken, setEmailErrorTaken] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordreError, setPasswordreError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,19 +83,18 @@ export default function Page() {
 
   const signupEmail = async (event: React.MouseEvent<HTMLButtonElement>  | React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log('start');
+    setLoading(true);
 
     try {
       await signup(email, password, userAvatar, name, gender, marketingEmails, shareData);
-      console.log('signed in');
       // router.push(`/profile/${user.uid}`)
+      setLoading(false);
       router.push(`/`)
     } catch (err) {
       console.log(err)
-      console.log('err up');
+      setLoading(false);
     }
 
-    console.log('finished up');
   }
 
   const signupGoogle = () => {
@@ -104,6 +107,16 @@ export default function Page() {
 
   return (
     <section className={`${styles.flexCenter} flex-col text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
+      
+      {(loading)
+        ? 
+        <div className={` fixed top-0 left-0 w-screen h-screen z-50 `}>
+            <Loader/>
+        </div>
+        :
+        <></>
+        }
+      
       <div className={`${styles.flexCenter} flex-col w-full sm:max-w-[675px]  p-8 gap-8 mb-6 `}>
         <div className={`${styles.flexStart} relative w-full flex-col`}>
           <h1 className={` ${styles.h1Section} text-center mb-0`}>Welcome to <span className='gradient1'>YukiRythem</span>  </h1>

@@ -46,6 +46,11 @@ const Header = () => {
   const router = useRouter();
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   function openNavMenu() {
     const element = document.getElementById("navMenu");
@@ -94,9 +99,25 @@ const Header = () => {
           <li >
             <Link href="/player" className={`${pathname === '/player' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Player</Link>
           </li>
-          {/* <li >
-            <Link href="/collections" className={`${pathname === '/collections' ? ' activeLink' : ''} transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}>Collections</Link>
-          </li> */}
+
+          <div className="relative">
+            <button 
+              onClick={toggleDropdown} 
+              className={`${pathname === ('/collections' || '/collections/create') ? ' activeLink' : ''} ${styles.flexCenter} gap-2 transition-all duration-200 hover:bg-primary-color-53 dark:hover:bg-primary-color-4 dark:hover:text-secondary-color px-4 py-1`}
+            >
+              Collections
+              <SolidSvg width={'18px'} height={'18px'} className={'SVGW2B scale-75'} color={'#DAE3E5 '} path={'/arrow-down.svg'} />
+            </button>
+            {isOpen && (
+              <div className={` origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg text-primary-color-4 dark:text-secondary-color bg-gray-100 dark:bg-primary-color-4 `}>
+                <div className={` rounded-md shadow-xs ${styles.flexStart} flex-col list-none w-full gap-2 p-4 `}>
+                  <a href="/collections" className="block p-4 py-2 text-sm gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">Collections hub</a>
+                  <a href="/collections/create" className="block p-4 py-2 text-sm gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">Create collection</a>
+                </div>
+              </div>
+            )}
+          </div>
+
           { (!user.ID ) ?
           <>
           <li >
@@ -110,10 +131,8 @@ const Header = () => {
             <ProfileNav mode={'md'} />
           }
         </ul>
+
         <LightModeBtn />
-
-        
-
 
       </div>
 

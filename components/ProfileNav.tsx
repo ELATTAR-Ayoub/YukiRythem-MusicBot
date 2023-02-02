@@ -69,17 +69,12 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
     const pathname = usePathname();
 
     const logoutEmail = async () => {
-        console.log('start');
-    
         try {
-          console.log('start2');
           await logout();
-          console.log('logout');
           console.log(user);
           router.push(`/`)
         } catch (err) {
           console.log(err)
-          console.log('err in');
         }
     
         console.log('finished logout');
@@ -108,13 +103,13 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
   
   
             <div id={'profile_menu_ref'}
-            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 bg-gray-100 rounded h-0 z-[51] overflow-hidden shadow-md`} >
+            className={` ${mode == 'md' ? 'top-24' :  'bottom-24 ' } ${styles.flexStart} flex-col absolute w-full transition-all duration-300 left-0 text-primary-color-4 dark:text-secondary-color bg-gray-100 dark:bg-primary-color-4 rounded h-0 z-[51] overflow-hidden shadow-md`} >
               <div className={`${styles.flexCenter} flex-col relative w-full gap-4 p-4`}>
                 <ul className={` ${styles.flexStart} flex-col list-none w-full gap-2 `}>
                   {Profile_menu.map(({ title, path, iconPath }) => (
-                    <li key={title} className={`${pathname === path ? 'font-bold bg-primary-color-77' : ''} ${styles.flexStart} gap-2 transition-all duration-200 hover:bg-gray-200 px-4 py-2 w-full rounded`}>
+                    <li key={title} className={`${pathname === path ? 'font-bold bg-primary-color-77' : ''} ${styles.flexStart} gap-2 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 px-4 py-2 w-full rounded`}>
                       <div className={` ${styles.flexCenter} w-6 h-6 rounded-full`}>
-                        <SolidSvg width={'24px'} height={'24px'} className={' z-10 scale-[0.7]'} color={'#04080F'} path={iconPath} />
+                        <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W z-10 scale-[0.7]'} color={'#04080F'} path={iconPath} />
                       </div>
                       <Link href={path} className='w-full h-full'>{title}</Link>
                     </li>

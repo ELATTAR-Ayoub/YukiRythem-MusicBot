@@ -59,6 +59,10 @@ export const Footer_links = [
         label: "sign up",
         path: "/signup",
       },
+      {
+        label: "sign in",
+        path: "/signin",
+      },
     ]
   },
   {
@@ -69,17 +73,17 @@ export const Footer_links = [
         path: "/about",
       },
       {
-        label: "Benefits",
-        path: "#skills",
+        label: "Collections hub",
+        path: "/collections",
       },
       {
-        label: "Features",
-        path: "#features",
+        label: "Craete a playlist",
+        path: "/collections/create",
       },
     ]
   },
   {
-    title: 'Developer',
+    title: 'Support Developer',
     links: [
       {
         label: "Twitter",
