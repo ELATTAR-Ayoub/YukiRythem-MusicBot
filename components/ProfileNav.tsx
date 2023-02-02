@@ -90,7 +90,7 @@ const ProfileNav: React.FC<NavProps> = ({ mode = "md" }, {ref}) => {
             <div onClick={toggleProfileMenu} className={` ${styles.flexBetween} w-full gap-8 text-secondary-color dark:text-primary-color-4 hover:bg-gray-100 dark:hover:bg-gray-200 hover:text-primary-color-4 p-2 rounded`}>
               <div className={` ${styles.flexEnd} gap-2 `}>
                 <div className='w-12 h-12 rounded-full overflow-hidden bg-white'>
-                  <img className=' w-full h-full bg-cover ' src={user.avatar} alt="user_avatar" />
+                  <img className=' w-full h-full object-cover ' src={user.avatar} alt="user_avatar" />
                 </div>
                 <div 
                 className={` ${mode == 'md' ? 'w-24' :  ' w-3/4' } relative flex justify-center items-start flex-col text-sm overflow-hidden`} >

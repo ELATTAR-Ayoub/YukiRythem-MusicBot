@@ -153,6 +153,10 @@ body {
   animation: radiant-animation 5s ease-in-out infinite;
 }
 
+.volume_seekBar_father:hover #volume_seekBar_container {
+  display: flex;
+}
+
 
 .progress_bar, .progress_bar_2 {
   position: relative;

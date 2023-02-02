@@ -93,7 +93,7 @@ const Tryit = () => {
         className=' h-full overflow-hidden'>
           {Array.from({length: 70}, (_, i) => (
             <div className=' inline-block py-0 px-2' key={i} >
-              <div className=' w-3 rounded-t-sm absolute bottom-0 bg_gradient1 bg-cover bg-center bg-fixed' ref={(el) => el && (vpRefs.current[i] = el)}></div>
+              <div className=' w-3 rounded-t-sm absolute bottom-0 bg_gradient1 object-cover bg-center bg-fixed' ref={(el) => el && (vpRefs.current[i] = el)}></div>
             </div>
           ))}
         </motion.div>

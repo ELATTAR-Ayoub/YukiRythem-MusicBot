@@ -40,7 +40,7 @@ interface Music {
 }
   
 interface Collection {
-    ID: string;
+    UID_Col: string;
     title: string;
     desc: string;
     thumbnails: string;
@@ -75,6 +75,7 @@ export default function ProfilePage()  {
     const [tagsError, setTagsError] = useState(false);
     const [listError, setListError] = useState(false);
     const [listErrorStep2, setListErrorStep2] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +116,7 @@ export default function ProfilePage()  {
             nextStep(1);
             return true
         }
-        if (titleError || titleErrorTaken || descriptionError || tagsError) {
+        if (titleError || titleErrorTaken || descriptionError || tagsError || title==='' || description==='' || tags==='') {
             setListErrorStep2(true);
             return true
         }
@@ -123,17 +124,16 @@ export default function ProfilePage()  {
     }
 
     function nextStep(step:number) {
-        /* if (musicState.length < 3) {
+        if (musicState.length < 3) {
             setListError(true)
             return
-        } */
+        }
 
         const collections_create_step1 = document.getElementById('collections_create_step1');
         const collections_create_step2 = document.getElementById('collections_create_step2');
 
         if (collections_create_step1 && collections_create_step2) {
             if (step === 2) {
-                console.log('hello? 2');
                 collections_create_step1.style.width = '0px';
                 collections_create_step2.style.width = '100%';
                 setStep(2);
@@ -157,8 +157,11 @@ export default function ProfilePage()  {
             return
         }
 
+        setLoading(true);
+
         var collectionLengthSecTotal = 0;
         const date = new Date();
+        var thumbnailsArr = [];
 
         musicState.forEach(music => {
             if (music.musicLengthSec) {
@@ -166,10 +169,21 @@ export default function ProfilePage()  {
             }
         });
 
+        
+        console.log(musicState);
+        console.log(musicState[0].thumbnails[0]);
+
+        if (musicState.length > 3) {
+            thumbnailsArr = [musicState[0].thumbnails[0], musicState[1].thumbnails[0], musicState[2].thumbnails[0], musicState[3].thumbnails[0]];
+            return
+        } else {
+            thumbnailsArr = [musicState[0].thumbnails[0], musicState[1].thumbnails[0], musicState[2].thumbnails[0]];
+        }
+
         const collectionData = {
             title: title,
             desc: description,
-            thumbnails: [musicState[0].thumbnails[0], musicState[1].thumbnails[0], musicState[2].thumbnails[0], musicState[3]!.thumbnails[0] ],
+            thumbnails: [...thumbnailsArr],
             music: [...musicState],
             likes: 0,
             tags: [...tagsArr],
@@ -177,14 +191,27 @@ export default function ProfilePage()  {
             private: false,
             collectionLengthSec: collectionLengthSecTotal,
         }
+
+        console.log(collectionData);
         
         await AddCollection(collectionData);
-        router.push('/');
+        setLoading(false);
+        router.push(`/profile/${user.ID}`);
     }
 
 
     return (
         <section className={` ${styles.flexCenter} text-secondary-color bg-primary-color-4  dark:text-primary-color-4 dark:bg-secondary-color relative gap-8 min-h-[90vh] w-full flex-col overflow-hidden `}>
+            {(loading)
+            ? 
+            <div className={` fixed top-0 left-0 w-screen h-screen z-50 `}>
+                <Loader/>
+            </div>
+            :
+            <></>
+            }
+            
+            
             <div className={` ${styles.flexStart} w-full flex-col lg:flex-row gap-0 lg:gap-6 px-8`}>
                 <h1 className={` ${styles.h1Section} text-center md:text-left lg:my-0`}><span className='gradient1'>Create</span> Your Own Playlists </h1>
                 <p className={`  ${styles.Paragraph} text-center md:text-left `}>{"Create and share your ultimate audio library with the world! This page lets you curate a mix of your favorite podcasts and songs in one personalized collection."}</p>

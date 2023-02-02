@@ -37,11 +37,13 @@ interface Music_small {
 }
 
 interface Collection {
-  ID: string;
+  UID_Col: string;
   title: string;
   desc: string;
   thumbnails: string[];
   ownerID: string;
+  ownerUID_Col: string;
+  ownerUserName: string;
   music: Music[];
   likes: number;
   tags: string[];
@@ -346,21 +348,22 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   }
 
-  const AddCollection = async (collection:any) => {
+  const AddCollection = async (collection_0001:any) => {
     if( user.ID && user.UID_Col ) {
       // 
       const collectionData = {
-        title: collection.title,
-        desc: collection.desc,
-        thumbnails: [...collection.thumbnails],
+        title: collection_0001.title,
+        desc: collection_0001.desc,
+        thumbnails: [...collection_0001.thumbnails],
         ownerID: user.ID,
         ownerUID_Col: user.UID_Col,
-        music: [...collection.music],
+        ownerUserName: user.userName,
+        music: [...collection_0001.music],
         likes: 0,
-        tags: [...collection.tags],
-        date: collection.date,
-        private: collection.private,
-        collectionLengthSec: collection.collectionLengthSec,
+        tags: [...collection_0001.tags],
+        date: collection_0001.date,
+        private: collection_0001.private,
+        collectionLengthSec: collection_0001.collectionLengthSec,
       }
       if (collectionData.title) {
           console.log(collectionData);

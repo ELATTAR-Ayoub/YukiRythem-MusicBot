@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 // components
 import SolidSvg from '@/components/SolidSVG';
 import EmptyListDiv from './EmptyListDiv';
+import Loader from './loader';
 
 // styles
 import styles from '../styles';
@@ -27,6 +28,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
    const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
@@ -52,6 +54,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
 
   const searchMusic = (event: React.MouseEvent<HTMLButtonElement>  | React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true);
     // 
     fetch("/api/searchEngine", {
         method: "POST",
@@ -66,13 +69,14 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
         console.log(data.URL);
         dispatch(ADD_ITEM(data));
         console.log(musicState);
+        setLoading(false);
     })
     .catch(error => {
         console.log(error);
+        setLoading(false);
     });
     // 
     setInputValue('');
-    
   }
 
   const handleDelete = (id:string) => {
@@ -99,12 +103,18 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
 
   return (
     <div 
-    className={` ${mode == 'player' ?
-     'dark:bg-primary-color-83 bg-primary-color-53 p-8' : 
-     ''
-    } 
+    className={` ${mode == 'player' ? 'dark:bg-primary-color-83 bg-primary-color-53 p-8' :  '' } 
       relative ${styles.flexEnd} flex-col w-full h-full min-h-[40vh] rounded-t-lg 
     `} >
+
+      {(loading)
+      ? 
+      <div className={` fixed top-0 left-0 w-screen h-screen z-50 `}>
+          <Loader/>
+      </div>
+      :
+      <></>
+      }
 
       {(mode == "player")
       
@@ -126,7 +136,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
           {musicState.map((musicStateSimble, index) => (
               <div key={musicStateSimble.ID} className={`relative grid grid-cols-[74px_1fr_118px] sm:grid-cols-[84px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
                   <div className='h-full'>
-                    <img className='w-full h-full bg-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
+                    <img className='w-full h-full object-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
                   </div>
                   <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
                   <div className={`relative ${styles.flexCenter} gap-4`}>
@@ -144,7 +154,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
                   </div>
               </div>
             ))}
-        </div>
+      </div>
 
       :
 
@@ -157,7 +167,9 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
           />
       </div>
     
-    }
+      }
+
+    
       
       <form onSubmit={searchMusic} className={` relative ${styles.flexBetween} flex-col w-full text-primary-color-4 dark:text-secondary-color `}>
           <label className={` primary_label_form `}>

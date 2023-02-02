@@ -18,6 +18,7 @@ import SolidSvg from '@/components/SolidSVG';
 import EmptyListDiv from '@/components/EmptyListDiv';
 import CollectionCard from '@/components/CollectionCard';
 import MusicCard from '@/components/MusicCard';
+import Loader from '@/components/loader';
 
 // firebase
 import { collection, getDocs, query, where, } from "firebase/firestore";
@@ -48,6 +49,35 @@ async function getData(uid:string) {
     return userData;
 }
 
+async function getCollections(uid:string) {
+
+    const q = query(collection(firestore, "collections"), where("collectionData.ownerID", "==", uid));
+    const querySnapshot = await getDocs(q);
+    let collectionsData: any = [];
+    querySnapshot.forEach((doc) => {
+        const Data = {
+            ID: doc.data().collectionData.ID,
+            UID_Col: doc.id,
+            title: doc.data().collectionData.title,
+            desc: doc.data().collectionData.desc,
+            thumbnails: [...doc.data().collectionData.thumbnails],
+            ownerID: doc.data().collectionData.ownerID,
+            ownerUID_Col: doc.data().collectionData.ownerUID_Col,
+            ownerUserName: doc.data().collectionData.ownerUserName,
+            music: [...doc.data().collectionData.music],
+            likes: doc.data().collectionData.likes,
+            tags: [...doc.data().collectionData.tags],
+            date: doc.data().collectionData.date,
+            private: doc.data().collectionData.private,
+            collectionLengthSec: doc.data().collectionData.collectionLengthSec,
+        }
+        collectionsData.push(Data);
+    });
+    console.log('collectionsData');
+    console.log(collectionsData);
+    return collectionsData;
+}
+
 // redux
 import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "@/store/musicSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,15 +100,19 @@ interface owner {
   }
   
   interface Collection {
-    ID: string;
+    UID_Col: string;
     title: string;
     desc: string;
-    thumbnails: string;
+    thumbnails: string[];
     ownerID: string;
+    ownerUID_Col: string;
+    ownerUserName: string;
     music: Music[];
     likes: number;
-    categories: string[];
+    tags: string[];
     date: Date;
+    private: Boolean;
+    collectionLengthSec?: number;
   }
 
 const ProfilePage = ({ params }: any) => {
@@ -91,6 +125,8 @@ const ProfilePage = ({ params }: any) => {
     const dispatch = useDispatch();
 
     const [profileUser, setProfileUser] = useState<any>({});
+    const [profileUserCollections, setProfileUserCollections] = useState<any>([]);
+    const [loading, setLoading] = useState(true);
 
     const { user, getUser } = useAuth();
 
@@ -99,7 +135,13 @@ const ProfilePage = ({ params }: any) => {
             const data = await getData(params.id);
             setProfileUser(data);
         }
+        const fetchDataCollections = async () => {
+            const data = await getCollections(params.id);
+            setProfileUserCollections(data);
+            setLoading(false);
+        }
         fetchData();
+        fetchDataCollections();
     }, [params.id]);
 
     const handlePlayPause = () => {
@@ -108,10 +150,21 @@ const ProfilePage = ({ params }: any) => {
 
     return (
         <section className={` ${styles.flexStart} text-secondary-color bg-primary-color-4  dark:text-primary-color-4 dark:bg-secondary-color relative w-full p-8 flex-col gap-16 overflow-hidden `}>
+            
+            {(loading)
+            ? 
+            <div className={` fixed top-0 left-0 w-screen h-screen z-50 `}>
+                <Loader/>
+            </div>
+            :
+            <></>
+            }
+            
+            
             <div className={` relative bg-primary-color-53 w-full h-[20vh]`}>
                 <div className={` grid grid-cols-[1fr_1fr] content-end absolute -bottom-8 left-0 gap-2 w-72 `}>
                     <div className='w-32 h-32 rounded overflow-hidden bg-white pointer-events-none'>
-                        <img className=' w-full h-full bg-cover ' src={profileUser.avatar} alt="profile_avatar" />
+                        <img className=' w-full h-full object-cover ' src={profileUser.avatar} alt="profile_avatar" />
                     </div>
                     <h1 className={` ${styles.h1Section} whitespace-pre-wrap my-0 self-end`}>
                         {profileUser.userName}
@@ -151,9 +204,9 @@ const ProfilePage = ({ params }: any) => {
                     </div>
                     <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                         {
-                            (profileUser.collections && profileUser.collections.length > 0) 
-                            ?   profileUser.collections.map((collection:Collection) => (
-                                    <CollectionCard key={collection.ID} Collection={collection} />
+                            (profileUserCollections && profileUserCollections.length > 0) 
+                            ?   profileUserCollections.map((collection:Collection) => (
+                                    <CollectionCard key={collection.UID_Col} Collection={collection} />
                                 ))
                             : <EmptyListDiv
                                 header="This list is empty"
@@ -175,7 +228,7 @@ const ProfilePage = ({ params }: any) => {
                         {
                             (profileUser.lovedCollections && profileUser.lovedCollections.length > 0) 
                             ?   profileUser.lovedCollections.map((collection:Collection) => (
-                                    <CollectionCard key={collection.ID} Collection={collection} />
+                                    <CollectionCard key={collection.UID_Col} Collection={collection} />
                                 ))
                             : <EmptyListDiv
                                 header="This list is empty"

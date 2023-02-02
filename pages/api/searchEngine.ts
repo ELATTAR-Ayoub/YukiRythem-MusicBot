@@ -31,6 +31,7 @@ var Data:Data ={
     URL: '',
     title: '',
     thumbnails: [],
+    musicLengthSec: 0,
     owner: {
         name: '',
         ID: '',
@@ -47,6 +48,7 @@ const searchMusic = (string:string) => {
                     reject(new Error("No video found"));
                 } else {
                     let video = data.results.filter((el: any) => el.type === "video")[0];
+                    console.log('video -------------------');
                     console.log(video);
 
                     Data.ID = video.ID;
@@ -59,6 +61,7 @@ const searchMusic = (string:string) => {
                         canonicalURL: video.owner.canonicalURL,
                         thumbnails: [video.owner.thumbnails[0].url],
                     };
+                    Data.musicLengthSec = video.duration.number;
 
                     // console.log('the returned is ' + Data);
                     resolve(Data);

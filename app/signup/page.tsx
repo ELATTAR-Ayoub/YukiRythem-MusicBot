@@ -131,7 +131,7 @@ export default function Page() {
             <div className={`${styles.flexCenter} flex-col relative w-full gap-4`}>
 
               <div className=' bg-white rounded w-32 h-32 relative'>
-                <img className='w-full h-full bg-cover' src={userAvatar} alt="avatar" />
+                <img className='w-full h-full object-cover' src={userAvatar} alt="avatar" />
               </div>  
 
               <label className={` primary_label_form `}>
