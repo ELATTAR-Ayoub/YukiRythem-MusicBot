@@ -185,6 +185,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     querySnapshot.forEach((doc) => {
       // console.log(doc.id, " => ", doc.data());
       // console.log(doc.data().userData.ID);
+      console.log('doc ---- getUser');
+      console.log(doc);
 
       setUser({
         ID: doc.data().userData.ID,
@@ -217,7 +219,6 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         followers: [...doc.data().userData.followers] || [],
         following: [...doc.data().userData.following] || [],
       }
-
       return userData;
     });
   }
@@ -254,9 +255,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     console.log(music);
     
     
-    if (user.ID) {
-      console.log('secure user - likeMusic ');
-      console.log(user);
+    if (user.ID && user.UID_Col) {
       
       const data = { 
         userData : {
@@ -276,17 +275,12 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         }
       };
       try {
-        console.log('try data - likeMusic ');
-        var UID = ''
-        // to make sure user.UID_Col is not null
-        if (user.UID_Col) {
-          UID = user.UID_Col
-        }
-
-        const docRef = doc(firestore, "users", UID);
+        const docRef = doc(firestore, "users", user.UID_Col);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
+            if (user.ID)
+            getUser(user.ID);
         })
         .catch(error => {
             console.log(error);
@@ -302,7 +296,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   const dislikeMusic = async (music: Music_small) => {
     console.log('enter - dislikeMusic ');
 
-    if (user.ID) {
+    if (user.ID && user.UID_Col) {
       console.log('secure user - dislikeMusic ');
 
       const result = user.lovedSongs.filter(item => item.ID !== music.ID);
@@ -326,16 +320,12 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       };
 
       try {
-        var UID = ''
-        // to make sure user.UID_Col is not null
-        if (user.UID_Col) {
-          UID = user.UID_Col
-        }
-
-        const docRef = doc(firestore, "users", UID);
+        const docRef = doc(firestore, "users", user.UID_Col);
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
+            if (user.ID)
+            getUser(user.ID);
         })
         .catch(error => {
             console.log(error);
@@ -402,6 +392,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
+            if (user.ID)
+            getUser(user.ID);
         })
         .catch(error => {
             console.log(error);
@@ -409,6 +401,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       } catch (error) {
         console.error('Error updating loved songs: ', error);
       }
+      
     }
   }
 
@@ -440,6 +433,8 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         updateDoc(docRef, data)
         .then(docRef => {
             console.log("Entire Document has been updated successfully");
+            if (user.ID)
+            getUser(user.ID);
         })
         .catch(error => {
             console.log(error);
