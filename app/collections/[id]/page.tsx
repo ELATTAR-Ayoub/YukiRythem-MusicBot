@@ -77,7 +77,7 @@ export default function Page({ params }: any) {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
+            // setLoading(true);
             const data = await getData(params.id);
             setThisCollection(data);
             setLoading(false);
