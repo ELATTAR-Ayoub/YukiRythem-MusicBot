@@ -56,7 +56,6 @@ async function getCollections(uid:string) {
     let collectionsData: any = [];
     querySnapshot.forEach((doc) => {
         const Data = {
-            ID: doc.data().collectionData.ID,
             UID_Col: doc.id,
             title: doc.data().collectionData.title,
             desc: doc.data().collectionData.desc,
@@ -77,6 +76,39 @@ async function getCollections(uid:string) {
     console.log(collectionsData);
     return collectionsData;
 }
+
+async function getLovedCollections(uid:string) {
+
+    const data = await getData(uid);
+
+    console.log('IDArr');
+    console.log(data.lovedCollections);
+    const q = query(collection(firestore, "collections"));
+    const querySnapshot = await getDocs(q);
+    let collectionsData: any = [];
+    querySnapshot.forEach((doc) => {
+        if (data.lovedCollections.includes(doc.id)) {
+            const Data = {
+                UID_Col: doc.id,
+                title: doc.data().collectionData.title,
+                desc: doc.data().collectionData.desc,
+                thumbnails: [...doc.data().collectionData.thumbnails],
+                ownerID: doc.data().collectionData.ownerID,
+                ownerUID_Col: doc.data().collectionData.ownerUID_Col,
+                ownerUserName: doc.data().collectionData.ownerUserName,
+                music: [...doc.data().collectionData.music],
+                likes: doc.data().collectionData.likes,
+                tags: [...doc.data().collectionData.tags],
+                date: doc.data().collectionData.date,
+                private: doc.data().collectionData.private,
+                collectionLengthSec: doc.data().collectionData.collectionLengthSec,
+            }
+            collectionsData.push(Data);
+        }
+    });
+    return collectionsData;
+}
+
 
 // redux
 import { selectMusicState, selectCurrentMusic, selectMusicPlaying, selectMusicLoading, SKIP_PLUS, SKIP_PREV, SET_LOADING, SET_PLAYING } from "@/store/musicSlice";
@@ -126,6 +158,7 @@ const ProfilePage = ({ params }: any) => {
 
     const [profileUser, setProfileUser] = useState<any>({});
     const [profileUserCollections, setProfileUserCollections] = useState<any>([]);
+    const [profileUserLovedCollections, setProfileUserLovedCollections] = useState<any>([]);
     const [loading, setLoading] = useState(true);
 
     const { user, getUser } = useAuth();
@@ -140,8 +173,14 @@ const ProfilePage = ({ params }: any) => {
             setProfileUserCollections(data);
             setLoading(false);
         }
+        const fetchDataLovedCollections = async () => {
+            const data = await getLovedCollections(params.id);
+            setProfileUserLovedCollections(data);
+            setLoading(false);
+        }
         fetchData();
         fetchDataCollections();
+        fetchDataLovedCollections();
     }, [params.id]);
 
     const handlePlayPause = () => {
@@ -196,8 +235,8 @@ const ProfilePage = ({ params }: any) => {
                 
             </div>
 
-            <div className={` grid grid-cols-1 flex-col w-full gap-4`}>
-                <div id='profile_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
+            <div className={` grid grid-cols-2 flex-col w-full gap-4`}>
+                <div id='profile_collections' className={` ${styles.flexStart} flex-col w-full`}>
                     <div className={` ${styles.flexBetween} w-full mb-4`}>
                         <h2 className={` ${styles.h2Section} `}>{`${profileUser.userName}'s collections`}</h2>
                         {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/collections`}>See all</Link> */}
@@ -219,15 +258,15 @@ const ProfilePage = ({ params }: any) => {
                         
                     </div>
                 </div>
-                <div id='profile_loved_collections' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
+                <div id='profile_loved_collections' className={` ${styles.flexStart} flex-col w-full`}>
                     <div className={` ${styles.flexBetween} w-full mb-4`}>
                         <h2 className={` ${styles.h2Section} `}>{`Loved collections`}</h2>
-                        {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link> */}
+                        {/* {<Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link>} */}
                     </div>
                     <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                         {
-                            (profileUser.lovedCollections && profileUser.lovedCollections.length > 0) 
-                            ?   profileUser.lovedCollections.map((collection:Collection) => (
+                            (profileUserLovedCollections && profileUserLovedCollections.length > 0) 
+                            ?   profileUserLovedCollections.map((collection:Collection) => (
                                     <CollectionCard key={collection.UID_Col} Collection={collection} />
                                 ))
                             : <EmptyListDiv

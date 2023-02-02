@@ -113,14 +113,14 @@ const MusicCard: React.FC<Card> = ({ Music }) => {
           <div className={`relative ${styles.flexCenter} gap-4 `}>
             <div className='grid content-center btn-rounded-primary'>
               <button onClick={() => handlePlayMusic(Music)} aria-label="play/pause_song_button">
-              {(!playing || ( musicState[current] && musicState[current].ID !== Music.ID)) ? <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
-                : <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-50'} path={'/pause.svg'} />}
+              {(!playing || ( musicState[current] && musicState[current].ID !== Music.ID)) ? <SolidSvg width={'24px'} height={'24px'} color={'#F6F8F9'} className={'SVGW2B scale-50'} path={'/play.svg'} />
+                : <SolidSvg width={'24px'} height={'24px'} color={'#F6F8F9'} className={'SVGW2B scale-50'} path={'/pause.svg'} />}
               </button>
             </div>
             <div className='grid content-center btn-rounded-primary'>
                 <button onClick={() => handleLikeMusic(Music)} aria-label="open_music_list">
                     {user.lovedSongs.some((lovedSong:any) => lovedSong.ID === Music.ID ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={''} path={'/heart.svg'} />
-                  : <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W'} path={'/heart_empty.svg'} />}
+                  : <SolidSvg width={'24px'} height={'24px'} color={'#F6F8F9'} className={'SVGW2B'} path={'/heart_empty.svg'} />}
                 </button>
             </div>
           </div>

@@ -125,7 +125,7 @@ body {
 }
 
 .btn-rounded-primary {
-  @apply rounded-full bg-primary-color-77 dark:bg-primary-color-53 hover:bg-primary-color-53 dark:hover:bg-primary-color-77 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
+  @apply rounded-full bg-primary-color-4 dark:bg-secondary-color hover:bg-primary-color-77 dark:hover:bg-primary-color-83 transition-all flex justify-center items-center overflow-hidden w-10 h-10;
 }
 
 .link_footer {

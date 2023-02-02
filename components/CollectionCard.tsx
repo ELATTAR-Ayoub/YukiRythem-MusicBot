@@ -69,14 +69,18 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
       return;
     }
     dispatch(setMusicState(musicArr));
-    console.log('Collection00-0-0-0-0-0');
-    console.log(Collection);
     router.push(`/collections/${Collection.UID_Col}`)
   };
 
   const handleLikeCollection = async (ID: string) => {
 
-    if ( user.lovedCollection.some((lovedCol:any) => lovedCol.ID === ID) ) {
+    console.log('user.lovedCollections.includes(ID)');
+    console.log(user.lovedCollections.includes(ID));
+    console.log(ID);
+    console.log(Collection.thumbnails.length);
+    
+
+    if ( user.lovedCollections.includes(ID) ) {
         await dislikeCollection(ID);
         return;
     }
@@ -96,7 +100,7 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
 
   return (
     <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col rounded-lg  `}>
-      <div className={`relative grid grid-cols-[84px_1fr_64px] sm:grid-cols-[96px_1fr_72px] gap-3 py-4 px-3 items-center w-full `}>
+      <div className={`relative grid grid-cols-[84px_1fr_64px_24px] sm:grid-cols-[96px_1fr_72px_24px] gap-3 py-4 px-3 items-center w-full `}>
           <div className='grid grid-cols-2 grid-rows-2 h-full'>
             <div className=''>
               <img className='h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[0] : ''} alt="music_thumbnails" />
@@ -128,24 +132,50 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
               <span className=' cursor-default  dark:bg-secondary-color bg-primary-color-4 dark:text-primary-color-4 text-secondary-color mr-1 mb-1 p-1 px-2 rounded-full' key={tags}>{tags}</span>
             )}
             </div>
-            <p className={` text-xs font-bold w-full`}> {formatTime(Collection.collectionLengthSec!)}  <Link className='underline ml-2 hover:text-primary-color-53 dark:hover:text-primary-color-77 ' href={`/profile/${Collection.ownerID}`}>{Collection.ownerUserName}</Link> </p>
+            <p className={` text-xs font-bold w-full`}> {formatTime(Collection.collectionLengthSec!)}  . <Link className='underline ml-2 hover:text-primary-color-53 dark:hover:text-primary-color-77 ' href={`/profile/${Collection.ownerID}`}>{Collection.ownerUserName}</Link> </p>
           </div>
 
           <div className={`relative ${styles.flexCenter} gap-4 flex-col`}>
             <div className='grid content-center btn-rounded-primary'>
               <button onClick={() => handlePlayCollection(Collection.music)} aria-label="play/pause_song_button">
-                {(JSON.stringify(musicState) !== JSON.stringify(Collection.music)) ? <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
-                : <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W scale-50'} path={'/pause.svg'} />}
+                {(JSON.stringify(musicState) !== JSON.stringify(Collection.music)) ? <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B scale-50'} color={'#F6F8F9'} path={'/play.svg'} />
+                : <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B scale-50'} color={'#F6F8F9'} path={'/pause.svg'} />}
               </button>
             </div>
             <div className='grid content-center btn-rounded-primary'>
                 <button onClick={() => handleLikeCollection(Collection.UID_Col)} aria-label="open_music_list">
                     {( user.lovedCollections.includes(Collection.UID_Col) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={' '} path={'/heart.svg'} />
-                  : <SolidSvg width={'24px'} height={'24px'} className={'SVGB2W '} path={'/heart_empty.svg'} />}
+                  : <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B '} color={'#F6F8F9'} path={'/heart_empty.svg'} />}
                 </button>
             </div>
           </div>
+
+          <div className={`hidden lg:flex items-center justify-end gap-6`}>
+                <button className='relative grid content-center list-opener' aria-label="open_player_menu">
+                    <SolidSvg width={'24px'} height={'24px'} color={'#04080F'} className={'SVGB2W'} path={'/dots-vertical.svg'} />
+
+                  <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 top-10 right-0 z-50'>
+                      
+                     {(user.ID === Collection.ownerID)
+                     ?
+                      <li className=' py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                        Delete Collection
+                      </li>
+                     :
+                     <></>
+                     } 
+
+                     <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                          Copy Link
+                      </li>
+                      <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                          Share Link
+                      </li>
+                  </ul>
+              </button>
+          </div>
       </div>
+      
     </div>
   );
 };

@@ -377,8 +377,81 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     }
   }
 
+  const likeCollection = async (ID: string) => {
+    
+    if (user.ID && user.UID_Col) {
+      const data = { 
+        userData : {
+          ID: user.ID,
+          UID_Col: user.UID_Col,
+          avatar: user.avatar,
+          userName: user.userName,
+          email: user.email,
+          gender: user.gender,
+          marketingEmails: user.marketingEmails,
+          shareData: user.shareData,
+          collections: [...user.collections],
+          lovedCollections: [...user.lovedCollections, ID],
+          followers: [...user.followers] || [],
+          following: [...user.following] || [],
+          lovedSongs: [...user.lovedSongs] 
+        }
+      };
+      try {
+        const docRef = doc(firestore, "users", user.UID_Col);
+        updateDoc(docRef, data)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating loved songs: ', error);
+      }
+    }
+  }
+
+  const dislikeCollection = async (ID: string) => {
+    if (user.ID && user.UID_Col) {
+
+      const result = user.lovedCollections.filter(item => item !== ID);
+
+      const data = { 
+        userData : {
+          ID: user.ID,
+          UID_Col: user.UID_Col,
+          avatar: user.avatar,
+          userName: user.userName,
+          email: user.email,
+          gender: user.gender,
+          marketingEmails: user.marketingEmails,
+          shareData: user.shareData,
+          collections: [...user.collections],
+          lovedCollections: result,
+          followers: [...user.followers] || [],
+          following: [...user.following] || [],
+          lovedSongs: [...user.lovedSongs],
+        }
+      };
+
+      try {
+        const docRef = doc(firestore, "users", user.UID_Col);
+        updateDoc(docRef, data)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating loved songs: ', error);
+      }
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic, AddCollection }}>
+    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
       {loading ? null : children}
     </AuthContext.Provider>
   )
