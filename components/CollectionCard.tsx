@@ -98,6 +98,32 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
     return value;
   }
 
+  function copy2ClipBoard(text: string) {
+    navigator.clipboard.writeText(text)
+    .then(() => {
+      console.log('Link copied to clipboard');
+    })
+    .catch((error) => {
+      console.error('Failed to copy link: ', error);
+    });
+  }
+
+  const shareLink = async (url: string, title:string) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          url: url,
+        });
+        console.log('Link shared successfully');
+      } catch (error) {
+        console.error('Error sharing the link: ', error);
+      }
+    } else {
+      console.error('This browser does not support the Web Share API');
+    }
+  };
+
   return (
     <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col rounded-lg  `}>
       <div className={`relative grid grid-cols-[84px_1fr_64px_24px] sm:grid-cols-[96px_1fr_72px_24px] gap-3 py-4 px-3 items-center w-full `}>
@@ -165,10 +191,10 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
                      <></>
                      } 
 
-                     <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                     <li onClick={()=>copy2ClipBoard(`https://yuki-rythem.vercel.app/collection/${Collection.UID_Col}`)} className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                           Copy Link
                       </li>
-                      <li className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
+                      <li onClick={()=>shareLink(`https://yuki-rythem.vercel.app/collection/${Collection.UID_Col}`, `Listen to this amazing song on Yukirythem!, ${Collection.title}`)} className=' py-2 my-1 mb-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                           Share Link
                       </li>
                   </ul>
