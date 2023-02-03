@@ -19,7 +19,7 @@ import Loader from '@/components/loader';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
-    const { user, signin } = useAuth()
+    const { user, signin, signinGoogle } = useAuth()
     const router = useRouter();
 
   // inputs
@@ -66,6 +66,23 @@ export default function Page() {
     }
   }
 
+  const signinGoogleFunc = async () => {
+    setLoading(true);
+
+    try {
+      await signinGoogle();
+    } catch (err) {
+      console.log(err)
+    } finally {
+      router.push(`/`);
+      setLoading(false);
+    }
+  }
+
+  const signinFacebookFunc = () => {
+
+  }
+
   return (
     <section className={`${styles.flexCenter} flex-col  text-secondary-color dark:text-primary-color-4 bg-primary-color-4 dark:bg-secondary-color relative w-full `}>
       {(loading)
@@ -88,7 +105,7 @@ export default function Page() {
             <Image className="w-[24x] h-[24x] object-contain relative" src="/facebook_color.svg" alt="facebook_signup" width={24} height={24}/> 
             Sign in with facebook
             </button>
-            <button className={`${styles.flexCenter} relative w-full gap-[50px] dark:bg-primary-color-4 bg-secondary-color font-semibold p-4 rounded-md hover:scale-105 transition-all duration-300 `}>
+            <button onClick={()=>signinGoogleFunc()} className={`${styles.flexCenter} relative w-full gap-[50px] dark:bg-primary-color-4 bg-secondary-color font-semibold p-4 rounded-md hover:scale-105 transition-all duration-300 `}>
             <Image className="w-[24x] h-[24x] object-contain relative" src="/google_color.svg" alt="google_signup" width={24} height={24}/> 
             Sign in with google
             </button>

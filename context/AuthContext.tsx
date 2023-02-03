@@ -3,7 +3,8 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut, updateProfile
+  signOut, updateProfile,
+  GoogleAuthProvider, signInWithPopup, getAuth
 } from 'firebase/auth'
 import { collection, addDoc, getDocs, setDoc, doc, updateDoc, query, where, } from "firebase/firestore";
 import { auth, firestore } from '../config/firebase'
@@ -133,7 +134,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         const userData = {
           ID: user.uid,
           UID_Col: '',
-          name: (user.displayName ) ? user.displayName : name,
+          userName: (user.displayName ) ? user.displayName : name,
           email: user.email,
           avatar: avatar,
           gender: gender,
@@ -162,6 +163,74 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
+  }
+
+  // avatar = https://api.dicebear.com/5.x/lorelei/svg?seed=A
+
+  const signupGoogle = async ()  => {
+    console.log('im in signupGoogle');
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    console.log('auth above me');
+
+    signInWithPopup(auth, provider)
+      .then(async (result)  =>  {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential!.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+
+        const userData = {
+          ID: user.uid,
+          userName: user.displayName,
+          email: user.email,
+          avatar: `https://api.dicebear.com/5.x/lorelei/svg?seed=${user.displayName}`,
+          gender: 'male',
+          marketingEmails: false,
+          shareData: false,
+          collections: [],
+          lovedSongs: [],
+          lovedCollections: [],
+          followers: [],
+          following: [],
+        }
+        if (user.uid) {
+            console.log('sasas');
+            console.log(userData);
+            try {
+              const docRef = await addDoc(collection(firestore, "users"), {userData});
+              console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+              console.error("Error adding document: ", e);
+            }
+        }
+      }).catch((error) => {
+        console.log('SIR, we have an error');
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+        console.log(errorCode, errorMessage);
+        console.log(email, credential);
+      });
+  }
+
+  const signinGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      getUser(user.uid);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      
+    });
   }
 
   const signin = (email: string, password: string) => {
@@ -487,7 +556,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   }
 
   return (
-    <AuthContext.Provider value={{ user, signin, signup, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
+    <AuthContext.Provider value={{ user, signin, signup, signupGoogle, signinGoogle, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

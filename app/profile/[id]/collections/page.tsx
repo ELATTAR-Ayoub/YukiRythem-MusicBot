@@ -24,6 +24,32 @@ import Loader from '@/components/loader';
 import { collection, getDocs, query, where, } from "firebase/firestore";
 import { auth, firestore } from '../../../../config/firebase'
 
+
+async function getData(uid:string) {
+
+    const q = query(collection(firestore, "users"), where("userData.ID", "==", uid));
+    const querySnapshot = await getDocs(q);
+    let userData: any = {};
+    querySnapshot.forEach((doc) => {
+        userData = {
+            ID: doc.data().userData.ID,
+            UID_Col: doc.id,
+            avatar: doc.data().userData.avatar,
+            userName: doc.data().userData.userName,
+            email: doc.data().userData.email,
+            gender: doc.data().userData.gender,
+            marketingEmails: doc.data().userData.marketingEmails,
+            shareData: doc.data().userData.shareData,
+            lovedSongs: [...doc.data().userData.lovedSongs],
+            collections: [...doc.data().userData.collections],
+            lovedCollections: [...doc.data().userData.lovedCollections],
+            followers: [...doc.data().userData.followers] || [],
+            following: [...doc.data().userData.following] || [],
+        }
+    });
+    return userData;
+}
+
 async function getCollections(uid:string) {
 
     const q = query(collection(firestore, "collections"), where("collectionData.ownerID", "==", uid));
@@ -107,11 +133,16 @@ const ProfilePage = ({ params }: any) => {
     const { user, getUser } = useAuth();
 
     useEffect(() => {
+        const fetchData = async () => {
+            const data = await getData(params.id);
+            setProfileUser(data);
+        }
         const fetchDataCollections = async () => {
             const data = await getCollections(params.id);
             setProfileUserCollections(data);
             setLoading(false);
         }
+        fetchData();
         fetchDataCollections();
     }, [params.id]);
 
