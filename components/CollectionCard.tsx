@@ -65,10 +65,10 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
   const dispatch = useDispatch();
 
   const handlePlayCollection = (musicArr: Music[]) => {
-    if (JSON.stringify(musicState) === JSON.stringify(musicArr)) {
+    /* if (JSON.stringify(musicState) === JSON.stringify(musicArr)) {
       return;
-    }
-    dispatch(setMusicState(musicArr));
+    } */
+    // dispatch(setMusicState(musicArr));
     router.push(`/collections/${Collection.UID_Col}`)
   };
 

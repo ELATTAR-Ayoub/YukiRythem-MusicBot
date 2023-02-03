@@ -133,7 +133,7 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
       ? 
 
       <div className={`relative ${styles.flexStart} gap-4 flex-col w-full h-full max-h-[500px] py-2 overflow-y-auto `}>
-          {musicState.map((musicStateSimble, index) => (
+          {musicState[current] && musicState.map((musicStateSimble, index) => (
               <div key={musicStateSimble.ID} className={`relative grid grid-cols-[74px_1fr_118px] sm:grid-cols-[84px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
                   <div className='h-full'>
                     <img className='w-full h-full object-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />

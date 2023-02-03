@@ -185,8 +185,6 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     querySnapshot.forEach((doc) => {
       // console.log(doc.id, " => ", doc.data());
       // console.log(doc.data().userData.ID);
-      console.log('doc ---- getUser');
-      console.log(doc);
 
       setUser({
         ID: doc.data().userData.ID,
@@ -403,6 +401,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       }
       
     }
+    
   }
 
   const dislikeCollection = async (ID: string) => {

@@ -200,7 +200,7 @@ const ProfilePage = ({ params }: any) => {
             }
             
             
-            <div className={` relative bg-primary-color-53 w-full h-[20vh]`}>
+            <div className={` relative bg-primary-color-53 dark:bg-primary-color-77 rounded w-full h-[20vh]`}>
                 <div className={` grid grid-cols-[1fr_1fr] content-end absolute -bottom-8 left-0 gap-2 w-72 `}>
                     <div className='w-32 h-32 rounded overflow-hidden bg-white pointer-events-none'>
                         <img className=' w-full h-full object-cover ' src={profileUser.avatar} alt="profile_avatar" />

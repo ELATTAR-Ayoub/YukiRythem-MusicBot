@@ -46,10 +46,14 @@ export const musicSlice = createSlice({
 
     // Action to set the music status
     setMusicState(state, action) {
-      state.musicState = [...action.payload];
+      if (Array.isArray(action.payload)) {
+        state.musicState = [...action.payload];
+      } else {
+        state.musicState = [action.payload];
+      }
     },
 
-    DELETE_ARR(state, action) {
+    DELETE_ARR(state) {
       state.musicState = [];
     },
 

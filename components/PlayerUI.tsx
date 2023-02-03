@@ -158,7 +158,7 @@ const PlayerUI = () => {
         <div className={` relative px-8 md:px-0 h-64 min-h-64 max-h-64 lg:h-96 lg:min-h-96 lg:max-h-96 w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]`}>
             {(!musicLoading) ? <div className='w-scren'><Loader /></div> : <></>} 
             <div style={MoveLeftStyle} className={` relative ${styles.flexStart} transition-all duration-300 gap-40 lg:gap-52 w-full h-full`}>
-                {musicState.map(musicStateSimble => (
+                {musicState[current] && musicState.map(musicStateSimble => (
                     <div key={musicStateSimble.ID} className={`${musicStateSimble.ID != musicState[current].ID ? 'opacity-70 scale-75' : ''} relative flex `}>
                         <div className={` ${stylescss.darkOverlay} w-[150px] h-[150px] sm:w-[200px] sm:h-[250px] lg:w-[400px] lg:h-[370px] rounded-lg overflow-hidden z-[2] `}>
                             <img className=" h-full object-cover relative" src={(musicState[current]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
@@ -181,19 +181,20 @@ const PlayerUI = () => {
 
             <div className='relative hidden lg:grid content-center'>
                 <button onClick={() => setVolumeIsHidden(!volumeIsHidden)} className='relative grid content-center' aria-label="volume">
-                    {( volume === 0 ) ? <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/no-volume.svg'} />
+                    {( volume == 0 ) ? <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/no-volume.svg'} />
                     : <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/volume.svg'} />}
                 </button>
 
-                <div className={`absolute rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20 ${volumeIsHidden ? "hidden" : ""}`}>
+                <div className={`absolute -rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20 ${volumeIsHidden ? "hidden" : ""}`}>
                     <div className={`' ${styles.flexCenter} p-2 px-4 scale-75'`}>
+                        {/* {volume} */}
                         <input 
                             aria-label="Volume Bar"
                             className='w-full SeekBar'
                             type='range' 
                             min={0} 
                             max={1} 
-                            step={0.1}
+                            step={0.01}
                             value={volume} 
                             onChange={e => (dispatch(SET_VOLUME(e.target.value)))} 
                         />
