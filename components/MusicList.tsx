@@ -134,12 +134,12 @@ const MusicList: React.FC<MusicListProb> = ({ mode = "player" }, {ref}) => {
 
       <div className={`relative ${styles.flexStart} gap-4 flex-col w-full h-full max-h-[500px] py-2 overflow-y-auto `}>
           {musicState[current] && musicState.map((musicStateSimble, index) => (
-              <div key={musicStateSimble.ID} className={`relative grid grid-cols-[74px_1fr_118px] sm:grid-cols-[84px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
+              <div key={musicStateSimble.ID} className={`relative grid grid-cols-[100%_1fr_118px] md:grid-cols-[84px_1fr_124px] gap-3 py-4 px-3 items-center w-full bg-primary-color-4 dark:bg-secondary-color rounded-lg `}>
                   <div className='h-full'>
                     <img className='w-full h-full object-cover' src={(musicState[index]) ? musicStateSimble.thumbnails[0] : ''} alt="music_thumbnails" />
                   </div>
                   <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{musicStateSimble.title}</p>
-                  <div className={`relative ${styles.flexCenter} gap-4`}>
+                  <div className={`relative flex justify-end md:justify-center items-center gap-4`}>
                     <div className='grid content-center btn-rounded-secondary'>
                       <button onClick={() => handlePlayPause(index)} aria-label="play/pause_song_button">
                         {(!playing || current !== index) ? <SolidSvg width={'46px'} height={'46px'} className={'SVGB2W scale-50'} path={'/play.svg'} />
