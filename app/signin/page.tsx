@@ -67,9 +67,9 @@ export default function Page() {
   }
 
   const signinGoogleFunc = async () => {
-    setLoading(true);
 
     try {
+      setLoading(true);
       await signinPopup('google');
     } catch (err) {
       console.log(err)
@@ -80,9 +80,9 @@ export default function Page() {
   }
 
   const signinFacebookFunc = async () => {
-    setLoading(true);
 
     try {
+      setLoading(true);
       await signinPopup('facebook');
     } catch (err) {
       console.log(err)

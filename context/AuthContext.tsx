@@ -10,6 +10,9 @@ import { collection, addDoc, getDocs, setDoc, doc, updateDoc, query, where, } fr
 import { auth, firestore } from '../config/firebase'
 import { async } from '@firebase/util';
 
+// route
+import { useRouter } from 'next/navigation';
+
 const AuthContext = createContext<any>({})
 
 export const useAuth = () => useContext(AuthContext)
@@ -72,6 +75,7 @@ export interface userState {
 
 
 export const AuthContextProvider = ({ children, }: { children: React.ReactNode }) => {
+  const router = useRouter();
 
   const [user, setUser] = useState<userState>({
       ID: null,
@@ -152,6 +156,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
             try {
               const docRef = await addDoc(collection(firestore, "users"), {userData});
               console.log("Document written with ID: ", docRef.id);
+              router.push(`/profile/${userData.ID}`);
             } catch (e) {
               console.error("Error adding document: ", e);
             }
@@ -203,6 +208,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
             try {
               const docRef = await addDoc(collection(firestore, "users"), {userData});
               console.log("Document written with ID: ", docRef.id);
+              router.push(`/profile/${userData.ID}`);
             } catch (e) {
               console.error("Error adding document: ", e);
             }
@@ -231,6 +237,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       // Signed in 
       const user = userCredential.user;
       getUser(user.uid);
+      router.push(`/profile/${user.uid}`);
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -246,6 +253,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       // Signed in 
       const user = userCredential.user;
       getUser(user.uid);
+      router.push(`/profile/${user.uid}`);
     })
     .catch((error) => {
       const errorCode = error.code;

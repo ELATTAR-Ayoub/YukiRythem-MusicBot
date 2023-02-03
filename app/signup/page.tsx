@@ -98,9 +98,9 @@ export default function Page() {
   }
 
   const signupGoogleFunc = async () => {
-    setLoading(true);
 
     try {
+      setLoading(true);
       await signupPopup('google');
     } catch (err) {
       console.log(err)
