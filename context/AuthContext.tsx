@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut, updateProfile,
-  GoogleAuthProvider, signInWithPopup, getAuth
+  GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, getAuth
 } from 'firebase/auth'
 import { collection, addDoc, getDocs, setDoc, doc, updateDoc, query, where, } from "firebase/firestore";
 import { auth, firestore } from '../config/firebase'
@@ -167,11 +167,14 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   // avatar = https://api.dicebear.com/5.x/lorelei/svg?seed=A
 
-  const signupGoogle = async ()  => {
-    console.log('im in signupGoogle');
-    const provider = new GoogleAuthProvider();
+  const signupPopup = async (prov:string) => {
+    let provider;
+    if (prov == 'facebook') {
+      provider = new FacebookAuthProvider();
+    } else {
+      provider = new GoogleAuthProvider();
+    }
     const auth = getAuth();
-    console.log('auth above me');
 
     signInWithPopup(auth, provider)
       .then(async (result)  =>  {
@@ -196,7 +199,6 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
           following: [],
         }
         if (user.uid) {
-            console.log('sasas');
             console.log(userData);
             try {
               const docRef = await addDoc(collection(firestore, "users"), {userData});
@@ -217,8 +219,13 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       });
   }
 
-  const signinGoogle = async () => {
-    const provider = new GoogleAuthProvider();
+  const signinPopup = async (prov:string) => {
+    let provider;
+    if (prov == 'facebook') {
+      provider = new FacebookAuthProvider();
+    } else {
+      provider = new GoogleAuthProvider();
+    }
     return signInWithPopup(auth, provider)
     .then((userCredential) => {
       // Signed in 
@@ -556,7 +563,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
   }
 
   return (
-    <AuthContext.Provider value={{ user, signin, signup, signupGoogle, signinGoogle, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
+    <AuthContext.Provider value={{ user, signin, signup, signupPopup, signinPopup, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

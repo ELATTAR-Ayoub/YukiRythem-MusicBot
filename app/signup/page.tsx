@@ -20,7 +20,7 @@ import Loader from '@/components/loader';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
-  const { user, signup, signupGoogle } = useAuth()
+  const { user, signup, signupPopup } = useAuth()
   const router = useRouter();
 
   // inputs
@@ -101,7 +101,7 @@ export default function Page() {
     setLoading(true);
 
     try {
-      await signupGoogle();
+      await signupPopup('google');
     } catch (err) {
       console.log(err)
     } finally {
@@ -110,8 +110,17 @@ export default function Page() {
     }
   }
 
-  const signupFacebookFunc = () => {
+  const signupFacebookFunc = async () => {
+    setLoading(true);
 
+    try {
+      await signupPopup('facebook');
+    } catch (err) {
+      console.log(err)
+    } finally {
+      router.push(`/`);
+      setLoading(false);
+    }
   }
 
   return (
@@ -133,7 +142,7 @@ export default function Page() {
         </div>
 
         <div className={`${styles.flexStart} relative w-4/5 flex-col gap-4 text-base dark:text-secondary-color text-primary-color-4`}>
-          <button className={`${styles.flexCenter} relative w-full gap-8  dark:bg-primary-color-4 bg-secondary-color font-semibold p-4 rounded-md hover:scale-105 transition-all duration-300 `}>
+          <button onClick={()=>signupFacebookFunc()} className={`${styles.flexCenter} relative w-full gap-8  dark:bg-primary-color-4 bg-secondary-color font-semibold p-4 rounded-md hover:scale-105 transition-all duration-300 `}>
             <Image className="w-[24x] h-[24x] object-contain relative" src="/facebook_color.svg" alt="facebook_signup" width={24} height={24}/> 
             Sign up with facebook
           </button>
