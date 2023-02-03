@@ -19,7 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from '@/context/AuthContext'
 
 // 
-const PlayerUI = () => {
+
+interface PlayerUI {
+    mode: 'player' | 'collection',
+}
+  
+const PlayerUI: React.FC<PlayerUI> = ({ mode = "player" }, {ref}) => {
     const { user, likeMusic, dislikeMusic } = useAuth();
     // call redux states
     const musicState = useSelector(selectMusicState);
@@ -143,7 +148,7 @@ const PlayerUI = () => {
                 <button className='relative grid content-center list-opener' aria-label="open_player_menu">
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/small_menu.svg'} />
 
-                    <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 top-10 right-0 z-50'>
+                    <ul className='absolute hidden shadow rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 top-10 right-0 z-50'>
                         <li className=' disabled py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Download this song
                         </li>
@@ -156,7 +161,7 @@ const PlayerUI = () => {
         </div>
 
         <div className={` relative px-8 md:px-0 h-64 min-h-64 max-h-64 lg:h-96 lg:min-h-96 lg:max-h-96 w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]`}>
-            {(!musicLoading) ? <div className='w-scren'><Loader /></div> : <></>} 
+            {(!musicLoading && musicPlaying) ? <div className='w-scren'><Loader /></div> : <></>} 
             <div style={MoveLeftStyle} className={` relative ${styles.flexStart} transition-all duration-300 gap-40 lg:gap-52 w-full h-full`}>
                 {musicState[current] && musicState.map(musicStateSimble => (
                     <div key={musicStateSimble.ID} className={`${musicStateSimble.ID != musicState[current].ID ? 'opacity-70 scale-75' : ''} relative flex `}>
@@ -186,7 +191,7 @@ const PlayerUI = () => {
                 </button>
 
                 <div className={`absolute -rotate-90 rounded-md bg-primary-color-53 text-secondary-color font-semibold w-[182px] -top-28 -right-20 z-20 ${volumeIsHidden ? "hidden" : ""}`}>
-                    <div className={`' ${styles.flexCenter} p-2 px-4 scale-75'`}>
+                    <div className={`${styles.flexCenter} p-2 px-4 scale-75 shadow`}>
                         {/* {volume} */}
                         <input 
                             aria-label="Volume Bar"
@@ -214,18 +219,19 @@ const PlayerUI = () => {
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/music_list.svg'} />
                 </button>
             </div>
+            
 
-            <div  className='grid content-center'>
+            { mode == 'player' && <div  className='grid content-center'>
                 <Link href={'collections/create'} aria-label="Add_to_my_list">
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/plus.svg'} />
                 </Link>
-            </div>
+            </div>}
 
             <div className={`hidden lg:flex items-center justify-end gap-6`}>
                 <button className='relative grid content-center list-opener' aria-label="open_player_menu">
                     <SolidSvg width={'24px'} height={'24px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/small_menu.svg'} />
 
-                    <ul className='absolute hidden rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 bottom-10 right-0 z-50'>
+                    <ul className='absolute hidden shadow rounded-md p-2 bg-primary-color-53 text-secondary-color  font-semibold w-64 bottom-10 right-0 z-50'>
                         <li className=' disabled py-2 my-1 mt-0 w-full hover:bg-primary-color-77 hover:text-primary-color-4 rounded-sm transition-all'>
                             Download this song
                         </li>

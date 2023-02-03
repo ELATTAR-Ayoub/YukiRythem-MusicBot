@@ -138,35 +138,64 @@ export default function Page({ params }: any) {
         
     }, [params.id, thisCollection]);
 
-    const handleLikeCollection = async (ID: string) => {
+    const handleLikeCollection = async (col: Collection) => {
     
-        if ( user.lovedCollections.includes(ID) ) {
-            await dislikeCollection(ID);
+        if ( user.lovedCollections.includes(col.UID_Col) ) {
+            await dislikeCollection(col);
+            thisCollection.likes = thisCollection.likes-1;
             return;
         }
       
-        await likeCollection(ID);
+        await likeCollection(col);
+        thisCollection.likes = thisCollection.likes+1;
       };
 
-      function formatTime(seconds: number) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const remainingSeconds = seconds % 60;
-    
-        const value = `${hours}h ${minutes}min ${remainingSeconds}s`;
-        
-        return value;
-      }
+    function formatTime(seconds: number) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
 
-      function formatDate(seconds: number) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const remainingSeconds = seconds % 60;
+    const value = `${hours}h ${minutes}min ${remainingSeconds}s`;
     
-        const value = `${hours}h ${minutes}min ${remainingSeconds}s`;
+    return value;
+    }
+
+    function formatDate(seconds: number) {
+        const value = new Date(seconds);
         
-        return value;
-      }
+        const date = new Date(value);
+        const currentDate = new Date();
+        const timeDifference = currentDate.getTime() - date.getTime();
+
+        const secondsInAMinute = 60;
+        const minutesInAnHour = 60;
+        const hoursInADay = 24;
+        const daysInAYear = 365;
+
+        const totalMinutes = timeDifference / (1000 * secondsInAMinute);
+        const totalHours = totalMinutes / minutesInAnHour;
+        const totalDays = totalHours / hoursInADay;
+        const totalYears = totalDays / daysInAYear;
+
+        let result = '';
+        if (totalYears >= 1) {
+            const years = Math.floor(totalYears);
+            result = `${years} years ago`;
+        } else if (totalDays >= 1) {
+            const days = Math.floor(totalDays);
+            result = `${days} days ago`;
+        } else if (totalHours >= 1) {
+            const hours = Math.floor(totalHours);
+            result = `${hours}h ago`;
+        } else if (totalMinutes >= 1) {
+            const minutes = Math.floor(totalMinutes);
+            result = `${minutes}min ago`;
+        } else {
+            result = 'just now';
+        }
+
+        return result;
+    }
 
 
   return (
@@ -198,7 +227,7 @@ export default function Page({ params }: any) {
 
             <div className={` flex justify-center items-center w-full gap-2`}>
                 <div className='grid grid-cols-2 content-center btn-rounded-primary'>
-                    <button onClick={() => handleLikeCollection(thisCollection.UID_Col)} aria-label="open_music_list">
+                    <button onClick={() => handleLikeCollection(thisCollection)} aria-label="open_music_list">
                         {( user.lovedCollections.includes(thisCollection.UID_Col) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={' '} path={'/heart.svg'} />
                     : <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B '} color={'#F6F8F9'} path={'/heart_empty.svg'} />}
                     </button>
@@ -218,13 +247,13 @@ export default function Page({ params }: any) {
             </div>
             
             <div className={` ${styles.flexStart} w-full gap-2`}>
-                <p className={`  ${styles.Paragraph_sm} text-left `}> {formatDate(thisCollection.date)} - Collection length: {formatTime(thisCollection.collectionLengthSec!)} </p>
+                <p className={`  ${styles.Paragraph_sm} text-left `}> {formatDate(thisCollection.date)} - Collection length: {formatTime(thisCollection.collectionLengthSec)} </p>
             </div>
 
         </div>
         
         <div id='player' className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative bg-primary-color-4 dark:bg-secondary-color overflow-hidden  h-full w-full `}>
-            <PlayerUI/>
+            <PlayerUI mode='collection'/>
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color dark:bg-primary-color-4 p-8  rounded-t-[35px] w-full h-[300px]`}>
                 <div className=' w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}

@@ -94,7 +94,7 @@ export default function Page() {
 
         <div id='player' className={` ${styles.flexBetween} lg:justify-end flex-col gap-[20px] relative bg-primary-color-4 dark:bg-secondary-color overflow-hidden  h-full w-full `}>
             {/*  */}
-            <PlayerUI/>
+            <PlayerUI mode='player'/>
             <div className={` ${styles.flexBetween} flex-col bg-secondary-color dark:bg-primary-color-4 p-8  rounded-t-[35px] w-full h-[333px]`}>
                 <div className=' w-full sm:max-w-[675px] lg:max-w-[800px] xl:max-w-[1014px]'>
                     {<NativeVideo videoId={(musicState[current]) ? musicState[current].ID : ''} />}

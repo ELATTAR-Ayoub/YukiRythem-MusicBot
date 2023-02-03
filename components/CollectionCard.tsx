@@ -72,20 +72,13 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
     router.push(`/collections/${Collection.UID_Col}`)
   };
 
-  const handleLikeCollection = async (ID: string) => {
-
-    console.log('user.lovedCollections.includes(ID)');
-    console.log(user.lovedCollections.includes(ID));
-    console.log(ID);
-    console.log(Collection.thumbnails.length);
-    
-
-    if ( user.lovedCollections.includes(ID) ) {
-        await dislikeCollection(ID);
+  const handleLikeCollection = async (col: Collection) => {
+    if ( user.lovedCollections.includes(col.UID_Col) ) {
+        await dislikeCollection(col);
         return;
     }
   
-    await likeCollection(ID);
+    await likeCollection(col);
   };
 
   function formatTime(seconds: number) {
@@ -169,7 +162,7 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
               </button>
             </div>
             <div className='grid content-center btn-rounded-primary'>
-                <button onClick={() => handleLikeCollection(Collection.UID_Col)} aria-label="open_music_list">
+                <button onClick={() => handleLikeCollection(Collection)} aria-label="open_music_list">
                     {( user.lovedCollections.includes(Collection.UID_Col) ) ? <SolidSvg width={'24px'} height={'24px'} color={'#ED493E'} className={' '} path={'/heart.svg'} />
                   : <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B '} color={'#F6F8F9'} path={'/heart_empty.svg'} />}
                 </button>

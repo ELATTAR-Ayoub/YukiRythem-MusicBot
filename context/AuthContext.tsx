@@ -365,7 +365,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
     }
   }
 
-  const likeCollection = async (ID: string) => {
+  const likeCollection = async (col: Collection) => {
     
     if (user.ID && user.UID_Col) {
       const data = { 
@@ -379,7 +379,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
           marketingEmails: user.marketingEmails,
           shareData: user.shareData,
           collections: [...user.collections],
-          lovedCollections: [...user.lovedCollections, ID],
+          lovedCollections: [...user.lovedCollections, col.UID_Col],
           followers: [...user.followers] || [],
           following: [...user.following] || [],
           lovedSongs: [...user.lovedSongs] 
@@ -401,13 +401,34 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       }
       
     }
+
+    if (col.UID_Col) {
+      const colData: any = {collectionData: {}}
+
+      colData.collectionData = col;
+      colData.collectionData.likes = (col.likes + 1)
+      
+      try {
+        const docRef = doc(firestore, "collections", col.UID_Col);
+        updateDoc(docRef, colData)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating the collection: ', error);
+      }
+      
+    }
     
   }
 
-  const dislikeCollection = async (ID: string) => {
+  const dislikeCollection = async (col: Collection) => {
     if (user.ID && user.UID_Col) {
 
-      const result = user.lovedCollections.filter(item => item !== ID);
+      const result = user.lovedCollections.filter(item => item !== col.UID_Col);
 
       const data = { 
         userData : {
@@ -441,6 +462,27 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
       } catch (error) {
         console.error('Error updating loved songs: ', error);
       }
+    }
+
+    if (col.UID_Col) {
+      const colData: any = {collectionData: {}}
+
+      colData.collectionData = col;
+      colData.collectionData.likes = (col.likes - 1)
+      
+      try {
+        const docRef = doc(firestore, "collections", col.UID_Col);
+        updateDoc(docRef, colData)
+        .then(docRef => {
+            console.log("Entire Document has been updated successfully");
+        })
+        .catch(error => {
+            console.log(error);
+        })
+      } catch (error) {
+        console.error('Error updating the collection: ', error);
+      }
+      
     }
   }
 
