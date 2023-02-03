@@ -105,12 +105,12 @@ const MusicCard: React.FC<Card> = ({ Music }) => {
 
   return (
     <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full rounded-lg `}>
-      <div className={`relative grid grid-cols-[84px_1fr_118px] sm:grid-cols-[96px_1fr_124px] gap-3 py-4 px-3 items-center w-full `}>
+      <div className={`relative grid grid-cols-[100%_1fr_118px] md:grid-cols-[96px_1fr_124px] gap-3 py-4 px-3 items-center w-full `}>
           <div className='h-full'>
             <img className='w-full h-full object-cover' src={(Music.thumbnails) ? Music.thumbnails[0] : ''} alt="music_thumbnails" />
           </div>
           <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{Music.title}</p>
-          <div className={`relative ${styles.flexCenter} gap-4 `}>
+          <div className={`relative flex justify-end md:justify-center items-center gap-4 `}>
             <div className='grid content-center btn-rounded-primary'>
               <button onClick={() => handlePlayMusic(Music)} aria-label="play/pause_song_button">
               {(!playing || ( musicState[current] && musicState[current].ID !== Music.ID)) ? <SolidSvg width={'24px'} height={'24px'} color={'#F6F8F9'} className={'SVGW2B scale-50'} path={'/play.svg'} />
