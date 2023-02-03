@@ -58,7 +58,7 @@ export default function Page() {
     try {
       await signin(email, password);
       console.log(user);
-      router.push(`/`)
+      // router.push(`/`)
       setLoading(false);
     } catch (err) {
       console.log(err)
@@ -74,7 +74,7 @@ export default function Page() {
     } catch (err) {
       console.log(err)
     } finally {
-      router.push(`/`);
+      // router.push(`/`);
       setLoading(false);
     }
   }
@@ -87,7 +87,7 @@ export default function Page() {
     } catch (err) {
       console.log(err)
     } finally {
-      router.push(`/`);
+      // router.push(`/`);
       setLoading(false);
     }
   }

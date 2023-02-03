@@ -89,7 +89,7 @@ export default function Page() {
       await signup(email, password, userAvatar, name, gender, marketingEmails, shareData);
       // router.push(`/profile/${user.uid}`)
       setLoading(false);
-      router.push(`/`)
+      // router.push(`/`)
     } catch (err) {
       console.log(err)
       setLoading(false);
@@ -105,7 +105,7 @@ export default function Page() {
     } catch (err) {
       console.log(err)
     } finally {
-      router.push(`/`);
+      // router.push(`/`);
       setLoading(false);
     }
   }
@@ -118,7 +118,7 @@ export default function Page() {
     } catch (err) {
       console.log(err)
     } finally {
-      router.push(`/`);
+      // router.push(`/`);
       setLoading(false);
     }
   }
