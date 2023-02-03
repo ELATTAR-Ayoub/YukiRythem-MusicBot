@@ -119,23 +119,23 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
 
   return (
     <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col rounded-lg  `}>
-      <div className={`relative grid grid-rows-[84px_1fr_64px] md:grid-cols-[96px_1fr_72px] gap-3 py-4 px-3 items-center w-full `}>
-          <div className='grid grid-cols-2 grid-rows-2 h-full'>
+      <div className={`relative grid grid-rows-[300px_1fr_64px] grid-cols-none md:grid-cols-[96px_1fr_72px] md:grid-rows-none gap-3 py-4 px-3 items-center w-full `}>
+          <div className='grid grid-cols-2 grid-rows-2 h-full '>
             <div className=''>
-              <img className='h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[0] : ''} alt="music_thumbnails" />
+              <img className='w-full h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[0] : ''} alt="music_thumbnails" />
             </div>
-            <div className='object-cover bg-center '>
+            <div className=''>
               <img className='object-cover h-full w-full' src={(Collection.thumbnails) ? Collection.thumbnails[1] : ''} alt="music_thumbnails" />
             </div>
             <div className={` ${Collection.thumbnails.length === 3 ? "col-span-2" : ""}`}>
-              <img className=' h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[2] : ''} alt="music_thumbnails" />
+              <img className=' h-full object-cover w-full' src={(Collection.thumbnails) ? Collection.thumbnails[2] : ''} alt="music_thumbnails" />
             </div>
 
             {
               (Collection.thumbnails.length > 3)
               ?
               <div className=''>
-                <img className=' h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[3] : ''} alt="music_thumbnails" />
+                <img className='w-full h-full object-cover' src={(Collection.thumbnails) ? Collection.thumbnails[3] : ''} alt="music_thumbnails" />
               </div>
               :
               <></>
@@ -154,7 +154,7 @@ const CollectionCard: React.FC<Card> = ({ Collection }) => {
             <p className={` text-xs font-bold w-full`}> {formatTime(Collection.collectionLengthSec!)}  . <Link className='underline ml-2 hover:text-primary-color-53 dark:hover:text-primary-color-77 ' href={`/profile/${Collection.ownerID}`}>{Collection.ownerUserName}</Link> </p>
           </div>
 
-          <div className={`relative flex justify-end md:justify-center items-center gap-4 flex-col`}>
+          <div className={`relative flex justify-end md:justify-center items-center gap-4 md:flex-col`}>
             <div className='grid content-center btn-rounded-primary'>
               <button onClick={() => handlePlayCollection(Collection.music)} aria-label="play/pause_song_button">
                 {(JSON.stringify(musicState) !== JSON.stringify(Collection.music)) ? <SolidSvg width={'24px'} height={'24px'} className={'SVGW2B scale-50'} color={'#F6F8F9'} path={'/play.svg'} />

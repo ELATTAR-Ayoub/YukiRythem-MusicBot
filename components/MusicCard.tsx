@@ -104,9 +104,9 @@ const MusicCard: React.FC<Card> = ({ Music }) => {
   };
 
   return (
-    <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full rounded-lg `}>
-      <div className={`relative grid grid-cols-[100%_1fr_118px] md:grid-cols-[96px_1fr_124px] gap-3 py-4 px-3 items-center w-full `}>
-          <div className='h-full'>
+    <div className={` ${styles.flexCenter} bg-secondary-color dark:bg-primary-color-4 text-primary-color-4 dark:text-secondary-color w-full flex-col rounded-lg `}>
+      <div className={`relative grid grid-rows-[200px_1fr_48px] grid-cols-none sm:grid-cols-[96px_1fr_124px] sm:grid-rows-none gap-3 py-4 px-3 items-center w-full `}>
+          <div className=' w-full h-full'>
             <img className='w-full h-full object-cover' src={(Music.thumbnails) ? Music.thumbnails[0] : ''} alt="music_thumbnails" />
           </div>
           <p className={` ${stylescss.elleipsAfterSecondLine} text-[100%] lg:text- font-bold mb-2 w-full`}>{Music.title}</p>

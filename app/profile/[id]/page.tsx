@@ -239,7 +239,7 @@ const ProfilePage = ({ params }: any) => {
                 <div id='profile_collections' className={` ${styles.flexStart} flex-col w-full`}>
                     <div className={` ${styles.flexBetween} w-full mb-4`}>
                         <h2 className={` ${styles.h2Section} `}>{`${profileUser.userName}'s collections`}</h2>
-                        {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/collections`}>See all</Link> */}
+                        {<Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/collections`}>See all</Link>}
                     </div>
                     <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                         {
@@ -261,7 +261,7 @@ const ProfilePage = ({ params }: any) => {
                 <div id='profile_loved_collections' className={` ${styles.flexStart} flex-col w-full`}>
                     <div className={` ${styles.flexBetween} w-full mb-4`}>
                         <h2 className={` ${styles.h2Section} `}>{`Loved collections`}</h2>
-                        {/* {<Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link>} */}
+                        {<Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-collections`}>See all</Link>}
                     </div>
                     <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                         {
@@ -283,7 +283,7 @@ const ProfilePage = ({ params }: any) => {
             <div id='profile_loved_songs' className={` ${styles.flexBetweenEnd} flex-col w-full`}>
                 <div className={` ${styles.flexBetween} w-full mb-4`}>
                     <h2 className={` ${styles.h2Section} `}>{`Loved songs`}</h2>
-                    {/* <Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-songs`}>See all</Link> */}
+                    {<Link className='link_footer whitespace-nowrap' href={`/profile/${profileUser.ID}/loved-songs`}>See all</Link>}
                 </div>
                 <div className={` ${styles.flexBetween} flex-col w-full gap-4`}>
                     {
