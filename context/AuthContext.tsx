@@ -11,7 +11,11 @@ import { auth, firestore } from '../config/firebase'
 import { async } from '@firebase/util';
 
 // route
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+
+// comp
+import ProtectedRoute from '@/components/ProtectedRoute';
+
 
 const AuthContext = createContext<any>({})
 
@@ -76,6 +80,8 @@ export interface userState {
 
 export const AuthContextProvider = ({ children, }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const AuthRequired = ['/collections/create', '/update-profile' ]
+  const pathname = usePathname()
 
   const [user, setUser] = useState<userState>({
       ID: null,
@@ -121,7 +127,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
               followers: [],
               following: [],
           });
-        }
+      }
       setLoading(false)
     });
       return () => {
@@ -323,6 +329,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
             followers: [],
             following: [],
         });
+        router.push(`/`);
       }).catch((error) => {
         console.log(error);
       });
@@ -442,6 +449,7 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
           try {
             const docRef = await addDoc(collection(firestore, "collections"), {collectionData});
             console.log("Document written with ID: ", docRef.id);
+            router.push(`/collections/${docRef.id}`);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
@@ -572,7 +580,22 @@ export const AuthContextProvider = ({ children, }: { children: React.ReactNode }
 
   return (
     <AuthContext.Provider value={{ user, signin, signup, signupPopup, signinPopup, logout, getUser, likeMusic, dislikeMusic, AddCollection, likeCollection, dislikeCollection }}>
-      {loading ? null : children}
+      {loading 
+      ? 
+      null 
+      : 
+
+      /* (!AuthRequired.includes(pathname!)) ? (
+        children
+      ) : (
+        <ProtectedRoute >
+          children
+        </ProtectedRoute>
+      ) */
+      
+      children
+      
+      }
     </AuthContext.Provider>
   )
 }

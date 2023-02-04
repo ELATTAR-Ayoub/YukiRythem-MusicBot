@@ -52,7 +52,7 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
             { (!user.ID ) ?
                   <Link href="/signup" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Login for free</Link>
                   : 
-                  <Link href="/collections/create" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Ceate a collection</Link>
+                  <Link href="/collections/create" className={`${mode == 'light' ? 'cta-secondary' : 'cta-secondary-dark'}`}>Create a collection</Link>
             }
         </motion.div>
         
@@ -80,6 +80,24 @@ const Hero: React.FC<HeroProps> = ({ mode = "light" }, {ref}) => {
           <SolidSvg width={'92px'} height={'92px'} color={'#A1C6EA'} className={'SVGBlue2DarkBlue'} path={'/triangle_empty.svg'} />
         </div>
     </motion.div>
+
+    <div className={` ${styles.flexCenter} flex-col absolute left-1/2 -translate-x-1/2 bottom-2 `}>
+      <span
+      className={` ${mode == 'light' ?
+      'border-secondary-color ' : 
+      ' border-primary-color-4'
+      } 
+      relative rounded-full border-2  w-4 h-12 `} >
+        <span 
+        className={` ${mode == 'light' ?
+          'bg-secondary-color ' : 
+          ' bg-primary-color-4'
+          } 
+          absolute w-2 h-2 rounded-full mouse  `} >
+        </span>
+      </span>
+      <div className=' text-sm md:text-base mt-2'>Scroll down</div>
+    </div>
 </motion.section>
   )
 }

@@ -212,9 +212,9 @@ export default function ProfilePage()  {
             }
             
             
-            <div className={` ${styles.flexStart} w-full flex-col lg:flex-row gap-0 lg:gap-6 px-8`}>
-                <h1 className={` ${styles.h1Section} text-center md:text-left lg:my-0`}><span className='gradient1'>Create</span> Your Own Playlists </h1>
-                <p className={`  ${styles.Paragraph} text-center md:text-left `}>{"Create and share your ultimate audio library with the world! This page lets you curate a mix of your favorite podcasts and songs in one personalized collection."}</p>
+            <div className={` ${styles.flexCenter} w-full flex-col gap-0 px-8`}>
+                <h1 className={` ${styles.h1Section} text-center w-full lg:my-0`}><span className='gradient1'>Create</span> Your Own Playlists </h1>
+                <p className={`  ${styles.Paragraph} text-center w-full md:w-3/4 `}>{"Create and share your ultimate audio library with the world! This page lets you curate a mix of your favorite podcasts and songs in one personalized collection."}</p>
             </div>
             <div className={` ${styles.flexBetween} w-full sm:max-w-[675px] lg:max-w-[800px] gap-4 px-8 `}>
                 <button onClick={()=>nextStep(1)} 

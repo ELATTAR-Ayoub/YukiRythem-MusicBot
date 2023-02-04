@@ -77,7 +77,7 @@ export const Footer_links = [
         path: "/collections",
       },
       {
-        label: "Craete a playlist",
+        label: "Create a playlist",
         path: "/collections/create",
       },
     ]
