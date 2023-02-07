@@ -85,8 +85,8 @@ const Header = () => {
                       <div className={` rounded-md shadow-xs ${styles.flexStart} flex-col list-none w-full gap-2 p-4 `}>
                         <a href={`/profile/${user.ID}`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My profile</a>
                         <a href={`/profile/${user.ID}/collections`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My collections</a>
-                        <a href={`/profile/${user.ID}/loved-songs`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My favorite collections</a>
-                        <a href={`/profile/${user.ID}/loved-collections`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My favorite songs</a>
+                        <a href={`/profile/${user.ID}/loved-collections`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My favorite collections</a>
+                        <a href={`/profile/${user.ID}/loved-songs`} className="block p-4 py-2 text-sm sm:text-base gap-2 w-full rounded hover:bg-gray-200 dark:hover:bg-slate-700 focus:outline-none focus:bg-gray-200 dark:focus:bg-slate-700 transition duration-150 ease-in-out">My favorite songs</a>
                       </div>
                     </div>
                   )}

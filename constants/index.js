@@ -86,20 +86,20 @@ export const Footer_links = [
     title: 'Support Developer',
     links: [
       {
-        label: "Twitter",
-        path: "https://twitter.com/EA_Krowl",
-      },
-      {
-        label: "LinkedIn",
-        path: "https://www.linkedin.com/in/elattar-ayoub-22469320b/",
+        label: "By me a coffee",
+        path: "https://www.buymeacoffee.com/elattar",
       },
       {
         label: "Github",
         path: "https://github.com/ELATTAR-Ayoub",
       },
       {
-        label: "Email",
-        path: "mailto:elattarayoub000@gmail.com",
+        label: "Twitter",
+        path: "https://twitter.com/EA_Krowl",
+      },
+      {
+        label: "LinkedIn",
+        path: "https://www.linkedin.com/in/elattar-ayoub-22469320b/",
       },
     ]
   },
